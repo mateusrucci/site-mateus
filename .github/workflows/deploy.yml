@@ -11,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Pull latest code on cPanel
+        env:
+          CPANEL_API_TOKEN: ${{ secrets.CPANEL_API_TOKEN }}
+        run: |
+          curl -s --fail \
+            -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
+            "https://mateusrucci.com.br:2083/execute/VersionControl/update?repository_root=/home2/mate3251/repos/site-mateus&branch=main"
+
       - name: Trigger cPanel Git Deploy via API
         env:
           CPANEL_API_TOKEN: ${{ secrets.CPANEL_API_TOKEN }}
