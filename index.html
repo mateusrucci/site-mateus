@@ -753,10 +753,7 @@
             line-height: 1.65;
         }
 
-        /* last card spans full row to center it */
-        .problem-card:last-child {
-            grid-column: 2 / 3;
-        }
+        /* 6 cards — grid 3×2 completo, sem regra especial para o último */
 
         /* ─── BENEFITS ────────────────────────────────────────────────── */
         .benefits {
@@ -1496,10 +1493,6 @@
 
             .problems-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .problem-card:last-child {
-                grid-column: auto;
             }
 
             .benefits-grid {
