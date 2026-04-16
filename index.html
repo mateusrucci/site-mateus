@@ -393,14 +393,18 @@
         }
 
         .hero h1 {
+            font-size: clamp(28px, 3.6vw, 46px);
+            line-height: 1.18;
+            letter-spacing: -.025em;
             color: var(--preto);
-            margin-bottom: 12px;
+            margin-bottom: 20px;
+            max-width: 560px;
         }
 
         .hero-tagline {
-            font-size: 15px;
+            font-size: clamp(16px, 1.6vw, 20px);
             color: var(--grafite);
-            line-height: 1.75;
+            line-height: 1.6;
             margin-bottom: 44px;
             max-width: 480px;
         }
@@ -1461,7 +1465,8 @@
                     </h1>
 
                     <p class="hero-tagline">
-                        <strong>Tenha o controle do seu crescimento sem depender de agências.</strong>
+                        Tenha o controle do seu crescimento<br>
+                        <strong>sem depender de agências.</strong>
                     </p>
 
                     <div class="hero-cta-group">
