@@ -7,35 +7,14 @@ on:
 
 jobs:
   deploy:
-    name: FTP Upload
+    name: cPanel Git Pull
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@v4
-
-      - name: Deploy via lftp para HostGator
+      - name: Trigger cPanel Git Deploy via API
         env:
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          CPANEL_API_TOKEN: ${{ secrets.CPANEL_API_TOKEN }}
         run: |
-          sudo apt-get install -y lftp -q
-          lftp -u "mate3251,$FTP_PASSWORD" ftp://162.241.203.171 <<'LFTP_SCRIPT'
-            set ftp:ssl-allow true
-            set ftp:passive-mode true
-            set net:timeout 30
-            set net:max-retries 3
-            mirror \
-              --reverse \
-              --parallel=4 \
-              --verbose \
-              --ignore-time \
-              --exclude-glob .git* \
-              --exclude-glob .github* \
-              --exclude-glob .DS_Store \
-              --exclude-glob node_modules/ \
-              --exclude-glob "Fotos Retratista/" \
-              --exclude-glob "FOTOS LUCIANO FERNANDES/" \
-              --exclude-glob "FOTOS CLIENTES/" \
-              . /public_html/
-            quit
-          LFTP_SCRIPT
+          curl -s --fail \
+            -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
+            "https://mateusrucci.com.br:2083/execute/VersionControlDeployment/create?repository_root=/home2/mate3251/repos/site-mateus"
