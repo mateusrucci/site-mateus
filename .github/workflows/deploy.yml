@@ -26,23 +26,3 @@ jobs:
           curl -s --fail \
             -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
             "https://mateusrucci.com.br:2083/execute/VersionControlDeployment/create?repository_root=/home2/mate3251/repos/site-mateus"
-
-      - name: Show cPanel deployment status
-        env:
-          CPANEL_API_TOKEN: ${{ secrets.CPANEL_API_TOKEN }}
-        run: |
-          sleep 15
-          echo "=== Deployment status ==="
-          curl -s --fail \
-            -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
-            "https://mateusrucci.com.br:2083/execute/VersionControlDeployment/retrieve"
-          echo
-          echo "=== User tasks ==="
-          curl -s --fail \
-            -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
-            "https://mateusrucci.com.br:2083/execute/UserTasks/retrieve"
-          echo
-          echo "=== Domain document root ==="
-          curl -s --fail \
-            -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
-            "https://mateusrucci.com.br:2083/execute/DomainInfo/single_domain_data?domain=mateusrucci.com.br"

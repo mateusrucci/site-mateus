@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/mate3251/public_html/
+    - export DEPLOYPATH=/home2/mate3251/mateusrucci.com.br/
     - /bin/cp -f  .htaccess         $DEPLOYPATH
     - /bin/cp -f  index-home.html   $DEPLOYPATH
     - /bin/cp -f  index.html        $DEPLOYPATH
