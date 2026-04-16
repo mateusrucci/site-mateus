@@ -106,35 +106,35 @@
   function nextStep()   { var s = sequence(); return s[stepIndex() + 1] !== undefined ? s[stepIndex() + 1] : null; }
   function prevStep()   { var s = sequence(); return s[stepIndex() - 1] !== undefined ? s[stepIndex() - 1] : null; }
 
-  /* ── Supabase: insert (cria registro) ───────────────────────── */
-  function sbInsert(data, retryWithoutDdi) {
-    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads', {
+  /* ── Supabase: upsert por session_id ────────────────────────── */
+  function sbUpsert(data, retryWithoutDdi) {
+    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads?on_conflict=session_id', {
       method: 'POST',
       headers: {
         'Content-Type':  'application/json',
         'apikey':         SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer':         'return=minimal',
+        'Prefer':         'resolution=merge-duplicates,return=minimal',
       },
       body: JSON.stringify(data),
     })
     .then(function(r) {
       if (!r.ok) {
         return r.text().then(function(t) {
-          console.error('[Diag] INSERT falhou (' + r.status + '):', t);
+          console.error('[Diag] UPSERT falhou (' + r.status + '):', t);
           if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
             var fallback = Object.assign({}, data);
             delete fallback.ddi;
             console.warn('[Diag] Tentando salvar novamente sem a coluna ddi.');
-            return sbInsert(fallback, false);
+            return sbUpsert(fallback, false);
           }
           return null;
         });
       }
-      console.log('[Diag] INSERT ok — session:', data.session_id);
+      console.log('[Diag] UPSERT ok — session:', data.session_id);
       return data.session_id;
     })
-    .catch(function(e) { console.error('[Diag] INSERT erro de rede:', e); return null; });
+    .catch(function(e) { console.error('[Diag] UPSERT erro de rede:', e); return null; });
   }
 
   /* ── Google Sheets webhook ──────────────────────────────────── */
@@ -179,7 +179,7 @@
   /* ── Salvar snapshot parcial ────────────────────────────────── */
   function savePartial(step) {
     return waitForGeo().then(function() {
-      return sbInsert(buildPayload(true, step));
+      return sbUpsert(buildPayload(true, step));
     }).then(function(id) {
       if (id) state.recordId = id;
       return id;
@@ -207,7 +207,7 @@
       .then(function() {
         payload = buildPayload(false, 5);
         payload.data_envio = nowBRT();
-        return sbInsert(payload);
+        return sbUpsert(payload);
       })
       .then(function(id) {
         if (!id) throw new Error('Falha ao salvar lead final no Supabase.');
