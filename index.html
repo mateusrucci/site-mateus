@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mateus Rucci | Estratégia, Tráfego e Funil</title>
+    <meta name="description" content="Ajudo empresas a construir times e estratégias de tráfego pago que geram resultados previsíveis.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === BASE TOKENS === */
+        :root {
+            --c-preto: #0A0A0A;
+            --c-branco: #FAFAFA;
+            --c-azul: #1A1F3D;
+            --c-ouro: #C9A96E;
+            --c-ouro-hover: #D4B87A;
+            --c-grafite: #4A4A4A;
+            --c-cinza-claro: #E8E8E8;
+            --c-cinza-medio: #9A9A9A;
+
+            --bg-body: var(--c-branco);
+            --text-main: var(--c-grafite);
+            --text-heading: var(--c-preto);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+
+            --shadow-subtle: 0 10px 30px -10px rgba(10, 10, 10, 0.05);
+            --shadow-glow: 0 0 40px rgba(26, 31, 61, 0.12);
+            --shadow-dark-glow: 0 0 30px rgba(26, 31, 61, 0.3);
+
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        /* Nav */
+        .ds-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(250, 250, 250, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--c-cinza-claro);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            gap: 32px;
+        }
+
+        .ds-nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .ds-nav a {
+            text-decoration: none;
+            color: var(--c-grafite);
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+
+        .ds-nav a:hover {
+            color: var(--c-preto);
+        }
+
+        /* Container */
+        .ds-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        .ds-section {
+            margin-bottom: 100px;
+            padding-top: 80px;
+        }
+
+        .ds-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--c-azul);
+            font-weight: 700;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ds-section-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--c-cinza-claro);
+        }
+
+        /* Typography */
+        .h1 { font-size: 56px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--text-heading); }
+        .h2 { font-size: 40px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--text-heading); }
+        .h3 { font-size: 28px; font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--text-heading); }
+        .p-body { font-size: 18px; font-weight: 400; line-height: 1.6; color: var(--c-grafite); }
+        .p-small { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--c-cinza-medio); }
+        .label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-grafite); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--c-ouro);
+            color: var(--c-preto);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: var(--c-ouro-hover);
+            box-shadow: 0 10px 20px rgba(201, 169, 110, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: var(--c-azul);
+            color: var(--c-branco);
+            border: 1px solid transparent;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            background-color: #252b52;
+            box-shadow: var(--shadow-dark-glow);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .glass-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(26, 31, 61, 0.1);
+            border-color: var(--c-azul);
+        }
+
+        /* Motion Card */
+        .motion-card {
+            background-color: var(--c-branco);
+            color: var(--c-preto);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--c-cinza-claro);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .motion-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--c-azul), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .motion-card:hover {
+            box-shadow: var(--shadow-glow), 0 20px 40px -10px rgba(26, 31, 61, 0.08);
+            transform: translateY(-4px);
+            border-color: var(--c-azul);
+        }
+        .motion-card:hover::before {
+            opacity: 1;
+            width: 100%;
+        }
+
+        /* Layout Grids */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Hero split */
+        .hero-split {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            padding: 140px 0 80px;
+        }
+
+        .hero-split-text {
+            flex: 1.1;
+        }
+
+        .hero-split-image {
+            flex: 0.85;
+            position: relative;
+        }
+
+        .hero-split-image img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            max-height: 620px;
+        }
+
+        /* Subtle background pulse */
+        .bg-pulse {
+            position: absolute;
+            top: 20%; right: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(26, 31, 61, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .dark-section {
+            background: var(--c-azul);
+            color: var(--c-branco);
+            padding: 80px 40px;
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-dark-glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .h1 { font-size: 40px; }
+            .h2 { font-size: 32px; }
+            .hero-split { flex-direction: column; gap: 48px; padding: 120px 0 60px; }
+            .hero-split-text { text-align: center; }
+            .hero-split-image { width: 100%; max-width: 480px; margin: 0 auto; }
+        }
+
+        @media (max-width: 600px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .sobre-flex { flex-direction: column; gap: 32px !important; }
+            .sobre-flex > div { min-width: unset !important; }
+
+            .ds-nav { flex-direction: column; gap: 12px; padding: 16px 12px; width: 100%; align-items: center; }
+            .ds-nav-links { display: flex; flex-wrap: wrap; justify-content: space-evenly; gap: 12px; width: 100%; max-width: 360px; margin: 0 auto; }
+            .ds-nav a { font-size: 14px; }
+
+            .ds-container { padding: 120px 16px 40px; }
+            .ds-section { margin-bottom: 40px; padding-top: 40px; }
+            .dark-section { padding: 60px 24px; margin-left: 0; margin-right: 0; }
+
+            .h1 { font-size: 32px; }
+            .h2 { font-size: 26px; }
+            .h3 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="ds-nav">
+        <div class="ds-brand">
+            <a href="#home" style="color: var(--c-azul); font-size: 16px;"><strong>Mateus Rucci</strong></a>
+        </div>
+        <div class="ds-nav-links">
+            <a href="#home">Home</a>
+            <a href="#solucoes">Soluções</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#contato" style="color: var(--c-ouro);">Fale comigo →</a>
+        </div>
+    </nav>
+
+    <div class="ds-container" style="position: relative;">
+        <div class="bg-pulse"></div>
+
+        <!-- HERO -->
+        <section id="home" class="hero-split">
+            <div class="hero-split-text">
+                <div class="label" style="color: var(--c-azul); margin-bottom: 24px;">Estratégia · Tráfego · Funil</div>
+                <h1 class="h1" style="margin-bottom: 28px;">Você não precisa de mais tráfego.<br>Precisa de uma estrutura que converte.</h1>
+                <p class="p-body" style="max-width: 520px; color: var(--c-grafite);">
+                    Construo times e estratégias de tráfego pago que geram resultados previsíveis — sem depender de agência, sem apagar incêndio todo dia.
+                </p>
+            </div>
+            <div class="hero-split-image">
+                <img
+                    src="Fotos Retratista/hero_optimized.jpg"
+                    alt="Mateus Rucci — Estrategista de Performance"
+                    loading="eager"
+                    decoding="async"
+                    fetchpriority="high"
+                >
+            </div>
+        </section>
+
+        <!-- NÚMEROS -->
+        <section class="ds-section" style="padding-top: 0; border-bottom: 1px solid var(--c-cinza-claro); padding-bottom: 80px;">
+            <div class="grid-3" style="text-align: center; gap: 40px;">
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">+R$ 200M</div>
+                    <div class="label" style="color: var(--c-azul); margin-bottom: 12px;">Gerenciados em tráfego pago</div>
+                    <p class="p-small">Meta · Google · LinkedIn · TikTok · Pinterest · Bing</p>
+                </div>
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">+400</div>
+                    <div class="label" style="color: var(--c-azul); margin-bottom: 12px;">Projetos executados</div>
+                    <p class="p-small">Em nichos, segmentos, regiões e países diferentes.</p>
+                </div>
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">8+</div>
+                    <div class="label" style="color: var(--c-azul); margin-bottom: 12px;">Anos operando</div>
+                    <p class="p-small">Executado e testado no campo de batalha — não em teoria.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABERTURA -->
+        <section class="ds-section" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p class="p-body" style="margin-bottom: 24px;">A maioria das empresas que investe em tráfego pago não tem problema de tráfego. Tem problema de estrutura.</p>
+            <p class="p-body" style="margin-bottom: 24px;">Agência troca de conta. Gestor troca de emprego. Plataforma muda o algoritmo. E no fim, o que fica é uma operação que depende de terceiros para funcionar — sem dados próprios, sem processo e sem previsibilidade.</p>
+            <p class="p-body" style="margin-bottom: 24px;">Jogar mais verba em cima de uma estrutura quebrada não resolve. <strong>Só amplifica o problema que já existe.</strong></p>
+            <p class="p-body">A solução não é trocar de agência. É construir a estrutura que deveria ter existido desde o começo.</p>
+        </section>
+
+        <!-- GRANDE VERDADE -->
+        <section class="ds-section dark-section" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <div class="label" style="color: var(--c-ouro); margin-bottom: 24px;">A Grande Verdade</div>
+            <h3 class="h3" style="color: var(--c-branco); margin-bottom: 32px; font-size: 32px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.4;">
+                Quem terceiriza o marketing terceiriza o controle do próprio crescimento.
+            </h3>
+            <p class="p-body" style="color: rgba(250,250,250,0.75); margin-bottom: 24px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Cada vez que você troca de agência, começa do zero. O histórico vai embora. O aprendizado vai embora. O relacionamento com o pixel, com o público, com o dado — tudo recomeça.
+            </p>
+            <p class="p-body" style="color: rgba(250,250,250,0.75); margin-bottom: 32px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Enquanto o seu marketing está nas mãos de um fornecedor externo, você não tem controle real das decisões, não tem autonomia para escalar e não tem a estrutura que transforma investimento em previsibilidade.
+            </p>
+            <p class="p-body" style="color: var(--c-ouro); font-weight: 600;">Isso muda quando você para de terceirizar e começa a construir.</p>
+        </section>
+
+        <!-- SOLUÇÕES -->
+        <section id="solucoes" class="ds-section">
+            <div class="ds-section-title">Soluções</div>
+            <h2 class="h2" style="margin-bottom: 60px; max-width: 600px;">Do caos ao controle. Escolha por onde começar.</h2>
+
+            <!-- Linha 1: 3 cards -->
+            <div class="grid-3" style="margin-bottom: 24px;">
+                <div class="glass-card">
+                    <div>
+                        <h3 class="h3" style="margin-bottom: 12px; font-size: 22px;">Implementação de Time Interno</h3>
+                        <p class="p-small" style="margin-bottom: 16px; color: var(--c-azul);"><em>Para quem paga caro por resultado que poderia ser seu</em></p>
+                        <p class="p-body" style="font-size: 15px; margin-bottom: 24px;">Migre da dependência de agências para um time interno de tráfego altamente capacitado. Estrutura, processos e pessoas — construídos do zero com metodologia testada.</p>
+                    </div>
+                    <a href="implementacao-de-trafego-interno/index.html" class="label" style="color: var(--c-azul); text-decoration: none;">→ Saiba mais</a>
+                </div>
+
+                <div class="glass-card">
+                    <div>
+                        <h3 class="h3" style="margin-bottom: 12px; font-size: 22px;">Consultoria</h3>
+                        <p class="p-small" style="margin-bottom: 16px; color: var(--c-azul);"><em>Para quem está quase lá e precisa do ajuste fino</em></p>
+                        <p class="p-body" style="font-size: 15px; margin-bottom: 24px;">Você já tem estrutura, já tem resultado — mas algo ainda trava o crescimento. Em poucas sessões, identificamos o gargalo e destravamos a operação.</p>
+                    </div>
+                    <a href="consultoria/index.html" class="label" style="color: var(--c-azul); text-decoration: none;">→ Saiba mais</a>
+                </div>
+
+                <div class="glass-card">
+                    <div>
+                        <h3 class="h3" style="margin-bottom: 12px; font-size: 22px;">Mentoria</h3>
+                        <p class="p-small" style="margin-bottom: 16px; color: var(--c-azul);"><em>Para quem quer pensar e agir como gestor de alto nível</em></p>
+                        <p class="p-body" style="font-size: 15px; margin-bottom: 24px;">Know-how, visão estratégica e acompanhamento próximo para tomar decisões melhores, mais rápido. Menos tentativa e erro, mais resultado.</p>
+                    </div>
+                    <a href="mentoria/index.html" class="label" style="color: var(--c-azul); text-decoration: none;">→ Saiba mais</a>
+                </div>
+            </div>
+
+            <!-- Linha 2: 2 cards centralizados -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 816px; margin: 0 auto;">
+                <div class="glass-card">
+                    <div>
+                        <h3 class="h3" style="margin-bottom: 12px; font-size: 22px;">Implementação de Funis</h3>
+                        <p class="p-small" style="margin-bottom: 16px; color: var(--c-azul);"><em>Para quem tem tráfego mas não tem conversão</em></p>
+                        <p class="p-body" style="font-size: 15px; margin-bottom: 24px;">Estrutura completa de funil de vendas — páginas, copy e fluxos que transformam tráfego em receita de forma previsível.</p>
+                    </div>
+                    <a href="implementaca-de-funis/index.html" class="label" style="color: var(--c-azul); text-decoration: none;">→ Saiba mais</a>
+                </div>
+
+                <div class="glass-card">
+                    <div>
+                        <h3 class="h3" style="margin-bottom: 12px; font-size: 22px;">Blog</h3>
+                        <p class="p-small" style="margin-bottom: 16px; color: var(--c-azul);"><em>Estratégia e tráfego sem enrolação</em></p>
+                        <p class="p-body" style="font-size: 15px; margin-bottom: 24px;">Conteúdo direto ao ponto sobre tráfego pago, funis e estrutura de marketing de performance — do jeito que funciona na prática.</p>
+                    </div>
+                    <a href="#blog" class="label" style="color: var(--c-azul); text-decoration: none;">→ Ver artigos</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUEM SOU EU -->
+        <section id="sobre" class="ds-section sobre-flex" style="display: flex; gap: 60px; align-items: center; border-bottom: 1px solid var(--c-cinza-claro); padding-bottom: 80px;">
+            <div style="flex: 1; min-width: 300px;">
+                <img
+                    src="Fotos Retratista/3_compressed.jpg"
+                    alt="Mateus Rucci"
+                    style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-subtle); object-fit: cover; aspect-ratio: 3/4;"
+                    loading="lazy"
+                    decoding="async"
+                >
+            </div>
+            <div style="flex: 1.2; min-width: 300px;">
+                <div class="ds-section-title">Quem sou eu</div>
+                <h2 class="h2" style="margin-bottom: 24px;">Mateus Rucci</h2>
+                <p class="p-body" style="margin-bottom: 24px;">
+                    Sou gestor de tráfego e estrategista de performance com mais de 8 anos de experiência e 400+ projetos executados.
+                </p>
+                <p class="p-body" style="margin-bottom: 24px;">
+                    Passei anos na trincheira — gerenciando campanhas, formando times, desenvolvendo metodologias e gerando resultado para empresas de todos os tamanhos. Saí de lá com uma visão clara: a maioria das empresas não tem problema de tráfego. Tem problema de estrutura.
+                </p>
+                <p class="p-body" style="margin-bottom: 40px;">
+                    Hoje, ajudo negócios a construir operações de marketing de performance que funcionam com ou sem mim — times que pensam, processos que escalam e estratégias que convertem.
+                </p>
+                <a href="#contato" class="label" style="color: var(--c-azul); text-decoration: none; font-size: 14px;">Me conta o seu desafio →</a>
+            </div>
+        </section>
+
+        <!-- CONTATO / CTA -->
+        <section id="contato" class="ds-section" style="text-align: center; max-width: 700px; margin: 0 auto; padding-top: 40px; padding-bottom: 40px;">
+            <div class="ds-section-title" style="justify-content: center; max-width: 300px; margin: 0 auto 40px;">Contato</div>
+            <h2 class="h2" style="margin-bottom: 24px;">Pronto para parar de improvisar e começar a escalar?</h2>
+            <p class="p-body" style="margin-bottom: 40px;">30 minutos. Sem compromisso. Você sai sabendo onde está o gargalo e qual é o próximo passo.</p>
+            <a href="https://wa.me/" target="_blank" class="btn btn-primary" style="font-size: 14px; padding: 18px 44px;">Falar com Mateus →</a>
+        </section>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer style="border-top: 1px solid var(--c-cinza-claro); padding: 60px 24px; text-align: center; background-color: var(--c-branco);">
+        <div style="margin-bottom: 32px;">
+            <span style="font-size: 18px; font-weight: 700; color: var(--c-azul);">Mateus Rucci</span>
+            <p class="p-small" style="margin-top: 8px;">— Estratégia, Tráfego e Funil.</p>
+        </div>
+
+        <div style="margin-bottom: 32px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;">
+            <a href="#home" class="label" style="text-decoration: none; color: var(--c-grafite);">Home</a>
+            <a href="#solucoes" class="label" style="text-decoration: none; color: var(--c-grafite);">Soluções</a>
+            <a href="#sobre" class="label" style="text-decoration: none; color: var(--c-grafite);">Sobre</a>
+            <a href="#contato" class="label" style="text-decoration: none; color: var(--c-grafite);">Contato</a>
+        </div>
+
+        <div style="margin-bottom: 40px; display: flex; gap: 32px; justify-content: center;">
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-azul);">[Instagram]</a>
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-azul);">[LinkedIn]</a>
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-azul);">[WhatsApp]</a>
+        </div>
+
+        <p class="p-small" style="color: var(--c-cinza-medio);">© 2025 Mateus Rucci. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

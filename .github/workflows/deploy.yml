@@ -1,0 +1,35 @@
+name: Deploy → HostGator
+
+on:
+  push:
+    branches:
+      - main   # dispara automaticamente a cada push na branch main
+
+jobs:
+  deploy:
+    name: FTP Upload
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTP para HostGator
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:           ftp.mateusrucci.com.br
+          username:         mate3251
+          password:         ${{ secrets.FTP_PASSWORD }}
+          server-dir:       /public_html/
+          local-dir:        ./
+          # Não apaga arquivos que existam no servidor mas não no repo
+          # (protege uploads manuais como hero.jpg)
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/Fotos Retratista/**
+            **/FOTOS LUCIANO FERNANDES/**
+            **/FOTOS CLIENTES/**

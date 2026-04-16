@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultoria Estratégica | Mateus Rucci</title>
+    <meta name="description" content="Consultoria estratégica semanal para quem já investe R$50k+ por mês em tráfego, tem equipe operando e quer escalar.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === BASE TOKENS === */
+        :root {
+            --c-preto: #0A0A0A;
+            --c-branco: #FAFAFA;
+            --c-azul: #1A1F3D;
+            --c-ouro: #C9A96E;
+            --c-ouro-hover: #D4B87A;
+            --c-grafite: #4A4A4A;
+            --c-cinza-claro: #E8E8E8;
+            --c-cinza-medio: #9A9A9A;
+
+            --bg-body: var(--c-branco);
+            --text-main: var(--c-grafite);
+            --text-heading: var(--c-preto);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+
+            --shadow-subtle: 0 10px 30px -10px rgba(10, 10, 10, 0.05);
+            --shadow-glow: 0 0 40px rgba(201, 169, 110, 0.15);
+            --shadow-dark-glow: 0 0 30px rgba(26, 31, 61, 0.3);
+
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        /* Nav */
+        .ds-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(250, 250, 250, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--c-cinza-claro);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            gap: 32px;
+        }
+
+        .ds-nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .ds-nav a {
+            text-decoration: none;
+            color: var(--c-grafite);
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+
+        .ds-nav a:hover {
+            color: var(--c-preto);
+        }
+
+        /* Container */
+        .ds-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        .ds-section {
+            margin-bottom: 100px;
+            padding-top: 80px;
+        }
+
+        .ds-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--c-cinza-medio);
+            font-weight: 700;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .ds-section-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--c-cinza-claro);
+        }
+
+        /* Typography */
+        .h1 { font-size: 56px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--text-heading); }
+        .h2 { font-size: 40px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--text-heading); }
+        .h3 { font-size: 28px; font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--text-heading); }
+        .p-body { font-size: 18px; font-weight: 400; line-height: 1.6; color: var(--c-grafite); }
+        .p-small { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--c-cinza-medio); }
+        .label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-grafite); }
+
+        /* Buttons Component */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Primary Button (Ouro) */
+        .btn-primary {
+            background-color: var(--c-ouro);
+            color: var(--c-preto);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: var(--c-ouro-hover);
+            box-shadow: 0 10px 20px rgba(201, 169, 110, 0.2);
+        }
+
+        /* Secondary Button (Preto com Fio Ouro on hover) */
+        .btn-secondary {
+            background-color: var(--c-preto);
+            color: var(--c-branco);
+            border: 1px solid transparent;
+        }
+        .btn-secondary::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(180deg, rgba(201,169,110,0.5), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+        .btn-secondary:hover::before {
+            opacity: 1;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .glass-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(10, 10, 10, 0.08);
+            border-color: var(--c-ouro);
+        }
+
+        /* Motion Card (Glow effect) */
+        .motion-card {
+            background-color: var(--c-branco);
+            color: var(--c-preto);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--c-cinza-claro);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .motion-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--c-ouro), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .motion-card:hover {
+            box-shadow: var(--shadow-glow), 0 20px 40px -10px rgba(10, 10, 10, 0.08);
+            transform: translateY(-4px);
+            border-color: var(--c-ouro);
+        }
+        .motion-card:hover::before {
+            opacity: 1;
+            width: 100%;
+        }
+
+        /* Layout Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .h1 { font-size: 40px; }
+            .h2 { font-size: 32px; }
+        }
+
+        @media (max-width: 600px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            
+            /* Menu responsivo */
+            .ds-nav { flex-direction: column; gap: 12px; padding: 16px 12px; width: 100%; align-items: center; }
+            .ds-nav-links { display: flex; flex-wrap: wrap; justify-content: space-evenly; gap: 12px; width: 100%; max-width: 360px; margin: 0 auto; }
+            .ds-nav a { font-size: 14px; }
+            
+            /* Ajustes finos de espaço para mobile */
+            .ds-container { padding: 120px 16px 40px; }
+            .ds-section { margin-bottom: 40px; padding-top: 40px; }
+            .hero-section { padding: 0px 0 20px; }
+            .dark-section { padding: 60px 24px; margin-left: 0; margin-right: 0; }
+            
+            /* Tipografia mobile */
+            .h1 { font-size: 32px; }
+            .h2 { font-size: 26px; }
+            .h3 { font-size: 22px; }
+        }
+
+        /* Hero Specifics */
+        .hero-section {
+            padding: 120px 0 60px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Subtle Background Animation */
+        .bg-animation {
+            position: absolute;
+            top: -50%; left: -50%; right: -50%; bottom: -50%;
+            background: radial-gradient(circle at 50% 50%, rgba(201, 169, 110, 0.03) 0%, transparent 50%);
+            animation: breathe 10s ease-in-out infinite alternate;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .dark-section {
+            background: var(--c-preto); 
+            color: var(--c-branco); 
+            padding: 80px 40px; 
+            border-radius: var(--radius-lg); 
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-dark-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="ds-nav">
+        <div class="ds-brand">
+            <a href="../index.html" style="color: var(--c-preto); font-size: 16px;"><strong>Mateus Rucci</strong></a>
+        </div>
+        <div class="ds-nav-links">
+            <a href="../index.html#home">Home</a>
+            <a href="../index.html#solucoes">Soluções</a>
+            <a href="../index.html#sobre">Sobre</a>
+            <a href="#diagnostico" style="color: var(--c-ouro);">Agendar Call →</a>
+        </div>
+    </nav>
+
+    <div class="ds-container">
+        
+        <!-- HERO -->
+        <section id="hero" class="hero-section">
+            <div class="bg-animation"></div>
+            <div class="label" style="margin-bottom: 24px; color: var(--c-ouro);">Consultoria Estratégica</div>
+            <h1 class="h1" style="margin-bottom: 24px;">Você não precisa de mais um gestor.<br>Precisa de alguém que já errou onde você está errando — e sabe exatamente o que fazer diferente.</h1>
+            <p class="p-body" style="margin-bottom: 40px; max-width: 750px; margin-left: auto; margin-right: auto; color: var(--text-main);">
+                Consultoria estratégica semanal para quem já investe <strong>R$50k+ por mês</strong> em tráfego, tem equipe operando — e quer parar de deixar dinheiro na mesa por falta de direcionamento no nível certo.
+            </p>
+            <div class="hero-btns" style="display: flex; gap: 16px; justify-content: center; flex-direction: column; align-items: center;">
+                <a href="#diagnostico" class="btn btn-primary" style="padding: 20px 48px; font-size: 15px;">Agendar meu Diagnóstico</a>
+                <span class="p-small" style="color: var(--c-cinza-medio); max-width: 400px;">30 minutos. Sem compromisso. Você sai sabendo o que mudar para aumentar o retorno do que já investe.</span>
+            </div>
+        </section>
+
+        <!-- ABERTURA -->
+        <section class="ds-section" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p class="p-body" style="margin-bottom: 24px;">Quem investe R$50k por mês em tráfego não tem problema de execução. Tem equipe, tem orçamento, tem estrutura.</p>
+            <p class="p-body" style="margin-bottom: 24px;">O que falta é alguém com visão de fora que já operou em escala real — e consegue ver em minutos o que está custando caro, o que está sendo desperdiçado e onde está o próximo salto de resultado.</p>
+            <p class="p-body" style="margin-bottom: 24px;">Sem esse nível de direcionamento, o time toma decisões com as referências que tem. Que raramente são as referências de quem já gerenciou mais de R$ 200M em tráfego pago.</p>
+            <p class="p-body" style="margin-bottom: 60px;">A diferença entre um time bom e um time de alto nível quase sempre não é esforço. <strong>É o padrão de decisão.</strong></p>
+        </section>
+
+        <!-- GRANDE IDEIA -->
+        <section class="ds-section dark-section" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <div class="label" style="color: var(--c-ouro); margin-bottom: 24px;">A Grande Verdade</div>
+            <h3 class="h3" style="color: var(--c-branco); margin-bottom: 32px; font-size: 32px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.4;">
+                Em tráfego pago, a maioria do desperdício não aparece no relatório.
+            </h3>
+            <p class="p-body" style="color: var(--c-cinza-claro); margin-bottom: 24px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Aparece nas campanhas que continuaram rodando uma semana a mais. Na verba concentrada no canal errado. Na oportunidade de lateralizar que ninguém viu porque estava ocupado operando.
+            </p>
+            <p class="p-body" style="color: var(--c-cinza-claro); margin-bottom: 32px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Quem está dentro da operação não consegue ver isso com clareza — não por incompetência, mas por perspectiva. É estrutural.
+            </p>
+            <p class="p-body" style="color: var(--c-ouro); font-weight: 600;">Um olhar externo com histórico de escala real corta esse ciclo. Rápido.</p>
+        </section>
+
+        <!-- PARA QUEM É -->
+        <section class="ds-section">
+            <div class="ds-section-title">O Cenário Certo</div>
+            <h2 class="h2" style="margin-bottom: 60px;">Esta consultoria é para você se:</h2>
+            
+            <div class="grid-3">
+                <div class="glass-card" style="background: var(--c-branco);">
+                    <div class="label" style="color: var(--c-ouro); margin-bottom: 12px;">Cenário 1</div>
+                    <p class="p-body" style="font-size: 16px;">Você já investe R$50k+ por mês em tráfego e tem equipe operando, <strong>mas sente que o resultado poderia ser significativamente maior com o mesmo orçamento.</strong></p>
+                </div>
+                <div class="glass-card" style="background: var(--c-branco);">
+                    <div class="label" style="color: var(--c-ouro); margin-bottom: 12px;">Cenário 2</div>
+                    <p class="p-body" style="font-size: 16px;">Você quer um nível de <strong>direcionamento estratégico que o time interno não consegue gerar sozinho</strong> — e não quer contratar uma agência para isso.</p>
+                </div>
+                <div class="glass-card" style="background: var(--c-branco);">
+                    <div class="label" style="color: var(--c-ouro); margin-bottom: 12px;">Cenário 3</div>
+                    <p class="p-body" style="font-size: 16px;">Você toma decisões importantes de marketing sem ter <strong>com quem validar em tempo real</strong>, e isso está custando caro em tempo e em verba.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- O QUE ESTÁ INCLUÍDO -->
+        <section class="ds-section">
+            <div class="ds-section-title">O Formato</div>
+            <h2 class="h2" style="margin-bottom: 60px;">O que está incluído na consultoria:</h2>
+            
+            <div class="grid-2">
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">1. Acompanhamento semanal</h3>
+                    <p class="p-body" style="font-size: 15px;">Reunião focada em decisões de alto impacto: onde concentrar verba, o que cortar, o que testar e qual é o próximo movimento para escalar.</p>
+                </div>
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">2. Grupo de WhatsApp em tempo real</h3>
+                    <p class="p-body" style="font-size: 15px;">Acesso direto para decisões que não podem esperar a semana: campanha que virou, oportunidade que apareceu, dúvida que trava o time.</p>
+                </div>
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">3. Lateralização estratégica</h3>
+                    <p class="p-body" style="font-size: 15px;">Identificação de canais, segmentos e abordagens que o seu time ainda não explorou e que representam crescimento sem aumentar investimento proporcionalmente.</p>
+                </div>
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">4. Redução de desperdício</h3>
+                    <p class="p-body" style="font-size: 15px;">Análise contínua do que está consumindo verba sem retorno real, com direcionamento claro da nossa parte para realocação instantânea.</p>
+                </div>
+                <div class="motion-card" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto; width: 100%; border-color: var(--c-ouro); box-shadow: var(--shadow-glow);">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 24px; color: var(--c-ouro);">5. Aumento de ROAS e faturamento</h3>
+                    <p class="p-body" style="font-size: 16px;">Não como promessa genérica, mas como consequência direta de tomar decisões muito melhores com o mesmo orçamento que você já tem.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INDICADORES -->
+        <section class="ds-section" style="border-bottom: 1px solid var(--c-cinza-claro); padding-bottom: 100px;">
+            <div class="grid-3" style="text-align: center; gap: 40px;">
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">+R$ 200M</div>
+                    <div class="label" style="color: var(--c-grafite); margin-bottom: 12px;">Gerenciados em tráfego pago</div>
+                    <p class="p-small">Meta · Google · LinkedIn · TikTok · Pinterest · Bing</p>
+                </div>
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">+400</div>
+                    <div class="label" style="color: var(--c-grafite); margin-bottom: 12px;">Projetos Estruturados</div>
+                    <p class="p-small">Em nichos, segmentos, regiões e países diferentes.</p>
+                </div>
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">8+</div>
+                    <div class="label" style="color: var(--c-grafite); margin-bottom: 12px;">Anos Operando</div>
+                    <p class="p-small">Tudo executado e testado no campo de batalha — não em teoria.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CASES -->
+        <section class="ds-section" style="background-color: var(--c-cinza-claro); margin-left: -24px; margin-right: -24px; padding: 100px 24px; border-radius: var(--radius-lg);">
+            <div class="ds-container" style="padding: 0;">
+                <div class="ds-section-title">Casos Reais</div>
+                <h2 class="h2" style="margin-bottom: 60px;">O impacto do direcionamento certo</h2>
+                
+                <div class="grid-2">
+                    <div class="glass-card" style="background: var(--c-branco);">
+                        <div class="label" style="color: var(--c-ouro); margin-bottom: 12px;">PagCorp</div>
+                        <p class="p-small" style="margin-bottom: 24px;"><em>Situação: Investia R$ 200 mil por mês com gestão descoordenada — mais de R$ 2 milhões desperdiçados sem visibilidade real do que estava funcionando.</em></p>
+                        <div style="background: var(--c-cinza-claro); height: 1px; margin-bottom: 24px; width: 100%;"></div>
+                        <h3 class="h3" style="font-size: 18px; margin-bottom: 12px;">Com a Consultoria</h3>
+                        <p class="p-body" style="font-size: 15px;">Com direcionamento estratégico, reorganizou a operação, montou time interno e abriu canais de aquisição que antes não existiam no radar.</p>
+                    </div>
+
+                    <div class="glass-card" style="background: var(--c-branco);">
+                        <div class="label" style="color: var(--c-ouro); margin-bottom: 12px;">Lucas Miguel — Treinador de Empresários</div>
+                        <p class="p-small" style="margin-bottom: 24px;"><em>Situação: Time operando, tráfego rodando — mas as vendas oscilavam entre 5 e 10 por mês sem previsibilidade.</em></p>
+                        <div style="background: var(--c-cinza-claro); height: 1px; margin-bottom: 24px; width: 100%;"></div>
+                        <h3 class="h3" style="font-size: 18px; margin-bottom: 12px;">Com a Consultoria</h3>
+                        <p class="p-body" style="font-size: 15px;">Com ajuste estratégico na estrutura e nas decisões semanais de campanha: chegou a 70 vendas por mês com o <strong>mesmo investimento</strong> de antes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="ds-section">
+            <div class="ds-section-title">Dúvidas Frequentes</div>
+            <h2 class="h2" style="margin-bottom: 60px;">FAQ</h2>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--c-cinza-claro);">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">Meu time já é experiente. Vai fazer diferença?</h3>
+                    <p class="p-body" style="font-size: 16px;">Times experientes são os que mais aproveitam esse tipo de consultoria — porque já sabem executar e a conversa vai direto para decisão estratégica. O ganho não é ensinar o básico. É ter um padrão de referência externo que eleva o nível das decisões que o time já toma bem.</p>
+                </div>
+                
+                <div style="margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--c-cinza-claro);">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">Já tenho mentoria / consultoria e não funcionou.</h3>
+                    <p class="p-body" style="font-size: 16px;">Faz sentido ter essa experiência — a maioria das consultorias opera no genérico. O acompanhamento aqui é baseado na sua operação real: campanha por campanha, decisão por decisão, com acesso direto quando a situação exige. Não é framework. É direcionamento com contexto.</p>
+                </div>
+                
+                <div style="margin-bottom: 0;">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">Como funciona na prática o acesso em tempo real?</h3>
+                    <p class="p-body" style="font-size: 16px;">Grupo de WhatsApp com resposta para dúvidas pontuais ao longo da semana — decisões que não podem esperar a reunião. O acompanhamento semanal resolve o estratégico. O WhatsApp resolve o que aparece no meio do caminho e não pode parar a operação.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section id="diagnostico" class="ds-section" style="text-align: center; max-width: 800px; margin: 0 auto; padding-top: 40px; padding-bottom: 40px;">
+            <h2 class="h1" style="margin-bottom: 24px;">Agende o seu Diagnóstico</h2>
+            <p class="p-body" style="margin-bottom: 40px;">30 minutos. Sem compromisso. Você sai sabendo onde está o maior desperdício na sua operação hoje e o que mudar primeiro para aumentar o retorno do investimento que você já faz.</p>
+            <a href="https://wa.me/" target="_blank" class="btn btn-primary" style="font-size: 16px; padding: 20px 48px;">Agendar meu Diagnóstico</a>
+        </section>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer style="border-top: 1px solid var(--c-cinza-claro); padding: 60px 24px; text-align: center; background-color: var(--c-branco);">
+        <div style="margin-bottom: 32px;">
+            <span class="h3" style="font-size: 24px;">Mateus Rucci</span>
+            <p class="p-small" style="margin-top: 8px;">— Estratégia, Tráfego e Funil.</p>
+        </div>
+        
+        <div style="margin-bottom: 32px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;">
+            <a href="../index.html#home" class="label" style="text-decoration: none; color: var(--c-grafite);">Home</a>
+            <a href="../index.html#solucoes" class="label" style="text-decoration: none; color: var(--c-grafite);">Soluções</a>
+            <a href="../index.html#blog" class="label" style="text-decoration: none; color: var(--c-grafite);">Blog</a>
+            <a href="#diagnostico" class="label" style="text-decoration: none; color: var(--c-grafite);">Contato</a>
+        </div>
+        
+        <div style="margin-bottom: 40px; display: flex; gap: 32px; justify-content: center;">
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-ouro);">[Instagram]</a>
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-ouro);">[LinkedIn]</a>
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-ouro);">[WhatsApp]</a>
+        </div>
+
+        <p class="p-small" style="color: var(--c-cinza-medio);">© 2025 Mateus Rucci. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

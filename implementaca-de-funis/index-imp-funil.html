@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementação de Funil de Vendas | Mateus Rucci</title>
+    <meta name="description" content="Estrutura completa de funil de vendas implementada por quem gerenciou mais de R$ 200M em tráfego pago.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === BASE TOKENS === */
+        :root {
+            --c-preto: #0A0A0A;
+            --c-branco: #FAFAFA;
+            --c-azul: #1A1F3D;
+            --c-ouro: #C9A96E;
+            --c-ouro-hover: #D4B87A;
+            --c-grafite: #4A4A4A;
+            --c-cinza-claro: #E8E8E8;
+            --c-cinza-medio: #9A9A9A;
+
+            --bg-body: var(--c-branco);
+            --text-main: var(--c-grafite);
+            --text-heading: var(--c-preto);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+
+            --shadow-subtle: 0 10px 30px -10px rgba(10, 10, 10, 0.05);
+            --shadow-glow: 0 0 40px rgba(201, 169, 110, 0.15);
+            --shadow-dark-glow: 0 0 30px rgba(26, 31, 61, 0.3);
+
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+
+        /* Nav */
+        .ds-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(250, 250, 250, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--c-cinza-claro);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            gap: 32px;
+        }
+
+        .ds-nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .ds-nav a {
+            text-decoration: none;
+            color: var(--c-grafite);
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+
+        .ds-nav a:hover {
+            color: var(--c-preto);
+        }
+
+        /* Container */
+        .ds-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        .ds-section {
+            margin-bottom: 100px;
+            padding-top: 80px;
+        }
+
+        .ds-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--c-cinza-medio);
+            font-weight: 700;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .ds-section-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--c-cinza-claro);
+        }
+
+        /* Typography */
+        .h1 { font-size: 56px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--text-heading); }
+        .h2 { font-size: 40px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: var(--text-heading); }
+        .h3 { font-size: 28px; font-weight: 600; line-height: 1.3; letter-spacing: 0; color: var(--text-heading); }
+        .p-body { font-size: 18px; font-weight: 400; line-height: 1.6; color: var(--c-grafite); }
+        .p-small { font-size: 14px; font-weight: 400; line-height: 1.5; color: var(--c-cinza-medio); }
+        .label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-grafite); }
+
+        /* Buttons Component */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Primary Button (Ouro) */
+        .btn-primary {
+            background-color: var(--c-ouro);
+            color: var(--c-preto);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: var(--c-ouro-hover);
+            box-shadow: 0 10px 20px rgba(201, 169, 110, 0.2);
+        }
+
+        /* Secondary Button (Preto com Fio Ouro on hover) */
+        .btn-secondary {
+            background-color: var(--c-preto);
+            color: var(--c-branco);
+            border: 1px solid transparent;
+        }
+        .btn-secondary::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(180deg, rgba(201,169,110,0.5), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+        .btn-secondary:hover::before {
+            opacity: 1;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .glass-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(10, 10, 10, 0.08);
+            border-color: var(--c-ouro);
+        }
+
+        /* Motion Card (Glow effect) */
+        .motion-card {
+            background-color: var(--c-branco);
+            color: var(--c-preto);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--c-cinza-claro);
+            cursor: pointer;
+        }
+        
+        .motion-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--c-ouro), transparent);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .motion-card:hover {
+            box-shadow: var(--shadow-glow), 0 20px 40px -10px rgba(10, 10, 10, 0.08);
+            transform: translateY(-4px);
+            border-color: var(--c-ouro);
+        }
+        .motion-card:hover::before {
+            opacity: 1;
+            width: 100%;
+        }
+
+        /* Layout Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        @media (max-width: 900px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .h1 { font-size: 40px; }
+            .h2 { font-size: 32px; }
+        }
+
+        @media (max-width: 600px) {
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            
+            /* Menu responsivo */
+            .ds-nav { flex-direction: column; gap: 12px; padding: 16px 12px; width: 100%; align-items: center; }
+            .ds-nav-links { display: flex; flex-wrap: wrap; justify-content: space-evenly; gap: 12px; width: 100%; max-width: 360px; margin: 0 auto; }
+            .ds-nav a { font-size: 14px; }
+            
+            /* Ajustes finos de espaço para mobile */
+            .ds-container { padding: 120px 16px 40px; }
+            .ds-section { margin-bottom: 40px; padding-top: 40px; }
+            .hero-section { padding: 0px 0 20px; }
+            .dark-section { padding: 60px 24px; margin-left: 0; margin-right: 0; }
+            
+            /* Tipografia mobile */
+            .h1 { font-size: 32px; }
+            .h2 { font-size: 26px; }
+            .h3 { font-size: 22px; }
+        }
+
+        /* Hero Specifics */
+        .hero-section {
+            padding: 120px 0 60px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Subtle Background Animation */
+        .bg-animation {
+            position: absolute;
+            top: -50%; left: -50%; right: -50%; bottom: -50%;
+            background: radial-gradient(circle at 50% 50%, rgba(201, 169, 110, 0.03) 0%, transparent 50%);
+            animation: breathe 10s ease-in-out infinite alternate;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .dark-section {
+            background: var(--c-preto); 
+            color: var(--c-branco); 
+            padding: 80px 40px; 
+            border-radius: var(--radius-lg); 
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-dark-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="ds-nav">
+        <div class="ds-brand">
+            <a href="../index.html" style="color: var(--c-preto); font-size: 16px;"><strong>Mateus Rucci</strong></a>
+        </div>
+        <div class="ds-nav-links">
+            <a href="../index.html#home">Home</a>
+            <a href="../index.html#solucoes">Soluções</a>
+            <a href="../index.html#sobre">Sobre</a>
+            <a href="#diagnostico" style="color: var(--c-ouro);">Agendar Call →</a>
+        </div>
+    </nav>
+
+    <div class="ds-container">
+        
+        <!-- HERO -->
+        <section id="hero" class="hero-section">
+            <div class="bg-animation"></div>
+            <div class="label" style="margin-bottom: 24px; color: var(--c-ouro);">A Fundação do Marketing</div>
+            <h1 class="h1" style="margin-bottom: 24px;">Você não tem um problema de tráfego.<br>Tem um funil que nunca foi montado direito.</h1>
+            <p class="p-body" style="margin-bottom: 24px; color: var(--c-grafite); max-width: 700px; margin-left: auto; margin-right: auto; font-style: italic;">
+                "É por isso que agência, freelancer e gestor continuam falhando — sempre no mesmo ponto."
+            </p>
+            <p class="p-body" style="margin-bottom: 40px; max-width: 650px; margin-left: auto; margin-right: auto; color: var(--text-main);">
+                Estrutura completa de funil de vendas implementada por quem gerenciou mais de <strong>R$ 200M</strong> em tráfego pago e atendeu <strong>+400 empresas</strong> em nichos, regiões e países diferentes.
+            </p>
+            <div class="hero-btns" style="display: flex; gap: 16px; justify-content: center; flex-direction: column; align-items: center;">
+                <a href="#diagnostico" class="btn btn-primary" style="padding: 20px 48px; font-size: 15px;">Agendar meu Diagnóstico</a>
+                <span class="p-small" style="color: var(--c-cinza-medio);">30 minutos. Sem compromisso. Previsibilidade estruturada.</span>
+            </div>
+        </section>
+
+        <!-- ABERTURA -->
+        <section class="ds-section" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 class="h2" style="margin-bottom: 32px;">O problema não foi quem você contratou.</h2>
+            <p class="p-body" style="margin-bottom: 24px;">Se você já contratou agência, tentou freelancer ou tentou montar tudo internamente — e o resultado continuou inconsistente —, o problema provavelmente não foi o profissional.</p>
+            <p class="p-body" style="margin-bottom: 24px;">O problema foi que <strong>nenhum deles montou a estrutura que precisava existir antes de qualquer campanha rodar</strong>. Você terceirizou a operação, mas a fundação nunca foi construída.</p>
+            <p class="p-body" style="margin-bottom: 24px;">Sem funil estruturado, qualquer gestor — bom ou ruim — vai travar no mesmo ponto. Porque <em>tráfego jogado numa estrutura quebrada é só custo. Não é escala.</em></p>
+            <p class="p-body" style="margin-bottom: 60px;">A questão não é "qual agência contratar agora". É: <strong>quando você vai montar a base que faz o tráfego converter?</strong></p>
+        </section>
+
+        <!-- GRANDE IDEIA -->
+        <section class="ds-section dark-section" style="text-align: center; max-width: 900px; margin: 0 auto;">
+            <div class="label" style="color: var(--c-ouro); margin-bottom: 24px;">A Grande Verdade</div>
+            <h3 class="h3" style="color: var(--c-branco); margin-bottom: 32px; font-size: 32px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Terceirizar o marketing sem ter um funil próprio é o mesmo que alugar a fundação da sua empresa.
+            </h3>
+            <p class="p-body" style="color: var(--c-cinza-claro); margin-bottom: 24px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Quando o fornecedor vai embora, vai tudo junto. O histórico de campanhas, a estrutura de páginas, os fluxos de follow-up, o aprendizado acumulado. E você começa do zero de novo — com outra agência, no mesmo ciclo.
+            </p>
+            <p class="p-body" style="color: var(--c-ouro); font-weight: 600;">A implementação existe para acabar com isso de vez.</p>
+        </section>
+
+        <!-- INDICADORES -->
+        <section class="ds-section" style="border-bottom: 1px solid var(--c-cinza-claro); padding-bottom: 100px;">
+            <div class="grid-3" style="text-align: center; gap: 40px;">
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">+R$ 200M</div>
+                    <div class="label" style="color: var(--c-grafite); margin-bottom: 12px;">Gerenciados em tráfego pago</div>
+                    <p class="p-small">Meta · Google · LinkedIn · TikTok · Pinterest · Bing</p>
+                </div>
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">+400</div>
+                    <div class="label" style="color: var(--c-grafite); margin-bottom: 12px;">Projetos Estruturados</div>
+                    <p class="p-small">Em nichos, segmentos, regiões e países diferentes.</p>
+                </div>
+                <div>
+                    <div class="h2" style="color: var(--c-ouro); margin-bottom: 8px;">8+</div>
+                    <div class="label" style="color: var(--c-grafite); margin-bottom: 12px;">Anos Operando</div>
+                    <p class="p-small">Tudo executado e testado no campo de batalha — não em teoria.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- O QUE VOCÊ RECEBE NA CALL -->
+        <section class="ds-section">
+            <div class="ds-section-title">A Consultoria Inicial</div>
+            <h2 class="h2" style="margin-bottom: 60px;">O que você recebe na call de diagnóstico de 30 minutos</h2>
+            
+            <div class="grid-2">
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">1. O que está travando o seu digital hoje</h3>
+                    <p class="p-body" style="font-size: 15px;">Não uma análise genérica, mas um mapeamento específico do seu cenário: onde está o gargalo real entre tráfego, funil e gestão.</p>
+                </div>
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">2. O que precisa ser feito primeiro</h3>
+                    <p class="p-body" style="font-size: 15px;">Prioridade clara para mudar o resultado, independente de você continuar com a implementação ou não a partir dali.</p>
+                </div>
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">3. Por que todos falharam com você</h3>
+                    <p class="p-body" style="font-size: 15px;">Por que agência e freelancer falharam no seu caso e o que é estruturalmente diferente numa implementação completa.</p>
+                </div>
+                <div class="motion-card">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">4. Se a implementação faz sentido</h3>
+                    <p class="p-body" style="font-size: 15px;">Visão clara se a implementação é para o momento da sua empresa, sem pressão de fechamento, com clareza para você decidir.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CASES -->
+        <section class="ds-section" style="background-color: var(--c-cinza-claro); margin-left: -24px; margin-right: -24px; padding: 100px 24px; border-radius: var(--radius-lg);">
+            <div class="ds-container" style="padding: 0;">
+                <div class="ds-section-title">Casos Reais</div>
+                <h2 class="h2" style="margin-bottom: 60px;">Empresas que deixaram de "alugar a fundação"</h2>
+                
+                <div class="grid-2">
+                    <div class="glass-card" style="background: var(--c-branco);">
+                        <div class="label" style="color: var(--c-ouro); margin-bottom: 12px;">PagCorp</div>
+                        <p class="p-small" style="margin-bottom: 24px;"><em>Situação: Investia R$ 200 mil/mês e havia desperdiçado +R$ 2 milhões com gestão descoordenada. Campanhas rodando sem estrutura para converter.</em></p>
+                        <div style="background: var(--c-cinza-claro); height: 1px; margin-bottom: 24px; width: 100%;"></div>
+                        <h3 class="h3" style="font-size: 18px; margin-bottom: 12px;">Após a implementação</h3>
+                        <p class="p-body" style="font-size: 15px;">Montou um time 100% interno, eliminou a dependência de agências e abriu canais de aquisição que antes nem existiam no radar.</p>
+                    </div>
+
+                    <div class="glass-card" style="background: var(--c-branco);">
+                        <div class="label" style="color: var(--c-ouro); margin-bottom: 12px;">Lucas Miguel — Treinador de Empresários</div>
+                        <p class="p-small" style="margin-bottom: 24px;"><em>Situação: Atendido por agências com tráfego rodando, mas vendas oscilando entre 5 e 10 por mês, sem previsibilidade.</em></p>
+                        <div style="background: var(--c-cinza-claro); height: 1px; margin-bottom: 24px; width: 100%;"></div>
+                        <h3 class="h3" style="font-size: 18px; margin-bottom: 12px;">Após a implementação</h3>
+                        <p class="p-body" style="font-size: 15px;">Chegou a 70 vendas mensais exclusivamente via tráfego pago, mantendo o <strong>mesmo investimento</strong> de antes. 7x mais resultado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="ds-section">
+            <div class="ds-section-title">Dúvidas Frequentes</div>
+            <h2 class="h2" style="margin-bottom: 60px;">FAQ</h2>
+            
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div style="margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--c-cinza-claro);">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">Já tive agência e não funcionou. Por que seria diferente?</h3>
+                    <p class="p-body" style="font-size: 16px;">Faz sentido ter essa dúvida — e a experiência provavelmente foi frustrante de verdade. Mas o problema raramente é a agência em si. É que ninguém montou a estrutura que deveria existir antes de qualquer campanha rodar. A agência chegou e encontrou uma fundação inexistente. A implementação resolve exatamente isso: constrói a base primeiro. Aí qualquer executor performa.</p>
+                </div>
+                
+                <div style="margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--c-cinza-claro);">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">Quanto custa? Não tenho orçamento agora.</h3>
+                    <p class="p-body" style="font-size: 16px;">Entendo. Mas considere o que você já gasta todo mês sem retorno consistente — agência, freelancer, tráfego que não converte. O custo de não resolver esse problema é recorrente e crescente. A call de diagnóstico existe justamente para mapear isso com clareza antes de qualquer conversa de investimento. Você sai sabendo os números — aí a decisão fica óbvia.</p>
+                </div>
+                
+                <div style="margin-bottom: 0;">
+                    <h3 class="h3" style="margin-bottom: 16px; font-size: 22px;">Funciona para o meu nicho / segmento?</h3>
+                    <p class="p-body" style="font-size: 16px;">Foram +400 empresas atendidas: e-commerce, B2B, infoproduto, prestador de serviço, coach, clínica, SaaS, mercado local. A estrutura do funil é agnóstica de nicho. O que muda de empresa para empresa é o processo de compra do cliente — e é exatamente isso que a implementação mapeia e adapta no início do projeto.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section id="diagnostico" class="ds-section" style="text-align: center; max-width: 800px; margin: 0 auto; padding-top: 40px; padding-bottom: 40px;">
+            <h2 class="h1" style="margin-bottom: 24px;">Pronto para deixar de alugar sua fundação?</h2>
+            <p class="p-body" style="margin-bottom: 40px;">30 minutos. Sem compromisso. Você sai com clareza sobre o que está travando o seu digital e qual é o próximo passo — independente de continuar ou não.</p>
+            <a href="https://wa.me/" target="_blank" class="btn btn-primary" style="font-size: 16px; padding: 20px 48px;">Agendar meu Diagnóstico</a>
+        </section>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer style="border-top: 1px solid var(--c-cinza-claro); padding: 60px 24px; text-align: center; background-color: var(--c-branco);">
+        <div style="margin-bottom: 32px;">
+            <span class="h3" style="font-size: 24px;">Mateus Rucci</span>
+            <p class="p-small" style="margin-top: 8px;">— Estratégia, Tráfego e Funil.</p>
+        </div>
+        
+        <div style="margin-bottom: 32px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;">
+            <a href="../index.html#home" class="label" style="text-decoration: none; color: var(--c-grafite);">Home</a>
+            <a href="../index.html#solucoes" class="label" style="text-decoration: none; color: var(--c-grafite);">Soluções</a>
+            <a href="../index.html#blog" class="label" style="text-decoration: none; color: var(--c-grafite);">Blog</a>
+            <a href="#diagnostico" class="label" style="text-decoration: none; color: var(--c-grafite);">Contato</a>
+        </div>
+        
+        <div style="margin-bottom: 40px; display: flex; gap: 32px; justify-content: center;">
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-ouro);">[Instagram]</a>
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-ouro);">[LinkedIn]</a>
+            <a href="#" class="label" style="text-decoration: none; color: var(--c-ouro);">[WhatsApp]</a>
+        </div>
+
+        <p class="p-small" style="color: var(--c-cinza-medio);">© 2025 Mateus Rucci. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>
