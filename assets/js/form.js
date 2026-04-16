@@ -109,7 +109,7 @@
   }
 
   /* ── Supabase: insert simples ───────────────────────────────── */
-  function sbInsert(data, retryWithoutDdi) {
+  function sbInsert(data) {
     return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads', {
       method: 'POST',
       headers: {
@@ -124,12 +124,6 @@
       if (!r.ok) {
         return r.text().then(function(t) {
           console.error('[Diag] INSERT falhou (' + r.status + '):', t);
-          if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
-            var fallback = Object.assign({}, data);
-            delete fallback.ddi;
-            console.warn('[Diag] Tentando salvar novamente sem a coluna ddi.');
-            return sbInsert(fallback, false);
-          }
           return null;
         });
       }
@@ -140,7 +134,7 @@
   }
 
   /* ── Supabase: upsert por session_id ────────────────────────── */
-  function sbUpsert(data, retryWithoutDdi) {
+  function sbUpsert(data) {
     return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads?on_conflict=session_id', {
       method: 'POST',
       headers: {
@@ -157,13 +151,7 @@
           console.error('[Diag] UPSERT falhou (' + r.status + '):', t);
           if (t.indexOf('42P10') !== -1 || t.indexOf('no unique or exclusion constraint') !== -1) {
             console.warn('[Diag] session_id não é UNIQUE no Supabase. Fazendo fallback para INSERT.');
-            return sbInsert(data, retryWithoutDdi);
-          }
-          if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
-            var fallback = Object.assign({}, data);
-            delete fallback.ddi;
-            console.warn('[Diag] Tentando salvar novamente sem a coluna ddi.');
-            return sbUpsert(fallback, false);
+            return sbInsert(data);
           }
           return null;
         });
@@ -203,7 +191,6 @@
       instagram:          normalizedInstagram(),
       nome:               normalizedName(),
       email:              normalizedEmail(),
-      ddi:                normalizedDdi(),
       telefone:           normalizedPhone(),
       lead_score:         calcScore(),
       etapa_atual:        step || state.currentStep,
