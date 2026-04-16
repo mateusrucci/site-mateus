@@ -1,0 +1,13 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/mate3251/public_html/
+    - /bin/cp -f  index-home.html   $DEPLOYPATH
+    - /bin/cp -f  index.html        $DEPLOYPATH
+    - /bin/cp -f  tracking.js       $DEPLOYPATH
+    - /bin/cp -f  api-tracking.php  $DEPLOYPATH
+    - /bin/cp -rf assets/           $DEPLOYPATH
+    - /bin/cp -rf consultoria/      $DEPLOYPATH
+    - /bin/cp -rf mentoria/         $DEPLOYPATH
+    - /bin/cp -rf implementaca-de-funis/                    $DEPLOYPATH
+    - /bin/cp -rf implementacao-de-trafego-interno/         $DEPLOYPATH
