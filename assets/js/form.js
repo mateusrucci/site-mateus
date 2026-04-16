@@ -43,17 +43,27 @@
     pagina_origem:   window.location.href,
   };
 
-  /* ── Geo via IP (ip-api.com — gratuito, sem chave) ─────────── */
-  fetch('https://ip-api.com/json/?fields=city,regionName,country&lang=pt')
-    .then(function(r) { return r.json(); })
+  /* ── Geo via IP (HTTPS + CORS, sem chave) ───────────────────── */
+  var geoReady = fetch('https://ipwho.is/?fields=success,city,region,country')
+    .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(d) {
+      if (!d || d.success === false) return;
       state.geo = {
-        cidade: d.city       || '',
-        estado: d.regionName || '',
-        pais:   d.country    || '',
+        cidade: d.city    || '',
+        estado: d.region  || '',
+        pais:   d.country || '',
       };
     })
-    .catch(function() {});
+    .catch(function(e) {
+      console.warn('[Diag] Geo falhou:', e);
+    });
+
+  function waitForGeo() {
+    return Promise.race([
+      geoReady,
+      new Promise(function(resolve) { setTimeout(resolve, 1200); }),
+    ]);
+  }
 
   /* ── Data/hora Brasil (UTC-3) ───────────────────────────────── */
   function nowBRT() {
@@ -168,8 +178,9 @@
 
   /* ── Salvar snapshot parcial ────────────────────────────────── */
   function savePartial(step) {
-    var payload = buildPayload(true, step);
-    return sbInsert(payload).then(function(id) {
+    return waitForGeo().then(function() {
+      return sbInsert(buildPayload(true, step));
+    }).then(function(id) {
       if (id) state.recordId = id;
       return id;
     });
@@ -192,7 +203,12 @@
     var payload = buildPayload(false, 5);
     payload.data_envio = nowBRT();
 
-    return sbInsert(payload)
+    return waitForGeo()
+      .then(function() {
+        payload = buildPayload(false, 5);
+        payload.data_envio = nowBRT();
+        return sbInsert(payload);
+      })
       .then(function(id) {
         if (!id) throw new Error('Falha ao salvar lead final no Supabase.');
         return sendSheets(payload);
