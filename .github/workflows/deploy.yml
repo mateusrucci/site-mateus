@@ -14,22 +14,28 @@ jobs:
       - name: Checkout do repositório
         uses: actions/checkout@v4
 
-      - name: Deploy via FTPS para HostGator
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server:           162.241.203.171
-          username:         mate3251
-          password:         ${{ secrets.FTP_PASSWORD }}
-          protocol:         ftps
-          port:             21
-          server-dir:       public_html/
-          local-dir:        ./
-          dangerous-clean-slate: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.DS_Store
-            **/Fotos Retratista/**
-            **/FOTOS LUCIANO FERNANDES/**
-            **/FOTOS CLIENTES/**
+      - name: Deploy via lftp para HostGator
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get install -y lftp -q
+          lftp -u "mate3251,$FTP_PASSWORD" ftp://162.241.203.171 <<'LFTP_SCRIPT'
+            set ftp:ssl-allow true
+            set ftp:passive-mode true
+            set net:timeout 30
+            set net:max-retries 3
+            mirror \
+              --reverse \
+              --parallel=4 \
+              --verbose \
+              --ignore-time \
+              --exclude-glob .git* \
+              --exclude-glob .github* \
+              --exclude-glob .DS_Store \
+              --exclude-glob node_modules/ \
+              --exclude-glob "Fotos Retratista/" \
+              --exclude-glob "FOTOS LUCIANO FERNANDES/" \
+              --exclude-glob "FOTOS CLIENTES/" \
+              . /public_html/
+            quit
+          LFTP_SCRIPT
