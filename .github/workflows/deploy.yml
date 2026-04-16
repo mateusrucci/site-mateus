@@ -41,3 +41,8 @@ jobs:
           curl -s --fail \
             -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
             "https://mateusrucci.com.br:2083/execute/UserTasks/retrieve"
+          echo
+          echo "=== Domain document root ==="
+          curl -s --fail \
+            -H "Authorization: cpanel mate3251:$CPANEL_API_TOKEN" \
+            "https://mateusrucci.com.br:2083/execute/DomainInfo/single_domain_data?domain=mateusrucci.com.br"
