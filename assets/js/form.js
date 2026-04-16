@@ -104,7 +104,7 @@
         'Content-Type':  'application/json',
         'apikey':         SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer':         'return=representation',
+        'Prefer':         'return=minimal',
       },
       body: JSON.stringify(data),
     })
@@ -115,11 +115,8 @@
           return null;
         });
       }
-      return r.json().then(function(j) {
-        var id = (Array.isArray(j) && j[0]) ? j[0].id : null;
-        console.log('[Diag] INSERT ok — id:', id);
-        return id;
-      });
+      console.log('[Diag] INSERT ok — session:', data.session_id);
+      return data.session_id;
     })
     .catch(function(e) { console.error('[Diag] INSERT erro de rede:', e); return null; });
   }
@@ -187,24 +184,40 @@
   }
 
   /* ── Salvar parcial ─────────────────────────────────────────── */
-  var insertAttempted = false; // evita loop de retry em caso de falha no insert
+  var insertPromise = null;
+
+  function ensureRecord(payload) {
+    if (state.recordId) return Promise.resolve(state.recordId);
+    if (!insertPromise) {
+      insertPromise = sbInsert(payload).then(function(id) {
+        state.recordId = id;
+        insertPromise = null;
+        if (!id) {
+          console.warn('[Diag] Insert não confirmou gravação — nova tentativa será feita no próximo salvamento.');
+        }
+        return id;
+      });
+    }
+    return insertPromise;
+  }
 
   function savePartial(step) {
     var payload = buildPayload(true, step);
     // Inclui telefone normalizado (DDI + dígitos) no registro do Supabase
     payload.telefone = normalizedPhone();
 
-    if (!state.recordId && !insertAttempted) {
-      insertAttempted = true;
-      return sbInsert(payload).then(function(id) {
-        state.recordId = id;
-        if (!id) console.warn('[Diag] Insert não retornou id — verifique RLS e estrutura da tabela.');
-      });
-    }
-    if (state.recordId) {
+    return ensureRecord(payload).then(function(id) {
+      if (!id) return null;
       return sbPatch(payload);
-    }
-    return Promise.resolve(); // insert falhou antes, não tenta mais
+    });
+  }
+
+  function debounce(fn, delay) {
+    var timer = null;
+    return function() {
+      clearTimeout(timer);
+      timer = setTimeout(fn, delay);
+    };
   }
 
   /* ── Submit final ───────────────────────────────────────────── */
@@ -214,9 +227,13 @@
 
     var score = calcScore();
     var payload = buildPayload(false, 5);
+    payload.telefone = normalizedPhone();
     payload.data_envio = nowBRT();
 
-    return Promise.all([sbPatch(payload), sendSheets(payload)])
+    return savePartial(5)
+      .then(function() {
+        return Promise.all([sbPatch(payload), sendSheets(payload)]);
+      })
       .then(function() {
         // GTM dataLayer
         gtm('form_complete', {
@@ -519,6 +536,7 @@
         var telEl = document.getElementById('telefoneInput');
         if (telEl) telEl.placeholder = phonePlaceholders[ddiEl.value] || 'Número';
         validateBtn(5);
+        if (state.started && state.currentStep === 5) saveContactPartial();
       });
     }
 
@@ -530,6 +548,7 @@
         var map = { nomeInput: 'nome', emailInput: 'email', telefoneInput: 'telefone' };
         state.answers[map[id]] = el.value;
         validateBtn(5);
+        if (state.started) saveContactPartial();
       });
     });
 
@@ -557,6 +576,10 @@
       });
     });
   }
+
+  var saveContactPartial = debounce(function() {
+    if (state.started && state.currentStep === 5) savePartial(5);
+  }, 700);
 
   /* Aguarda DOM pronto */
   if (document.readyState === 'loading') {
