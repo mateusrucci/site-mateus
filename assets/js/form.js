@@ -95,6 +95,7 @@
         estado: result.geo.estado || '',
         pais:   result.geo.pais || '',
       };
+      window.__diagGeo = state.geo;
     })
     .catch(function(e) {
       console.warn('[Diag] Geo server-side falhou:', e);
@@ -270,6 +271,9 @@
               content_name:       'Diagnostico Personalizado',
               lead_score:          score,
               valor_investimento:  state.answers.valor_investimento,
+              cidade:              state.geo.cidade || '',
+              estado:              state.geo.estado || '',
+              pais:                state.geo.pais || '',
             },
             {
               email:       normalizedEmail(),

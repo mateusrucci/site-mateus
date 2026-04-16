@@ -6,6 +6,7 @@
 
 const Tracker = {
     endpoint: './api-tracking.php',
+    geoEndpoint: './api-diagnostico.php',
 
     /* ── Cookie helper ──────────────────────────────────────────── */
     getCookie: function (name) {
@@ -52,6 +53,21 @@ const Tracker = {
     normalizePhone: function (phone) {
         const digits = String(phone || '').replace(/\D/g, '');
         return digits || null;
+    },
+
+    getGeo: function () {
+        if (window.__diagGeo) {
+            return Promise.resolve(window.__diagGeo);
+        }
+
+        return fetch(this.geoEndpoint)
+            .then((r) => r.ok ? r.json() : null)
+            .then((result) => {
+                const geo = (result && result.geo) ? result.geo : {};
+                window.__diagGeo = geo;
+                return geo;
+            })
+            .catch(() => ({}));
     },
 
     /* ── Disparo principal ───────────────────────────────────────── */
@@ -102,5 +118,11 @@ const Tracker = {
 
 // PageView ao carregar (com eventID — deduplicado com o Pixel)
 document.addEventListener('DOMContentLoaded', () => {
-    Tracker.track('PageView');
+    Tracker.getGeo().then((geo) => {
+        Tracker.track('PageView', {
+            cidade: geo.cidade || '',
+            estado: geo.estado || '',
+            pais: geo.pais || '',
+        });
+    });
 });
