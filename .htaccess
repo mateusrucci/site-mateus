@@ -1,0 +1,25 @@
+# ============================================================
+#  Cache Control — mateusrucci.com.br
+# ============================================================
+
+# HTML: sem cache (sempre busca a versão mais recente)
+<FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</FilesMatch>
+
+# JS e CSS: cache de 7 dias (renova quando o arquivo muda via versionamento)
+<FilesMatch "\.(js|css)$">
+    Header set Cache-Control "public, max-age=604800, must-revalidate"
+</FilesMatch>
+
+# Imagens e fontes: cache de 30 dias
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf)$">
+    Header set Cache-Control "public, max-age=2592000"
+</FilesMatch>
+
+# PHP: sem cache
+<FilesMatch "\.php$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+</FilesMatch>
