@@ -14,16 +14,16 @@ jobs:
       - name: Checkout do repositório
         uses: actions/checkout@v4
 
-      - name: Deploy via FTP para HostGator
+      - name: Deploy via FTPS para HostGator
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server:           ftp.mateusrucci.com.br
+          server:           162.241.203.171
           username:         mate3251
           password:         ${{ secrets.FTP_PASSWORD }}
-          server-dir:       /public_html/
+          protocol:         ftps
+          port:             21
+          server-dir:       public_html/
           local-dir:        ./
-          # Não apaga arquivos que existam no servidor mas não no repo
-          # (protege uploads manuais como hero.jpg)
           dangerous-clean-slate: false
           exclude: |
             **/.git*
