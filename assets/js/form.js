@@ -97,7 +97,7 @@
   function prevStep()   { var s = sequence(); return s[stepIndex() - 1] !== undefined ? s[stepIndex() - 1] : null; }
 
   /* ── Supabase: insert (cria registro) ───────────────────────── */
-  function sbInsert(data) {
+  function sbInsert(data, retryWithoutDdi) {
     return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads', {
       method: 'POST',
       headers: {
@@ -112,6 +112,12 @@
       if (!r.ok) {
         return r.text().then(function(t) {
           console.error('[Diag] INSERT falhou (' + r.status + '):', t);
+          if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
+            var fallback = Object.assign({}, data);
+            delete fallback.ddi;
+            console.warn('[Diag] Tentando salvar novamente sem a coluna ddi.');
+            return sbInsert(fallback, false);
+          }
           return null;
         });
       }
@@ -119,30 +125,6 @@
       return data.session_id;
     })
     .catch(function(e) { console.error('[Diag] INSERT erro de rede:', e); return null; });
-  }
-
-  /* ── Supabase: patch (atualiza pelo session_id) ─────────────── */
-  function sbPatch(data) {
-    if (!state.sessionId) return Promise.resolve();
-    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads?session_id=eq.' + state.sessionId, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type':  'application/json',
-        'apikey':         SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer':         'return=minimal',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(function(r) {
-      if (!r.ok) {
-        return r.text().then(function(t) {
-          console.error('[Diag] PATCH falhou (' + r.status + '):', t);
-        });
-      }
-      console.log('[Diag] PATCH ok — step', data.etapa_atual);
-    })
-    .catch(function(e) { console.error('[Diag] PATCH erro de rede:', e); });
   }
 
   /* ── Google Sheets webhook ──────────────────────────────────── */
@@ -171,11 +153,11 @@
       investe_trafego:    state.answers.investe_trafego,
       valor_investimento: state.answers.valor_investimento,
       problemas:          state.answers.problemas,
-      instagram:          state.answers.instagram,
-      nome:               state.answers.nome,
-      email:              state.answers.email,
-      ddi:                state.answers.ddi,
-      telefone:           state.answers.telefone,
+      instagram:          normalizedInstagram(),
+      nome:               normalizedName(),
+      email:              normalizedEmail(),
+      ddi:                normalizedDdi(),
+      telefone:           normalizedPhone(),
       lead_score:         calcScore(),
       etapa_atual:        step || state.currentStep,
       parcial:            partial,
@@ -184,32 +166,12 @@
     return base;
   }
 
-  /* ── Salvar parcial ─────────────────────────────────────────── */
-  var insertPromise = null;
-
-  function ensureRecord(payload) {
-    if (state.recordId) return Promise.resolve(state.recordId);
-    if (!insertPromise) {
-      insertPromise = sbInsert(payload).then(function(id) {
-        state.recordId = id;
-        insertPromise = null;
-        if (!id) {
-          console.warn('[Diag] Insert não confirmou gravação — nova tentativa será feita no próximo salvamento.');
-        }
-        return id;
-      });
-    }
-    return insertPromise;
-  }
-
+  /* ── Salvar snapshot parcial ────────────────────────────────── */
   function savePartial(step) {
     var payload = buildPayload(true, step);
-    // Inclui telefone normalizado (DDI + dígitos) no registro do Supabase
-    payload.telefone = normalizedPhone();
-
-    return ensureRecord(payload).then(function(id) {
-      if (!id) return null;
-      return sbPatch(payload);
+    return sbInsert(payload).then(function(id) {
+      if (id) state.recordId = id;
+      return id;
     });
   }
 
@@ -228,30 +190,31 @@
 
     var score = calcScore();
     var payload = buildPayload(false, 5);
-    payload.telefone = normalizedPhone();
     payload.data_envio = nowBRT();
 
-    return savePartial(5)
-      .then(function() {
-        return Promise.all([sbPatch(payload), sendSheets(payload)]);
+    return sbInsert(payload)
+      .then(function(id) {
+        if (!id) throw new Error('Falha ao salvar lead final no Supabase.');
+        return sendSheets(payload);
       })
       .then(function() {
         // GTM dataLayer
         gtm('form_complete', {
           lead_score:          score,
-          nome:                state.answers.nome,
-          email:               state.answers.email,
-          ddi:                 state.answers.ddi,
-          telefone:            state.answers.telefone,
+          nome:                normalizedName(),
+          email:               normalizedEmail(),
+          ddi:                 normalizedDdi(),
+          telefone:            normalizedPhone(),
+          telefone_local:      localPhoneDigits(),
           investe_trafego:     state.answers.investe_trafego,
           valor_investimento:  state.answers.valor_investimento,
           problemas:           state.answers.problemas.join(' | '),
-          instagram:           state.answers.instagram,
+          instagram:           normalizedInstagram(),
         });
 
         // Meta CAPI — evento Lead com todos os dados normalizados (E.164 sem +)
         if (typeof Tracker !== 'undefined') {
-          var nameParts = state.answers.nome.trim().split(' ');
+          var nameParts = normalizedName().split(' ');
           Tracker.track(
             'Lead',
             {
@@ -260,7 +223,7 @@
               valor_investimento:  state.answers.valor_investimento,
             },
             {
-              email:       state.answers.email,
+              email:       normalizedEmail(),
               phone:       normalizedPhone(),   // ex: "5511999999999"
               fn:          nameParts[0] || '',
               ln:          nameParts.slice(1).join(' ') || '',
@@ -270,6 +233,14 @@
         }
 
         showThanks(score);
+      })
+      .catch(function(e) {
+        console.error('[Diag] Submit final falhou:', e);
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Enviar →';
+        }
+        alert('Não consegui enviar agora. Tente novamente em alguns segundos.');
       });
   }
 
@@ -317,10 +288,34 @@
 
   /* ── Normalização do telefone (E.164 sem o +) ──────────────── */
   // Resultado: "5511999999999" — formato exigido pelo Meta Pixel
+  function onlyDigits(value) {
+    return String(value || '').replace(/\D/g, '');
+  }
+
+  function normalizedDdi() {
+    return onlyDigits(state.answers.ddi) || '55';
+  }
+
+  function localPhoneDigits() {
+    return onlyDigits(state.answers.telefone);
+  }
+
   function normalizedPhone() {
-    var ddi = state.answers.ddi || '55';
-    var digits = state.answers.telefone.replace(/\D/g, '');
-    return ddi + digits;
+    var digits = localPhoneDigits();
+    if (!digits) return '';
+    return normalizedDdi() + digits;
+  }
+
+  function normalizedEmail() {
+    return state.answers.email.trim().toLowerCase();
+  }
+
+  function normalizedName() {
+    return state.answers.nome.trim().replace(/\s+/g, ' ');
+  }
+
+  function normalizedInstagram() {
+    return state.answers.instagram.trim();
   }
 
   /* ── Cal.com lazy init (só carrega para leads qualificados) ─── */
@@ -403,8 +398,8 @@
     else if (step === 3) ok = a.problemas.length > 0;
     else if (step === 4) ok = a.instagram.trim().length > 1;
     else if (step === 5) {
-      var tel = a.telefone.replace(/\D/g, '');
-      ok = !!(a.nome.trim() && a.email.indexOf('@') > 0 && tel.length >= 8);
+      var tel = localPhoneDigits();
+      ok = !!(normalizedName() && normalizedEmail().indexOf('@') > 0 && tel.length >= 8);
     }
     btn.disabled = !ok;
   }

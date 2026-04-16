@@ -45,6 +45,15 @@ const Tracker = {
         return null;
     },
 
+    normalizeEmail: function (email) {
+        return String(email || '').trim().toLowerCase() || null;
+    },
+
+    normalizePhone: function (phone) {
+        const digits = String(phone || '').replace(/\D/g, '');
+        return digits || null;
+    },
+
     /* ── Disparo principal ───────────────────────────────────────── */
     /**
      * @param {string} eventName  Ex: 'PageView', 'Lead', 'CompleteRegistration'
@@ -70,8 +79,8 @@ const Tracker = {
             fbp:         this.getCookie('_fbp') || null,
             fbc:         this.getFbc(),
             external_id: userData.external_id || this.getExternalId(),
-            email:       userData.email  || null,
-            phone:       userData.phone  || null,   // já com 55 se vier do form
+            email:       this.normalizeEmail(userData.email),
+            phone:       this.normalizePhone(userData.phone),   // E.164 sem + quando vier do form
             fn:          userData.fn     || null,   // primeiro nome
             ln:          userData.ln     || null,   // sobrenome
             custom_data: customData,
