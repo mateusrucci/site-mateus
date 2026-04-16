@@ -595,6 +595,114 @@
             text-align: center;
         }
 
+        /* ─── CAROUSEL ────────────────────────────────────────────────── */
+        .cases-carousel-wrap {
+            position: relative;
+            margin-bottom: 48px;
+        }
+
+        .cases-carousel {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 8px 4px 20px;
+        }
+
+        .cases-carousel::-webkit-scrollbar { display: none; }
+
+        .cases-carousel .case-card {
+            flex: 0 0 calc(33.333% - 16px);
+            scroll-snap-align: start;
+            min-width: 260px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 45%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background: var(--branco);
+            border: 1.5px solid var(--cinza-claro);
+            box-shadow: var(--shadow-md);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 22px;
+            color: var(--azul);
+            transition: all .2s;
+            line-height: 1;
+        }
+
+        .carousel-btn:hover {
+            background: var(--azul);
+            color: var(--branco);
+            border-color: var(--azul);
+        }
+
+        .carousel-btn:disabled {
+            opacity: .35;
+            cursor: default;
+        }
+
+        .carousel-prev { left: -22px; }
+        .carousel-next { right: -22px; }
+
+        .carousel-counter {
+            text-align: center;
+            font-size: 12px;
+            color: var(--cinza-medio);
+            margin-top: 8px;
+            letter-spacing: .05em;
+        }
+
+        /* ─── CASE LOGO ───────────────────────────────────────────────── */
+        .case-logo-wrap {
+            width: 52px;
+            height: 52px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f7;
+            border: 1px solid var(--cinza-claro);
+            flex-shrink: 0;
+        }
+
+        .case-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 7px;
+        }
+
+        .case-logo-fallback {
+            width: 100%;
+            height: 100%;
+            background: var(--azul);
+            color: #fff;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: .04em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .case-logo-fallback.person {
+            background: var(--ouro);
+            color: var(--preto);
+        }
+
         /* ─── PROBLEMS ────────────────────────────────────────────────── */
         .problems {
             background: var(--branco);
@@ -1327,9 +1435,12 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .case-grid {
-                grid-template-columns: 1fr;
+            .cases-carousel .case-card {
+                flex: 0 0 calc(50% - 12px);
             }
+
+            .carousel-prev { left: -12px; }
+            .carousel-next { right: -12px; }
 
             .footer-inner {
                 grid-template-columns: 1fr 1fr;
@@ -1337,6 +1448,19 @@
         }
 
         @media (max-width: 720px) {
+            .cases-carousel .case-card {
+                flex: 0 0 85%;
+            }
+
+            .carousel-prev { left: -8px; }
+            .carousel-next { right: -8px; }
+
+            .carousel-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+
             .section {
                 padding: 72px 0;
             }
@@ -1525,45 +1649,199 @@
                     </h2>
                 </div>
 
-                <div class="case-grid">
-                    <!-- Case 1 -->
-                    <div class="case-card reveal reveal-delay-1">
-                        <div class="case-client">PagCorp</div>
-                        <p class="case-before">
-                            Investia R$ 200 mil por mês em tráfego com toda a operação nas mãos de terceiros. Mais de R$
-                            2 milhões desperdiçados sem controle real do que estava funcionando.
-                        </p>
-                        <div class="case-after-label">Com a estrutura implementada</div>
-                        <p class="case-after">
-                            Montou um time 100% interno, eliminou a dependência de agências e abriu canais de aquisição
-                            que antes nem existiam no radar.
-                        </p>
-                        <div class="case-result">
-                            De operação terceirizada e descoordenada para autonomia total — com o mesmo orçamento de
-                            antes.
-                        </div>
-                    </div>
+                <div class="cases-carousel-wrap reveal">
+                    <button class="carousel-btn carousel-prev" aria-label="Anterior">&#8249;</button>
 
-                    <!-- Case 2 -->
-                    <div class="case-card reveal reveal-delay-2">
-                        <div class="case-client">Lucas Miguel — Treinador de Empresários</div>
-                        <p class="case-before">
-                            Tinha agência operando, tráfego rodando, budget disponível. Mas as vendas oscilavam entre 5
-                            e 10 por mês, sem nenhuma previsibilidade — e sem saber por quê.
-                        </p>
-                        <div class="case-after-label">Com a estrutura interna implementada</div>
-                        <p class="case-after">
-                            Chegou a <strong style="color: var(--azul);">70 vendas por mês</strong> exclusivamente via
-                            tráfego pago. Mesmo investimento de antes.
-                        </p>
-                        <div class="case-result">
-                            <strong>7x mais resultado.</strong> Sem aumentar o orçamento — apenas com estrutura e
-                            processo.
-                        </div>
-                    </div>
-                </div>
+                    <div class="cases-carousel">
 
-                <div class="cases-cta reveal">
+                        <!-- 1. PagCorp -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/pagcorp.com.br" alt="PagCorp"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">PC</div>
+                            </div>
+                            <div class="case-client">PagCorp</div>
+                            <p class="case-before">
+                                Investia R$200 mil/mês com toda a operação nas mãos de terceiros. Sem controle real do que estava funcionando.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Montou um time 100% interno, eliminou a dependência de agências e abriu canais de aquisição que antes nem existiam no radar.
+                            </p>
+                            <div class="case-result">De operação terceirizada para autonomia total — com o mesmo orçamento.</div>
+                        </div>
+
+                        <!-- 2. Lucas Miguel / Acelerador Empresarial -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/lucasmiguell.com.br" alt="Lucas Miguel"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback person" style="display:none">LM</div>
+                            </div>
+                            <div class="case-client">Lucas Miguel — Acelerador Empresarial</div>
+                            <p class="case-before">
+                                Havia atingido um teto com o investimento que estava fazendo — precisava escalar mas não conseguia.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Implementou diversos funis que trouxeram demanda qualificada: palestras pagas em diferentes cidades, iscas digitais e novos canais de aquisição.
+                            </p>
+                            <div class="case-result">Conseguiu investir mais, melhorar os resultados e implementar novos canais.</div>
+                        </div>
+
+                        <!-- 3. IBC Coaching -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/ibccoaching.com.br" alt="IBC Coaching"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">IBC</div>
+                            </div>
+                            <div class="case-client">IBC Coaching</div>
+                            <p class="case-before">
+                                Investia R$500.000/mês com custo médio de lead a R$50,00.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Conseguimos o mesmo volume de leads com uma economia de R$200.000 por mês.
+                            </p>
+                            <div class="case-result">Não só otimizamos o investimento — como também melhoramos a qualidade do lead.</div>
+                        </div>
+
+                        <!-- 4. Loovi Seguros -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/loovi.com.br" alt="Loovi"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">LV</div>
+                            </div>
+                            <div class="case-client">Loovi Seguros</div>
+                            <p class="case-before">
+                                Investia R$50.000/mês com ROAS 1.5 — sem espaço para escalar com segurança.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                3 meses depois: R$400.000/mês investidos com ROAS 1.7.
+                            </p>
+                            <div class="case-result">8x mais verba investida com rentabilidade melhorada — a partir de decisões assertivas.</div>
+                        </div>
+
+                        <!-- 5. Incorporação na Prática -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/incorporacaonapratica.com" alt="Incorporação na Prática"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">INP</div>
+                            </div>
+                            <div class="case-client">Incorporação na Prática</div>
+                            <p class="case-before">
+                                Agendamento médio a R$200,00 com investimento de R$30.000/mês.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Agendamento médio a R$80,00 com investimento de R$60.000/mês.
+                            </p>
+                            <div class="case-result">Custo por agendamento 60% menor mesmo dobrando o investimento.</div>
+                        </div>
+
+                        <!-- 6. Great Pages -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/greatpages.com.br" alt="Great Pages"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">GP</div>
+                            </div>
+                            <div class="case-client">Great Pages</div>
+                            <p class="case-before">
+                                Vinham em uma constante e não conseguiam destravar o crescimento.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Os 3 meses seguintes foram os 3 melhores meses da história da empresa.
+                            </p>
+                            <div class="case-result">Investimentos certos, na medida certa — economizando onde fazia sentido e potencializando onde havia margem.</div>
+                        </div>
+
+                        <!-- 7. EEMOVEL -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/eemovel.com.br" alt="EEMOVEL"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">EEM</div>
+                            </div>
+                            <div class="case-client">EEMOVEL</div>
+                            <p class="case-before">
+                                Tinham o objetivo de bater os recordes históricos da empresa.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Já no primeiro mês atingimos o melhor resultado da história da empresa.
+                            </p>
+                            <div class="case-result">Estratégias digitais e funis de prospecção bem geridos como diferencial decisivo.</div>
+                        </div>
+
+                        <!-- 8. Fazendas S.A -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/fazendassa.com" alt="Fazendas S.A"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">FSA</div>
+                            </div>
+                            <div class="case-client">Fazendas S.A</div>
+                            <p class="case-before">
+                                Meta de bater o recorde de cotas do período — um objetivo ambicioso sem estrutura para suportá-lo.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Planejamento de 6 meses executado com precisão — ao final, meta histórica de volume de cotas atingida.
+                            </p>
+                            <div class="case-result">Alocação correta de recursos e decisões assertivas como principais fatores.</div>
+                        </div>
+
+                        <!-- 9. Pablo Marçal -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/pablomarcal.com.br" alt="Pablo Marçal"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback person" style="display:none">PM</div>
+                            </div>
+                            <div class="case-client">Pablo Marçal</div>
+                            <p class="case-before">
+                                Maior escala de lançamentos do Brasil — operação de tráfego exigindo liderança técnica de alto nível.
+                            </p>
+                            <div class="case-after-label">Resultado</div>
+                            <p class="case-after">
+                                Responsável por liderar a equipe de tráfego em 6 dos 10 maiores lançamentos do Brasil da época.
+                            </p>
+                            <div class="case-result">6 dos 10 maiores lançamentos do Brasil — equipe liderada do zero.</div>
+                        </div>
+
+                        <!-- 10. Devzapp -->
+                        <div class="case-card">
+                            <div class="case-logo-wrap">
+                                <img class="case-logo" src="https://logo.clearbit.com/devzapp.com.br" alt="Devzapp"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <div class="case-logo-fallback" style="display:none">DZ</div>
+                            </div>
+                            <div class="case-client">Devzapp</div>
+                            <p class="case-before">
+                                Investiam R$30.000/mês sem clareza de como estavam sendo os resultados.
+                            </p>
+                            <div class="case-after-label">Com a nova estrutura</div>
+                            <p class="case-after">
+                                Passaram a investir R$110.000/mês com vendas mensuráveis, precisas e CAC dentro do desejado.
+                            </p>
+                            <div class="case-result">3.6x mais verba com resultado rastreável — trackeamento e alocação correta como pilares.</div>
+                        </div>
+
+                    </div><!-- /.cases-carousel -->
+
+                    <button class="carousel-btn carousel-next" aria-label="Próximo">&#8250;</button>
+                </div><!-- /.cases-carousel-wrap -->
+
+                <div class="carousel-counter" id="carouselCounter">1 — 3 de 10</div>
+
+                <div class="cases-cta reveal" style="margin-top:48px">
                     <a href="#diagnostico" class="btn btn-primary btn-lg" data-diag-open>
                         Quero o mesmo resultado → Agendar meu Diagnóstico
                     </a>
@@ -2044,6 +2322,63 @@
                     : 'none';
             }, { passive: true });
         })();
+    </script>
+
+    <!-- Carrossel de Cases -->
+    <script>
+    (function () {
+        var carousel  = document.querySelector('.cases-carousel');
+        var prevBtn   = document.querySelector('.carousel-prev');
+        var nextBtn   = document.querySelector('.carousel-next');
+        var counter   = document.getElementById('carouselCounter');
+        if (!carousel) return;
+
+        var cards = carousel.querySelectorAll('.case-card');
+        var total = cards.length;
+        var currentIdx = 0;
+
+        function visibleCount() {
+            return window.innerWidth > 960 ? 3 : window.innerWidth > 720 ? 2 : 1;
+        }
+
+        function maxIdx() {
+            return Math.max(0, total - visibleCount());
+        }
+
+        function scrollTo(idx) {
+            currentIdx = Math.max(0, Math.min(idx, maxIdx()));
+            var card = cards[currentIdx];
+            carousel.scrollTo({ left: card.offsetLeft - 4, behavior: 'smooth' });
+            updateUI();
+        }
+
+        function updateUI() {
+            var vis = visibleCount();
+            var last = Math.min(currentIdx + vis, total);
+            if (counter) counter.textContent = (currentIdx + 1) + ' — ' + last + ' de ' + total;
+            if (prevBtn) prevBtn.disabled = currentIdx === 0;
+            if (nextBtn) nextBtn.disabled = currentIdx >= maxIdx();
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', function () { scrollTo(currentIdx - 1); });
+        if (nextBtn) nextBtn.addEventListener('click', function () { scrollTo(currentIdx + 1); });
+
+        // Sync counter on manual scroll
+        carousel.addEventListener('scroll', function () {
+            if (!cards[0]) return;
+            var cardW = cards[0].offsetWidth + 24;
+            currentIdx = Math.round(carousel.scrollLeft / cardW);
+            updateUI();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft')  scrollTo(currentIdx - 1);
+            if (e.key === 'ArrowRight') scrollTo(currentIdx + 1);
+        });
+
+        updateUI();
+    })();
     </script>
 
     <!-- Server-Side Tracking Script -->
