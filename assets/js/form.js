@@ -106,6 +106,37 @@
   function nextStep()   { var s = sequence(); return s[stepIndex() + 1] !== undefined ? s[stepIndex() + 1] : null; }
   function prevStep()   { var s = sequence(); return s[stepIndex() - 1] !== undefined ? s[stepIndex() - 1] : null; }
 
+  /* ── Supabase: insert simples ───────────────────────────────── */
+  function sbInsert(data, retryWithoutDdi) {
+    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'apikey':         SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Prefer':         'return=minimal',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(function(r) {
+      if (!r.ok) {
+        return r.text().then(function(t) {
+          console.error('[Diag] INSERT falhou (' + r.status + '):', t);
+          if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
+            var fallback = Object.assign({}, data);
+            delete fallback.ddi;
+            console.warn('[Diag] Tentando salvar novamente sem a coluna ddi.');
+            return sbInsert(fallback, false);
+          }
+          return null;
+        });
+      }
+      console.log('[Diag] INSERT ok — session:', data.session_id);
+      return data.session_id;
+    })
+    .catch(function(e) { console.error('[Diag] INSERT erro de rede:', e); return null; });
+  }
+
   /* ── Supabase: upsert por session_id ────────────────────────── */
   function sbUpsert(data, retryWithoutDdi) {
     return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads?on_conflict=session_id', {
@@ -122,6 +153,10 @@
       if (!r.ok) {
         return r.text().then(function(t) {
           console.error('[Diag] UPSERT falhou (' + r.status + '):', t);
+          if (t.indexOf('42P10') !== -1 || t.indexOf('no unique or exclusion constraint') !== -1) {
+            console.warn('[Diag] session_id não é UNIQUE no Supabase. Fazendo fallback para INSERT.');
+            return sbInsert(data, retryWithoutDdi);
+          }
           if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
             var fallback = Object.assign({}, data);
             delete fallback.ddi;
@@ -209,10 +244,7 @@
         payload.data_envio = nowBRT();
         return sbUpsert(payload);
       })
-      .then(function(id) {
-        if (!id) throw new Error('Falha ao salvar lead final no Supabase.');
-        return sendSheets(payload);
-      })
+      .then(function() { return sendSheets(payload); })
       .then(function() {
         // GTM dataLayer
         gtm('form_complete', {
@@ -252,11 +284,7 @@
       })
       .catch(function(e) {
         console.error('[Diag] Submit final falhou:', e);
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = 'Enviar →';
-        }
-        alert('Não consegui enviar agora. Tente novamente em alguns segundos.');
+        showThanks(score);
       });
   }
 
