@@ -6,6 +6,7 @@ deployment:
     - /bin/cp -f  index.html        $DEPLOYPATH
     - /bin/cp -f  tracking.js       $DEPLOYPATH
     - /bin/cp -f  api-tracking.php  $DEPLOYPATH
+    - /bin/cp -f  api-diagnostico.php  $DEPLOYPATH
     - /bin/cp -rf assets/           $DEPLOYPATH
     - /bin/cp -rf consultoria/      $DEPLOYPATH
     - /bin/cp -rf mentoria/         $DEPLOYPATH

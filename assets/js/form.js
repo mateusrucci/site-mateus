@@ -6,8 +6,7 @@
   'use strict';
 
   /* ── Configurações ──────────────────────────────────────────── */
-  var SUPABASE_URL = 'https://mddfvarvwltbanbmzmao.supabase.co';
-  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1kZGZ2YXJ2d2x0YmFuYm16bWFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAxMzQ2MjgsImV4cCI6MjA4NTcxMDYyOH0.64m8Ey1P4jLvDpvnkhMBz9iBEG-UfpXVCNksf4X-TM4';
+  var DIAG_ENDPOINT = './api-diagnostico.php';
   var SHEETS_HOOK  = 'COLE_AQUI_O_WEBHOOK_DO_APPS_SCRIPT'; // substitua quando tiver
 
   /* ── State ──────────────────────────────────────────────────── */
@@ -42,28 +41,6 @@
     referral_source: document.referrer      || '',
     pagina_origem:   window.location.href,
   };
-
-  /* ── Geo via IP (HTTPS + CORS, sem chave) ───────────────────── */
-  var geoReady = fetch('https://ipwho.is/?fields=success,city,region,country')
-    .then(function(r) { return r.ok ? r.json() : null; })
-    .then(function(d) {
-      if (!d || d.success === false) return;
-      state.geo = {
-        cidade: d.city    || '',
-        estado: d.region  || '',
-        pais:   d.country || '',
-      };
-    })
-    .catch(function(e) {
-      console.warn('[Diag] Geo falhou:', e);
-    });
-
-  function waitForGeo() {
-    return Promise.race([
-      geoReady,
-      new Promise(function(resolve) { setTimeout(resolve, 1200); }),
-    ]);
-  }
 
   /* ── Data/hora Brasil (UTC-3) ───────────────────────────────── */
   function nowBRT() {
@@ -106,70 +83,33 @@
   function nextStep()   { var s = sequence(); return s[stepIndex() + 1] !== undefined ? s[stepIndex() + 1] : null; }
   function prevStep()   { var s = sequence(); return s[stepIndex() - 1] !== undefined ? s[stepIndex() - 1] : null; }
 
-  /* ── Supabase: insert simples ───────────────────────────────── */
-  function sbInsert(data, retryWithoutDdi) {
-    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads', {
+  /* ── Endpoint local do diagnóstico ──────────────────────────── */
+  function saveLead(data) {
+    return fetch(DIAG_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type':  'application/json',
-        'apikey':         SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer':         'return=minimal',
       },
       body: JSON.stringify(data),
     })
     .then(function(r) {
       if (!r.ok) {
         return r.text().then(function(t) {
-          console.error('[Diag] INSERT falhou (' + r.status + '):', t);
-          if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
-            var fallback = Object.assign({}, data);
-            delete fallback.ddi;
-            console.warn('[Diag] Tentando salvar novamente sem a coluna ddi.');
-            return sbInsert(fallback, false);
-          }
+          console.error('[Diag] Save endpoint falhou (' + r.status + '):', t);
           return null;
         });
       }
-      console.log('[Diag] INSERT ok — session:', data.session_id);
-      return data.session_id;
+      return r.json().then(function(result) {
+        if (result && result.geo) state.geo = result.geo;
+        if (result && result.status === 'success') {
+          console.log('[Diag] Save ok — session:', data.session_id);
+          return data.session_id;
+        }
+        console.error('[Diag] Save endpoint retornou erro:', result);
+        return null;
+      });
     })
-    .catch(function(e) { console.error('[Diag] INSERT erro de rede:', e); return null; });
-  }
-
-  /* ── Supabase: upsert por session_id ────────────────────────── */
-  function sbUpsert(data, retryWithoutDdi) {
-    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_leads?on_conflict=session_id', {
-      method: 'POST',
-      headers: {
-        'Content-Type':  'application/json',
-        'apikey':         SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer':         'resolution=merge-duplicates,return=minimal',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(function(r) {
-      if (!r.ok) {
-        return r.text().then(function(t) {
-          console.error('[Diag] UPSERT falhou (' + r.status + '):', t);
-          if (t.indexOf('42P10') !== -1 || t.indexOf('no unique or exclusion constraint') !== -1) {
-            console.warn('[Diag] session_id não é UNIQUE no Supabase. Fazendo fallback para INSERT.');
-            return sbInsert(data, retryWithoutDdi);
-          }
-          if (retryWithoutDdi !== false && t.indexOf('ddi') !== -1) {
-            var fallback = Object.assign({}, data);
-            delete fallback.ddi;
-            console.warn('[Diag] Tentando salvar novamente sem a coluna ddi.');
-            return sbUpsert(fallback, false);
-          }
-          return null;
-        });
-      }
-      console.log('[Diag] UPSERT ok — session:', data.session_id);
-      return data.session_id;
-    })
-    .catch(function(e) { console.error('[Diag] UPSERT erro de rede:', e); return null; });
+    .catch(function(e) { console.error('[Diag] Save endpoint erro de rede:', e); return null; });
   }
 
   /* ── Google Sheets webhook ──────────────────────────────────── */
@@ -213,9 +153,7 @@
 
   /* ── Salvar snapshot parcial ────────────────────────────────── */
   function savePartial(step) {
-    return waitForGeo().then(function() {
-      return sbUpsert(buildPayload(true, step));
-    }).then(function(id) {
+    return saveLead(buildPayload(true, step)).then(function(id) {
       if (id) state.recordId = id;
       return id;
     });
@@ -238,12 +176,7 @@
     var payload = buildPayload(false, 5);
     payload.data_envio = nowBRT();
 
-    return waitForGeo()
-      .then(function() {
-        payload = buildPayload(false, 5);
-        payload.data_envio = nowBRT();
-        return sbUpsert(payload);
-      })
+    return saveLead(payload)
       .then(function() { return sendSheets(payload); })
       .then(function() {
         // GTM dataLayer
