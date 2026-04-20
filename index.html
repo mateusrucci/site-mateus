@@ -345,68 +345,164 @@
             overflow: hidden;
             position: relative;
             border-bottom: 1px solid var(--cinza-claro);
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
         }
 
-        /* subtle radial warm on white */
+        /* Decorative layers — background art */
         .hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse 55% 70% at 85% 60%, rgba(26, 31, 61, .04) 0%, transparent 65%);
+            background:
+                radial-gradient(ellipse 45% 55% at 82% 28%, rgba(199, 161, 91, .12) 0%, transparent 60%),
+                radial-gradient(ellipse 55% 65% at 15% 85%, rgba(26, 31, 61, .05) 0%, transparent 60%);
             pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Subtle dot grid + gold decorative line */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(26, 31, 61, .06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, #000 0%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, #000 0%, transparent 75%);
+            pointer-events: none;
+            opacity: .55;
+            z-index: 0;
+        }
+
+        .hero-shapes {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: .65;
+            animation: floatShape 14s ease-in-out infinite;
+        }
+
+        .hero-shape.s1 {
+            width: 480px; height: 480px;
+            background: radial-gradient(circle, rgba(199, 161, 91, .22) 0%, transparent 70%);
+            top: -120px; right: -80px;
+        }
+
+        .hero-shape.s2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(26, 31, 61, .12) 0%, transparent 70%);
+            bottom: -120px; left: -60px;
+            animation-delay: -7s;
+        }
+
+        @keyframes floatShape {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50%      { transform: translate(30px, -25px) scale(1.08); }
+        }
+
+        .hero-gold-line {
+            position: absolute;
+            top: 50%;
+            right: 8%;
+            width: 140px;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+            transform: rotate(-30deg);
+            opacity: .5;
+            z-index: 0;
         }
 
         .hero-inner {
-            max-width: 1200px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 80px 32px 0;
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            align-items: flex-end;
-            gap: 72px;
+            padding: 60px 32px;
+            text-align: center;
             position: relative;
             z-index: 1;
         }
 
-        .hero-content {
-            padding-bottom: 100px;
-        }
+        .hero-content { width: 100%; }
 
         .hero-eyebrow {
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: .12em;
+            letter-spacing: .18em;
             color: var(--azul);
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 28px;
+            gap: 14px;
+            margin-bottom: 36px;
+            padding: 10px 20px;
+            background: rgba(199, 161, 91, .08);
+            border: 1px solid rgba(199, 161, 91, .28);
+            border-radius: 100px;
         }
 
         .hero-eyebrow::before {
             content: '';
-            width: 24px;
-            height: 1.5px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
             background: var(--ouro);
             display: inline-block;
+            box-shadow: 0 0 0 4px rgba(199, 161, 91, .15);
         }
 
         .hero h1 {
-            font-size: clamp(28px, 3.6vw, 46px);
-            line-height: 1.18;
-            letter-spacing: -.025em;
+            font-size: clamp(44px, 7vw, 92px);
+            line-height: .98;
+            letter-spacing: -.035em;
             color: var(--preto);
-            margin-bottom: 20px;
-            max-width: 560px;
+            margin-bottom: 28px;
+            font-weight: 800;
+        }
+
+        .hero h1 .gold-accent {
+            color: var(--ouro);
+            font-style: italic;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 .gold-accent::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            bottom: -2px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--ouro) 40%, var(--ouro) 60%, transparent);
+            opacity: .5;
+        }
+
+        .hero-sub1 {
+            font-size: clamp(18px, 2vw, 24px);
+            color: var(--azul);
+            line-height: 1.35;
+            letter-spacing: -.015em;
+            font-weight: 500;
+            margin: 0 auto 20px;
+            max-width: 680px;
         }
 
         .hero-tagline {
-            font-size: clamp(16px, 1.6vw, 20px);
+            font-size: clamp(15px, 1.5vw, 18px);
             color: var(--grafite);
-            line-height: 1.6;
-            margin-bottom: 44px;
-            max-width: 480px;
+            line-height: 1.65;
+            margin: 0 auto 44px;
+            max-width: 620px;
         }
 
         .hero-tagline strong {
@@ -417,29 +513,16 @@
         .hero-cta-group {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             gap: 16px;
         }
 
         .hero-cta-note {
-            font-size: 12px;
+            font-size: 12.5px;
             color: var(--cinza-medio);
             line-height: 1.6;
-            max-width: 380px;
-        }
-
-        .hero-photo-col {
-            align-self: flex-end;
-            position: relative;
-        }
-
-        .hero-photo-col img {
-            width: 100%;
-            border-radius: var(--r-xl) var(--r-xl) 0 0;
-            object-fit: cover;
-            object-position: center top;
-            max-height: 600px;
-            box-shadow: -20px 0 60px rgba(26, 31, 61, .08);
+            max-width: 480px;
+            font-style: italic;
         }
 
         /* ─── METRICS ─────────────────────────────────────────────────── */
@@ -869,6 +952,188 @@
             font-size: 13px;
             color: rgba(250, 250, 250, .55);
             line-height: 1.65;
+        }
+
+        /* ─── ABOUT (Quem sou eu) ─────────────────────────────────────── */
+        .about {
+            background: var(--branco);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 40% 50% at 88% 20%, rgba(199, 161, 91, .08) 0%, transparent 60%),
+                radial-gradient(ellipse 45% 55% at 12% 85%, rgba(26, 31, 61, .04) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .about-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 72px;
+            align-items: start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-photo-wrap {
+            position: relative;
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(26, 31, 61, .15);
+            aspect-ratio: 3 / 4;
+        }
+
+        .about-photo-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 55%, rgba(26, 31, 61, .25) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .about-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+
+        .about-photo-accent {
+            position: absolute;
+            top: -16px;
+            right: -16px;
+            width: 90px;
+            height: 90px;
+            border: 1.5px solid var(--ouro);
+            border-radius: var(--r-md);
+            z-index: -1;
+            opacity: .7;
+        }
+
+        .about-photo-accent.bl {
+            top: auto; right: auto;
+            bottom: -16px; left: -16px;
+            background: linear-gradient(135deg, rgba(199, 161, 91, .12), transparent);
+            border: none;
+        }
+
+        .about-content .eyebrow { margin-bottom: 16px; }
+
+        .about-content h2 {
+            margin-bottom: 32px;
+            max-width: 520px;
+        }
+
+        .about-content p {
+            font-size: 15px;
+            line-height: 1.75;
+            color: var(--grafite);
+            margin-bottom: 20px;
+        }
+
+        .about-content p:last-child { margin-bottom: 0; }
+
+        .about-content strong {
+            color: var(--azul);
+            font-weight: 600;
+        }
+
+        /* ─── SERVICES (O que eu faço) ────────────────────────────────── */
+        .services {
+            background: #fafafa;
+            position: relative;
+        }
+
+        .services-intro {
+            max-width: 720px;
+            margin: 0 auto 56px;
+            text-align: center;
+            font-size: 15.5px;
+            line-height: 1.7;
+            color: var(--grafite);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--branco);
+            border: 1px solid var(--cinza-claro);
+            border-radius: var(--r-lg);
+            padding: 36px 32px;
+            transition: all .35s var(--ease);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--ouro);
+            transition: height .35s var(--ease);
+        }
+
+        .service-card:hover {
+            border-color: rgba(26, 31, 61, .15);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .service-card:hover::before {
+            height: 100%;
+        }
+
+        .service-number {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            color: var(--ouro);
+            margin-bottom: 14px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .service-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--azul);
+            margin-bottom: 14px;
+            letter-spacing: -.015em;
+            line-height: 1.3;
+        }
+
+        .service-body {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--grafite);
+        }
+
+        .services-note {
+            text-align: center;
+            margin-top: 48px;
+            font-size: 14px;
+            font-style: italic;
+            color: var(--cinza-medio);
+            max-width: 620px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* ─── DIAGNOSTIC ──────────────────────────────────────────────── */
@@ -1324,10 +1589,39 @@
         color: var(--grafite);
         line-height: 1.65;
         margin-bottom: 12px;
-        max-width: 400px;
+        max-width: 460px;
         margin-left: auto;
         margin-right: auto;
     }
+    .diag-thanks .diag-scenario {
+        background: var(--cinza-bg);
+        border: 1px solid var(--cinza-claro);
+        border-radius: 12px;
+        padding: 16px 20px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 460px;
+        margin: 0 auto 18px;
+    }
+    .diag-thanks .diag-scenario strong {
+        color: var(--preto);
+        font-weight: 600;
+    }
+    .diag-thanks .diag-route {
+        display: inline-block;
+        background: rgba(199,161,83,.12);
+        border-left: 3px solid var(--c-ouro);
+        color: var(--preto);
+        padding: 12px 18px;
+        border-radius: 8px;
+        font-size: 15px;
+        line-height: 1.5;
+        text-align: left;
+        max-width: 460px;
+        margin: 4px auto 18px;
+    }
+    .diag-thanks .diag-route strong { color: var(--preto); font-weight: 700; }
     .diag-cal-container {
         width: 100%;
         min-height: 600px;
@@ -1389,47 +1683,34 @@
 
         /* ─── RESPONSIVE ──────────────────────────────────────────────── */
         @media (max-width: 960px) {
-            .hero-inner {
-                grid-template-columns: 1fr;
-                gap: 48px;
+            .hero {
+                min-height: auto;
+                padding-top: 60px;
+                padding-bottom: 24px;
             }
 
-            .hero-content {
-                padding-bottom: 0;
-            }
+            .hero-shape.s1 { width: 340px; height: 340px; top: -80px; right: -100px; }
+            .hero-shape.s2 { width: 280px; height: 280px; bottom: -60px; left: -80px; }
 
-            .hero-photo-col {
-                max-width: 380px;
-                margin: 0 auto;
-                align-self: center;
-            }
-
-            .hero-photo-col img {
-                border-radius: var(--r-xl);
-                max-height: 460px;
-                box-shadow: 0 20px 60px rgba(26, 31, 61, .12);
-            }
-
-            .hero-content {
-                text-align: center;
-            }
-
-            .hero-eyebrow,
-            .hero-cta-group {
-                justify-content: center;
-                align-items: center;
-            }
-
-            .hero-cta-note {
-                text-align: center;
-            }
-
-            .hero-tagline {
-                margin: 0 auto 44px;
-            }
+            .hero-gold-line { display: none; }
 
             .benefits-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-inner {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                max-width: 560px;
+            }
+
+            .about-photo-wrap {
+                max-width: 360px;
+                margin: 0 auto;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
             }
 
             .cases-carousel .case-card {
@@ -1513,7 +1794,17 @@
             }
 
             .hero-inner {
-                padding: 48px 20px 0;
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: clamp(36px, 10vw, 56px);
+            }
+
+            .hero-eyebrow {
+                padding: 8px 16px;
+                font-size: 10px;
+                margin-bottom: 28px;
             }
 
             /* Botões: permitir quebra de linha em mobile */
@@ -1572,37 +1863,39 @@
     <!-- ═══════════════════════════════════════════════════════════════ -->
     <main>
         <section class="hero">
+            <!-- Decorative background shapes -->
+            <div class="hero-shapes" aria-hidden="true">
+                <div class="hero-shape s1"></div>
+                <div class="hero-shape s2"></div>
+            </div>
+            <div class="hero-gold-line" aria-hidden="true"></div>
+
             <div class="hero-inner">
-                <!-- Conteúdo -->
                 <div class="hero-content reveal">
-                    <div class="hero-eyebrow">Diagnóstico Personalizado</div>
+                    <div class="hero-eyebrow">Auditoria de Performance</div>
 
                     <h1>
-                        Sente que poderia ter uma performance de Marketing Melhor?
+                        Escala <span class="gold-accent">sem Risco.</span>
                     </h1>
 
+                    <p class="hero-sub1">
+                        Tenha a estrutura interna necessária para sua empresa escalar de forma previsível.
+                    </p>
+
                     <p class="hero-tagline">
-                        Tenha o controle do seu crescimento<br>
-                        <strong>sem depender de agências.</strong>
+                        <strong>Sem depender de agência. Sem começar do zero a cada troca.</strong><br>
+                        Com time, processo e funil operando por conta própria.
                     </p>
 
                     <div class="hero-cta-group">
                         <a href="#diagnostico" class="btn btn-primary btn-lg" data-diag-open>
-                            Agendar meu Diagnóstico →
+                            Agendar minha Auditoria de Performance →
                         </a>
                         <p class="hero-cta-note">
                             30 minutos. Sem compromisso. Você sai sabendo o que está travando a escala da sua empresa e
                             qual é o próximo passo.
                         </p>
                     </div>
-                </div>
-
-                <!-- Foto -->
-                <div class="hero-photo-col">
-                    <img src="assets/images/hero.jpg"
-                        srcset="assets/images/hero-sm.jpg 600w, assets/images/hero.jpg 900w"
-                        sizes="(max-width: 960px) 380px, 400px" alt="Mateus Rucci" width="900" height="1350"
-                        loading="eager" fetchpriority="high" decoding="async">
                 </div>
             </div>
         </section>
@@ -1791,25 +2084,7 @@
                             <div class="case-result">Alocação correta de recursos e decisões assertivas como principais fatores.</div>
                         </div>
 
-                        <!-- 9. Pablo Marçal -->
-                        <div class="case-card">
-                            <div class="case-logo-wrap">
-                                <img class="case-logo" src="https://logo.clearbit.com/pablomarcal.com.br" alt="Pablo Marçal"
-                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                                <div class="case-logo-fallback person" style="display:none">PM</div>
-                            </div>
-                            <div class="case-client">Pablo Marçal</div>
-                            <p class="case-before">
-                                Maior escala de lançamentos do Brasil — operação de tráfego exigindo liderança técnica de alto nível.
-                            </p>
-                            <div class="case-after-label">Resultado</div>
-                            <p class="case-after">
-                                Responsável por liderar a equipe de tráfego em 6 dos 10 maiores lançamentos do Brasil da época.
-                            </p>
-                            <div class="case-result">6 dos 10 maiores lançamentos do Brasil — equipe liderada do zero.</div>
-                        </div>
-
-                        <!-- 10. Devzapp -->
+                        <!-- 9. Devzapp -->
                         <div class="case-card">
                             <div class="case-logo-wrap">
                                 <img class="case-logo" src="https://logo.clearbit.com/devzapp.com.br" alt="Devzapp"
@@ -1832,11 +2107,11 @@
                     <button class="carousel-btn carousel-next" aria-label="Próximo">&#8250;</button>
                 </div><!-- /.cases-carousel-wrap -->
 
-                <div class="carousel-counter" id="carouselCounter">1 — 3 de 10</div>
+                <div class="carousel-counter" id="carouselCounter">1 — 3 de 9</div>
 
                 <div class="cases-cta reveal" style="margin-top:48px">
                     <a href="#diagnostico" class="btn btn-primary btn-lg" data-diag-open>
-                        Quero o mesmo resultado → Agendar meu Diagnóstico
+                        Quero o mesmo resultado → Agendar minha Auditoria de Performance
                     </a>
                 </div>
             </div>
@@ -1881,9 +2156,8 @@
 
                     <div class="problem-card reveal reveal-delay-4">
                         <div class="problem-num">04</div>
-                        <div class="problem-title">Resultado aparece um mês e some no outro</div>
-                        <p class="problem-body">Não falta esforço nem investimento. Falta estrutura que sustenta o
-                            resultado quando a campanha muda, o gestor muda, o algoritmo muda.</p>
+                        <div class="problem-title">Sua empresa fatura bem, mas o digital não contribui</div>
+                        <p class="problem-body">Você vende por indicação, por rede de contatos, por esforço comercial. O digital existe — mas não gera demanda. Você sabe que poderia estar vendendo muito mais se tivesse uma operação de marketing real funcionando.</p>
                     </div>
 
                     <div class="problem-card reveal reveal-delay-5">
@@ -1895,8 +2169,8 @@
 
                     <div class="problem-card reveal reveal-delay-1">
                         <div class="problem-num">06</div>
-                        <div class="problem-title">Você quer ter o Marketing internamente, mas não encontra gente competente</div>
-                        <p class="problem-body">Você quer ter o controle da equipe internamente e ao mesmo tempo ter um serviço de alto nível.</p>
+                        <div class="problem-title">Você já gastou com agência e freelancer — e não sobrou nada</div>
+                        <p class="problem-body">Nem resultado, nem aprendizado, nem estrutura. Cada vez que o contrato acabou, voltou à estaca zero. E agora não sabe se vale a pena tentar de novo.</p>
                     </div>
                 </div>
             </div>
@@ -1910,7 +2184,7 @@
                 <div class="section-header reveal">
                     <div class="eyebrow">O que muda</div>
                     <h2 style="margin-top: 16px; max-width: 640px;">
-                        O que muda quando sua empresa tem estrutura própria para escalar.
+                        O que muda quando a estrutura certa existe dentro da sua empresa.
                     </h2>
                 </div>
 
@@ -1986,23 +2260,109 @@
 
                     <div class="benefit-card reveal reveal-delay-3">
                         <div class="benefit-icon">
-                            <!-- database / history icon -->
+                            <!-- peace / mind icon -->
                             <svg viewBox="0 0 24 24">
-                                <ellipse cx="12" cy="5" rx="9" ry="3" />
-                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 2v20" />
+                                <path d="M12 12L2 17" />
+                                <path d="M12 12l10 5" />
                             </svg>
                         </div>
-                        <div class="benefit-title">Histórico e aprendizado que ficam na sua empresa</div>
-                        <p class="benefit-body">O que foi construído é seu. Não vai embora com a próxima agência. Cada
-                            ciclo alimenta o próximo — e a curva só sobe.</p>
+                        <div class="benefit-title">Paz mental para focar no que importa</div>
+                        <p class="benefit-body">Você para de se preocupar com o marketing e passa a confiar que ele está funcionando. Sua energia volta para o negócio, para os clientes e para as decisões que só você pode tomar.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════════ -->
-        <!-- S6 — DIAGNÓSTICO -->
+        <!-- S6 — QUEM SOU EU                                                -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section class="about section" id="sobre">
+            <div class="container">
+                <div class="about-inner">
+                    <div class="about-photo reveal">
+                        <div class="about-photo-accent" aria-hidden="true"></div>
+                        <div class="about-photo-accent bl" aria-hidden="true"></div>
+                        <div class="about-photo-wrap">
+                            <img src="assets/images/hero.jpg"
+                                 srcset="assets/images/hero-sm.jpg 600w, assets/images/hero.jpg 900w"
+                                 sizes="(max-width: 960px) 360px, 360px"
+                                 alt="Mateus Rucci"
+                                 width="900" height="1350"
+                                 loading="lazy" decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="about-content reveal reveal-delay-2">
+                        <div class="eyebrow">Quem sou eu</div>
+                        <h2>Quem está por trás da auditoria.</h2>
+
+                        <p>
+                            Meu nome é <strong>Mateus Rucci</strong>. Nos últimos <strong>8 anos</strong>, eu vivi dentro de operações de tráfego pago — gerenciando campanhas, formando times, construindo funis e tomando decisões de investimento em mais de <strong>400 empresas</strong> de nichos, tamanhos e países diferentes.
+                        </p>
+                        <p>
+                            Já gerenciei mais de <strong>R$ 200 milhões</strong> em mídia paga. Já montei times do zero, já desmontei operações que não funcionavam, já entrei em empresas que investiam R$ 500 mil por mês sem saber onde o dinheiro estava indo — e já ajudei empresas que nunca tinham rodado um anúncio a construir uma operação que mudou o patamar do negócio.
+                        </p>
+                        <p>
+                            O que eu aprendi nesse caminho é simples: <strong>a maioria das empresas não tem problema de tráfego. Tem problema de estrutura.</strong> Não falta verba, não falta ferramenta, não falta vontade. Falta a base que faz tudo isso funcionar junto — e falta alguém que já viu o suficiente para saber exatamente o que montar primeiro.
+                        </p>
+                        <p>
+                            É isso que eu faço hoje. Seja por mentoria individual para quem está construindo do zero, seja por implementação completa para quem quer internalizar a operação e parar de depender de agência — o objetivo é o mesmo: deixar a sua empresa com estrutura própria para crescer com <strong>previsibilidade e controle</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- S7 — O QUE EU FAÇO                                              -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section class="services section" id="servicos">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="eyebrow">O que eu faço</div>
+                    <h2 style="margin-top: 16px; max-width: 620px;">
+                        Como posso te ajudar.
+                    </h2>
+                </div>
+
+                <p class="services-intro reveal">
+                    Depois da auditoria, o caminho depende do seu momento. Hoje trabalho com empresários em <strong>4 formatos</strong>:
+                </p>
+
+                <div class="services-grid">
+                    <div class="service-card reveal reveal-delay-1">
+                        <div class="service-number">01</div>
+                        <div class="service-title">Mentoria Individual</div>
+                        <p class="service-body">Para quem quer construir a operação de marketing do zero, com método e acompanhamento semanal.</p>
+                    </div>
+
+                    <div class="service-card reveal reveal-delay-2">
+                        <div class="service-number">02</div>
+                        <div class="service-title">Implementação de Time Interno</div>
+                        <p class="service-body">Para quem quer sair da dependência de agência e ter um gestor de tráfego interno operando em alto nível em até 90 dias.</p>
+                    </div>
+
+                    <div class="service-card reveal reveal-delay-3">
+                        <div class="service-number">03</div>
+                        <div class="service-title">Implementação de Funil de Vendas</div>
+                        <p class="service-body">Para quem tem tráfego mas não tem conversão. Estrutura completa de páginas, copy e fluxos.</p>
+                    </div>
+
+                    <div class="service-card reveal reveal-delay-4">
+                        <div class="service-number">04</div>
+                        <div class="service-title">Consultoria Estratégica</div>
+                        <p class="service-body">Para quem já investe R$ 50k+/mês e precisa de direcionamento de alto nível para parar de deixar dinheiro na mesa.</p>
+                    </div>
+                </div>
+
+                <p class="services-note reveal">A auditoria existe para identificar qual desses caminhos faz sentido para o seu momento — sem pressão.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- S8 — DIAGNÓSTICO -->
         <!-- ═══════════════════════════════════════════════════════════════ -->
         <section class="diagnostic section" id="diagnostico">
             <div class="container">
@@ -2010,34 +2370,34 @@
                     <div class="reveal">
                         <div class="eyebrow">Diagnóstico Personalizado</div>
                         <h2 style="margin-top: 20px; margin-bottom: 16px;">
-                            O que é o Diagnóstico Personalizado — e o que você vai sair sabendo.
+                            Descubra em 2 minutos qual é o caminho mais coerente pra escalar sua empresa.
                         </h2>
                         <p class="diagnostic-subtitle">
-                            Não é uma call de vendas. É uma conversa de 30 minutos focada em entender o que está
-                            travando a escala da sua empresa hoje.
+                            10 perguntas simples. No final, você recebe uma leitura do seu cenário real e o próximo
+                            passo sugerido — sem compromisso de call.
                         </p>
                     </div>
 
                     <div class="diagnostic-box reveal">
                         <p>
-                            Toda semana, disponibilizo algumas vagas para um diagnóstico direto com empresários que
-                            querem parar de depender de terceiros para crescer — e entender, de verdade, o que precisa
-                            ser construído internamente para isso acontecer.
+                            Este diagnóstico foi desenhado pra devolver clareza, não te empurrar pra uma call.
+                            Você responde sobre o seu momento — o que incomoda, o que quer alcançar, como está
+                            a operação hoje — e recebe, na hora, qual é a rota mais coerente: Mentoria,
+                            Implementação de Time Interno, Consultoria Estratégica, ou <strong>nenhuma delas</strong>,
+                            se não for o momento certo.
                         </p>
                         <p>
-                            Não é um bate-papo genérico. É uma análise do seu cenário real: onde está o gargalo que
-                            impede a escala, o que precisa existir antes de qualquer outra decisão, e qual é o próximo
-                            movimento concreto para sua empresa crescer com <strong>previsibilidade e controle.</strong>
+                            Se fizer sentido conversar depois, você decide. O diagnóstico fica com você
+                            independentemente disso.
                         </p>
                     </div>
 
                     <div class="diagnostic-cta-group reveal">
                         <a href="#" class="btn btn-primary btn-lg" data-diag-open>
-                            Agendar meu Diagnóstico Personalizado →
+                            Fazer meu diagnóstico agora →
                         </a>
                         <p class="diagnostic-note">
-                            30 minutos. Sem compromisso. Você sai com clareza sobre o que está travando a escala —
-                            independente de continuar ou não.
+                            ~2 minutos. 10 perguntas. Resultado personalizado na hora — com ou sem call.
                         </p>
                     </div>
                 </div>
@@ -2053,7 +2413,7 @@
   <div class="diag-modal">
 
     <div class="diag-header" id="diagHeader">
-      <span class="diag-step-counter" id="diagCounter">1 de 5</span>
+      <span class="diag-step-counter" id="diagCounter">1 de 10</span>
       <div class="diag-progress-wrap">
         <div class="diag-progress-fill" id="diagProgress"></div>
       </div>
@@ -2066,9 +2426,157 @@
 
     <div class="diag-body">
 
-      <!-- P1: Investe em tráfego? -->
+      <!-- P1: Incômodo (multi-select, engajamento emocional) -->
       <div class="diag-step" data-step="1">
-        <div class="diag-q-title">Você já investe em tráfego pago?</div>
+        <div class="diag-q-title">O que mais te incomoda hoje no seu marketing?</div>
+        <div class="diag-q-sub">Escolha tudo que se aplica — pelo menos uma opção.</div>
+        <div class="diag-options">
+          <div class="diag-option multi" data-field="incomodo" data-value="Não tenho previsibilidade de resultado">
+            <span class="diag-check"></span><span class="diag-opt-text">Não tenho previsibilidade de resultado</span>
+          </div>
+          <div class="diag-option multi" data-field="incomodo" data-value="Dependo de agência/freela e não tenho controle">
+            <span class="diag-check"></span><span class="diag-opt-text">Dependo de agência/freela e não tenho controle</span>
+          </div>
+          <div class="diag-option multi" data-field="incomodo" data-value="Invisto e não sei o que volta (ROI)">
+            <span class="diag-check"></span><span class="diag-opt-text">Invisto e não sei o que volta (ROI)</span>
+          </div>
+          <div class="diag-option multi" data-field="incomodo" data-value="Tenho time/agência mas não performa">
+            <span class="diag-check"></span><span class="diag-opt-text">Tenho time/agência mas não performa</span>
+          </div>
+          <div class="diag-option multi" data-field="incomodo" data-value="Não sei por onde começar">
+            <span class="diag-check"></span><span class="diag-opt-text">Não sei por onde começar</span>
+          </div>
+          <div class="diag-option multi" data-field="incomodo" data-value="Cresci e travei, não sei desbloquear">
+            <span class="diag-check"></span><span class="diag-opt-text">Cresci e travei, não sei desbloquear</span>
+          </div>
+          <div class="diag-option multi" data-field="incomodo" data-value="Outro" id="outroOption">
+            <span class="diag-check"></span><span class="diag-opt-text">Outro</span>
+          </div>
+        </div>
+        <div class="diag-outro-wrap" id="outroWrap">
+          <input type="text" id="outroInput" class="diag-input" placeholder="Descreva brevemente...">
+        </div>
+        <div class="diag-nav">
+          <button class="diag-btn-next" data-cur="1" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- P2: Objetivo (single, aspiracional) -->
+      <div class="diag-step" data-step="2">
+        <div class="diag-q-title">Qual é o seu maior objetivo nos próximos 6–12 meses?</div>
+        <div class="diag-options">
+          <div class="diag-option" data-field="objetivo" data-value="Escalar vendas com previsibilidade">
+            <span class="diag-radio"></span><span class="diag-opt-text">Escalar vendas com previsibilidade</span>
+          </div>
+          <div class="diag-option" data-field="objetivo" data-value="Construir uma máquina de aquisição própria">
+            <span class="diag-radio"></span><span class="diag-opt-text">Construir uma máquina de aquisição própria</span>
+          </div>
+          <div class="diag-option" data-field="objetivo" data-value="Aprender a liderar o marketing do meu negócio">
+            <span class="diag-radio"></span><span class="diag-opt-text">Aprender a liderar o marketing do meu negócio</span>
+          </div>
+          <div class="diag-option" data-field="objetivo" data-value="Profissionalizar a operação atual">
+            <span class="diag-radio"></span><span class="diag-opt-text">Profissionalizar a operação atual</span>
+          </div>
+          <div class="diag-option" data-field="objetivo" data-value="Resolver um problema pontual">
+            <span class="diag-radio"></span><span class="diag-opt-text">Resolver um problema pontual</span>
+          </div>
+        </div>
+        <div class="diag-nav">
+          <button class="diag-btn-back" data-cur="2">← Voltar</button>
+          <button class="diag-btn-next" data-cur="2" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- P3: Situação de marketing hoje (single) -->
+      <div class="diag-step" data-step="3">
+        <div class="diag-q-title">Como está sua estrutura de marketing hoje?</div>
+        <div class="diag-options">
+          <div class="diag-option" data-field="situacao_mkt" data-value="Não tenho estrutura">
+            <span class="diag-radio"></span><span class="diag-opt-text">Não tenho estrutura</span>
+          </div>
+          <div class="diag-option" data-field="situacao_mkt" data-value="Eu mesmo opero">
+            <span class="diag-radio"></span><span class="diag-opt-text">Eu mesmo opero</span>
+          </div>
+          <div class="diag-option" data-field="situacao_mkt" data-value="Tenho freelancer">
+            <span class="diag-radio"></span><span class="diag-opt-text">Tenho freelancer</span>
+          </div>
+          <div class="diag-option" data-field="situacao_mkt" data-value="Agência — satisfeito">
+            <span class="diag-radio"></span><span class="diag-opt-text">Agência — satisfeito</span>
+          </div>
+          <div class="diag-option" data-field="situacao_mkt" data-value="Agência — insatisfeito">
+            <span class="diag-radio"></span><span class="diag-opt-text">Agência — insatisfeito</span>
+          </div>
+          <div class="diag-option" data-field="situacao_mkt" data-value="Time interno operando bem">
+            <span class="diag-radio"></span><span class="diag-opt-text">Time interno operando bem</span>
+          </div>
+          <div class="diag-option" data-field="situacao_mkt" data-value="Time interno subperformando">
+            <span class="diag-radio"></span><span class="diag-opt-text">Time interno subperformando</span>
+          </div>
+        </div>
+        <div class="diag-nav">
+          <button class="diag-btn-back" data-cur="3">← Voltar</button>
+          <button class="diag-btn-next" data-cur="3" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- P4: Tempo de operação (single, auto) -->
+      <div class="diag-step" data-step="4">
+        <div class="diag-q-title">Há quanto tempo sua empresa está ativa?</div>
+        <div class="diag-options">
+          <div class="diag-option" data-field="tempo_empresa" data-value="menos_1ano">
+            <span class="diag-radio"></span><span class="diag-opt-text">Menos de 1 ano</span>
+          </div>
+          <div class="diag-option" data-field="tempo_empresa" data-value="1_3">
+            <span class="diag-radio"></span><span class="diag-opt-text">1 a 3 anos</span>
+          </div>
+          <div class="diag-option" data-field="tempo_empresa" data-value="mais_3">
+            <span class="diag-radio"></span><span class="diag-opt-text">Mais de 3 anos</span>
+          </div>
+        </div>
+        <div class="diag-nav">
+          <button class="diag-btn-back" data-cur="4">← Voltar</button>
+          <button class="diag-btn-next" data-cur="4" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- P5: Setor (single) -->
+      <div class="diag-step" data-step="5">
+        <div class="diag-q-title">Qual o setor da sua empresa?</div>
+        <div class="diag-options">
+          <div class="diag-option" data-field="setor" data-value="Serviços">
+            <span class="diag-radio"></span><span class="diag-opt-text">Serviços</span>
+          </div>
+          <div class="diag-option" data-field="setor" data-value="E-commerce">
+            <span class="diag-radio"></span><span class="diag-opt-text">E-commerce</span>
+          </div>
+          <div class="diag-option" data-field="setor" data-value="Infoproduto/educação">
+            <span class="diag-radio"></span><span class="diag-opt-text">Infoproduto / educação</span>
+          </div>
+          <div class="diag-option" data-field="setor" data-value="SaaS/tech">
+            <span class="diag-radio"></span><span class="diag-opt-text">SaaS / tech</span>
+          </div>
+          <div class="diag-option" data-field="setor" data-value="Indústria/varejo">
+            <span class="diag-radio"></span><span class="diag-opt-text">Indústria / varejo</span>
+          </div>
+          <div class="diag-option" data-field="setor" data-value="Saúde/clínica">
+            <span class="diag-radio"></span><span class="diag-opt-text">Saúde / clínica</span>
+          </div>
+          <div class="diag-option" data-field="setor" data-value="regulado">
+            <span class="diag-radio"></span><span class="diag-opt-text">Nicho regulado (bets, tabaco, medicamento controlado, apostas)</span>
+          </div>
+          <div class="diag-option" data-field="setor" data-value="Outro">
+            <span class="diag-radio"></span><span class="diag-opt-text">Outro</span>
+          </div>
+        </div>
+        <div class="diag-nav">
+          <button class="diag-btn-back" data-cur="5">← Voltar</button>
+          <button class="diag-btn-next" data-cur="5" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- P6: Investe em tráfego? (single, auto) -->
+      <div class="diag-step" data-step="6">
+        <div class="diag-q-title">Você investe em tráfego pago hoje?</div>
         <div class="diag-options">
           <div class="diag-option" data-field="investe_trafego" data-value="Sim">
             <span class="diag-radio"></span><span class="diag-opt-text">Sim</span>
@@ -2078,12 +2586,13 @@
           </div>
         </div>
         <div class="diag-nav">
-          <button class="diag-btn-next" data-cur="1" disabled>Continuar →</button>
+          <button class="diag-btn-back" data-cur="6">← Voltar</button>
+          <button class="diag-btn-next" data-cur="6" disabled>Continuar →</button>
         </div>
       </div>
 
-      <!-- P2: Valor (só se Sim) -->
-      <div class="diag-step" data-step="2">
+      <!-- P7: Valor do investimento (single, auto — só se P6 = Sim) -->
+      <div class="diag-step" data-step="7">
         <div class="diag-q-title">Qual valor você investe mensalmente em tráfego?</div>
         <div class="diag-options">
           <div class="diag-option" data-field="valor_investimento" data-value="De R$1 a R$5.000">
@@ -2109,65 +2618,68 @@
           </div>
         </div>
         <div class="diag-nav">
-          <button class="diag-btn-back" data-cur="2">← Voltar</button>
-          <button class="diag-btn-next" data-cur="2" disabled>Continuar →</button>
+          <button class="diag-btn-back" data-cur="7">← Voltar</button>
+          <button class="diag-btn-next" data-cur="7" disabled>Continuar →</button>
         </div>
       </div>
 
-      <!-- P3: Problemas (multi-select) -->
-      <div class="diag-step" data-step="3">
-        <div class="diag-q-title">Quais problemas você está vivendo hoje?</div>
-        <div class="diag-q-sub">Selecione mais de uma opção se desejar.</div>
+      <!-- P8: Faturamento mensal (single — money question tarde, método Ask) -->
+      <div class="diag-step" data-step="8">
+        <div class="diag-q-title">Qual seu faturamento mensal médio?</div>
+        <div class="diag-q-sub">Essa informação é usada só para calibrar o diagnóstico — fica com você.</div>
         <div class="diag-options">
-          <div class="diag-option multi" data-field="problemas" data-value="Falta de consistência nos resultados">
-            <span class="diag-check"></span><span class="diag-opt-text">Falta de consistência nos resultados</span>
+          <div class="diag-option" data-field="faturamento" data-value="ate_25k">
+            <span class="diag-radio"></span><span class="diag-opt-text">Até R$ 25.000 / mês</span>
           </div>
-          <div class="diag-option multi" data-field="problemas" data-value="Não tenho clareza de ROI — não sei o que volta">
-            <span class="diag-check"></span><span class="diag-opt-text">Não tenho clareza de ROI — não sei o que volta</span>
+          <div class="diag-option" data-field="faturamento" data-value="25_100k">
+            <span class="diag-radio"></span><span class="diag-opt-text">R$ 25.000 a R$ 100.000 / mês</span>
           </div>
-          <div class="diag-option multi" data-field="problemas" data-value="Não sei como começar ou onde investir">
-            <span class="diag-check"></span><span class="diag-opt-text">Não sei como começar ou onde investir</span>
+          <div class="diag-option" data-field="faturamento" data-value="100_250k">
+            <span class="diag-radio"></span><span class="diag-opt-text">R$ 100.000 a R$ 250.000 / mês</span>
           </div>
-          <div class="diag-option multi" data-field="problemas" data-value="Sinto que estou desperdiçando dinheiro">
-            <span class="diag-check"></span><span class="diag-opt-text">Sinto que estou desperdiçando dinheiro</span>
+          <div class="diag-option" data-field="faturamento" data-value="250k_1M">
+            <span class="diag-radio"></span><span class="diag-opt-text">R$ 250.000 a R$ 1M / mês</span>
           </div>
-          <div class="diag-option multi" data-field="problemas" data-value="Não consigo acertar o tráfego para o meu negócio">
-            <span class="diag-check"></span><span class="diag-opt-text">Não consigo acertar o tráfego para o meu negócio</span>
+          <div class="diag-option" data-field="faturamento" data-value="1M_mais">
+            <span class="diag-radio"></span><span class="diag-opt-text">Mais de R$ 1M / mês</span>
           </div>
-          <div class="diag-option multi" data-field="problemas" data-value="Gostaria de ter um time interno">
-            <span class="diag-check"></span><span class="diag-opt-text">Gostaria de ter um time interno</span>
-          </div>
-          <div class="diag-option multi" data-field="problemas" data-value="Tenho time interno ou agência, mas não performa">
-            <span class="diag-check"></span><span class="diag-opt-text">Tenho time interno ou agência, mas não performa</span>
-          </div>
-          <div class="diag-option multi" data-field="problemas" data-value="Outro" id="outroOption">
-            <span class="diag-check"></span><span class="diag-opt-text">Outro</span>
-          </div>
-        </div>
-        <div class="diag-outro-wrap" id="outroWrap">
-          <input type="text" id="outroInput" class="diag-input" placeholder="Descreva brevemente...">
         </div>
         <div class="diag-nav">
-          <button class="diag-btn-back" data-cur="3">← Voltar</button>
-          <button class="diag-btn-next" data-cur="3" disabled>Continuar →</button>
+          <button class="diag-btn-back" data-cur="8">← Voltar</button>
+          <button class="diag-btn-next" data-cur="8" disabled>Continuar →</button>
         </div>
       </div>
 
-      <!-- P4: Instagram -->
-      <div class="diag-step" data-step="4">
-        <div class="diag-q-title">Qual o @ do Instagram do seu negócio?</div>
-        <div class="diag-q-sub">Isso nos ajuda a entender melhor seu mercado antes da conversa.</div>
+      <!-- P9: Intenção / roteador (single) -->
+      <div class="diag-step" data-step="9">
+        <div class="diag-q-title">Como posso te ajudar?</div>
+        <div class="diag-q-sub">Escolha o que mais se aproxima — isso define o diagnóstico final.</div>
+        <div class="diag-options">
+          <div class="diag-option" data-field="intencao" data-value="mentoria">
+            <span class="diag-radio"></span><span class="diag-opt-text">Quero <strong>aprender e liderar</strong> o marketing do meu negócio</span>
+          </div>
+          <div class="diag-option" data-field="intencao" data-value="implementacao">
+            <span class="diag-radio"></span><span class="diag-opt-text">Quero <strong>construir um time interno de tráfego</strong> com processo e gestor capacitado</span>
+          </div>
+          <div class="diag-option" data-field="intencao" data-value="consultoria">
+            <span class="diag-radio"></span><span class="diag-opt-text">Quero resolver um <strong>problema pontual / consultoria estratégica</strong></span>
+          </div>
+          <div class="diag-option" data-field="intencao" data-value="indefinido">
+            <span class="diag-radio"></span><span class="diag-opt-text">Ainda <strong>não sei</strong> — preciso de clareza sobre o caminho</span>
+          </div>
+        </div>
+        <div class="diag-nav">
+          <button class="diag-btn-back" data-cur="9">← Voltar</button>
+          <button class="diag-btn-next" data-cur="9" disabled>Continuar →</button>
+        </div>
+      </div>
+
+      <!-- P10: Instagram + Contato combinados (última etapa) -->
+      <div class="diag-step" data-step="10">
+        <div class="diag-q-title">Pra onde mando seu diagnóstico?</div>
+        <div class="diag-q-sub">Você recebe o resultado na tela agora — e uma cópia no seu e-mail/WhatsApp.</div>
+        <label class="diag-label" for="instagramInput">@ do Instagram do seu negócio</label>
         <input type="text" id="instagramInput" class="diag-input" placeholder="@seunegocio" autocomplete="off" spellcheck="false">
-        <div class="diag-nav">
-          <button class="diag-btn-back" data-cur="4">← Voltar</button>
-          <button class="diag-btn-next" data-cur="4" disabled>Continuar →</button>
-        </div>
-      </div>
-
-      <!-- P5: Contato -->
-      <div class="diag-step" data-step="5">
-        <div class="diag-q-title">Pra onde mando o diagnóstico?</div>
-        <div class="diag-q-sub">Você vai receber uma análise personalizada em até 24h.</div>
         <label class="diag-label" for="nomeInput">Seu nome</label>
         <input type="text"  id="nomeInput"     class="diag-input" placeholder="Nome completo"        autocomplete="name">
         <label class="diag-label" for="emailInput">E-mail</label>
@@ -2196,45 +2708,187 @@
             placeholder="(11) 99999-9999" autocomplete="tel-national">
         </div>
         <div class="diag-nav">
-          <button class="diag-btn-back" data-cur="5">← Voltar</button>
-          <button class="diag-btn-next" data-cur="5" disabled>Enviar →</button>
+          <button class="diag-btn-back" data-cur="10">← Voltar</button>
+          <button class="diag-btn-next" data-cur="10" disabled>Ver meu diagnóstico →</button>
         </div>
       </div>
 
-      <!-- OBRIGADO: Desqualificado (não investe) -->
-      <div class="diag-step diag-thanks" data-step="thanks-desqualificado">
+      <!-- ============ TELAS DE RESULTADO (DIAGNÓSTICO) ============ -->
+
+      <!-- Template helper: cada tela tem placeholders <strong data-fill="..."> -->
+
+      <!-- RESULTADO: Implementação de Time Interno -->
+      <div class="diag-step diag-thanks" data-step="thanks-diag_implementacao">
         <div class="diag-thanks-icon">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
           </svg>
         </div>
-        <h3>Suas respostas foram recebidas.</h3>
-        <p>Com base no que você compartilhou, vamos preparar materiais para te ajudar a entender como começar a investir em tráfego com segurança.</p>
-        <p style="font-size:13px;color:#9A9A9A;">Fique de olho no e-mail que você informou.</p>
+        <h3>Seu diagnóstico está pronto.</h3>
+        <p class="diag-scenario">
+          Seu cenário: faturamento <strong data-fill="faturamento">—</strong>,
+          operação <strong data-fill="tempo_empresa">—</strong>,
+          estrutura <strong data-fill="situacao_mkt">—</strong>.<br>
+          Principais incômodos: <strong data-fill="incomodo">—</strong>.<br>
+          Objetivo declarado: <strong data-fill="objetivo">—</strong>.
+        </p>
+        <div class="diag-route">
+          → O caminho mais coerente pra você agora é: <strong>Implementação de Time de Tráfego Interno (90 dias).</strong>
+        </div>
+        <p>
+          Seu porte e intenção de internalizar o time são exatamente o perfil pra qual esse método foi desenhado.
+          Se quiser aprofundar em 30 minutos comigo, agende abaixo — sem compromisso.
+        </p>
+        <div id="my-cal-inline-diag_implementacao" class="diag-cal-container"></div>
       </div>
 
-      <!-- OBRIGADO: Médio (até R$30k) -->
-      <div class="diag-step diag-thanks" data-step="thanks-medio">
+      <!-- RESULTADO: Mentoria Individual -->
+      <div class="diag-step diag-thanks" data-step="thanks-diag_mentoria">
         <div class="diag-thanks-icon">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
           </svg>
         </div>
-        <h3>Diagnóstico recebido.</h3>
-        <p>Analisamos sua operação e entraremos em contato pelo WhatsApp para conversar sobre o que pode ser estruturado para escalar com mais previsibilidade.</p>
-        <p style="font-size:13px;color:#9A9A9A;">Verifique o número informado — nosso time vai te chamar em breve.</p>
+        <h3>Seu diagnóstico está pronto.</h3>
+        <p class="diag-scenario">
+          Seu cenário: faturamento <strong data-fill="faturamento">—</strong>,
+          operação <strong data-fill="tempo_empresa">—</strong>,
+          estrutura <strong data-fill="situacao_mkt">—</strong>.<br>
+          Principais incômodos: <strong data-fill="incomodo">—</strong>.<br>
+          Objetivo declarado: <strong data-fill="objetivo">—</strong>.
+        </p>
+        <div class="diag-route">
+          → O caminho mais coerente pra você agora é: <strong>Mentoria Individual.</strong>
+        </div>
+        <p>
+          Você já tem estrutura e caixa pra escalar, e a intenção de liderar (não só delegar) — isso é exatamente
+          o perfil da mentoria. Se quiser conversar 30 minutos pra alinharmos o desenho, agende abaixo.
+        </p>
+        <div id="my-cal-inline-diag_mentoria" class="diag-cal-container"></div>
       </div>
 
-      <!-- OBRIGADO: Qualificado (acima de R$30k) -->
-      <div class="diag-step diag-thanks" data-step="thanks-qualificado">
+      <!-- RESULTADO: Consultoria Estratégica -->
+      <div class="diag-step diag-thanks" data-step="thanks-diag_consultoria">
         <div class="diag-thanks-icon">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
           </svg>
         </div>
-        <h3>Perfeito. Escolha seu horário.</h3>
-        <p>Agende agora o seu Diagnóstico Personalizado — 30 minutos direto com Mateus Rucci.</p>
-        <div id="my-cal-inline-diagnostico" class="diag-cal-container"></div>
+        <h3>Seu diagnóstico está pronto.</h3>
+        <p class="diag-scenario">
+          Seu cenário: faturamento <strong data-fill="faturamento">—</strong>,
+          estrutura <strong data-fill="situacao_mkt">—</strong>.<br>
+          Principais incômodos: <strong data-fill="incomodo">—</strong>.<br>
+          Objetivo declarado: <strong data-fill="objetivo">—</strong>.
+        </p>
+        <div class="diag-route">
+          → O caminho mais coerente pra você agora é: <strong>Consultoria Estratégica.</strong>
+        </div>
+        <p>
+          Você quer resolver algo pontual, não iniciar um programa longo. Uma consultoria-focada faz mais
+          sentido. Agende 30 minutos pra eu entender o contexto específico e desenhar o escopo.
+        </p>
+        <div id="my-cal-inline-diag_consultoria" class="diag-cal-container"></div>
+      </div>
+
+      <!-- RESULTADO: Call Estratégica (zona cinzenta) -->
+      <div class="diag-step diag-thanks" data-step="thanks-diag_estrategica">
+        <div class="diag-thanks-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Seu diagnóstico está pronto.</h3>
+        <p class="diag-scenario">
+          Seu cenário: faturamento <strong data-fill="faturamento">—</strong>,
+          estrutura <strong data-fill="situacao_mkt">—</strong>.<br>
+          Principais incômodos: <strong data-fill="incomodo">—</strong>.<br>
+          Objetivo declarado: <strong data-fill="objetivo">—</strong>.
+        </p>
+        <div class="diag-route">
+          → O caminho mais coerente pra você agora é: <strong>uma call de clareza (30 min).</strong>
+        </div>
+        <p>
+          Você ainda está buscando clareza sobre qual caminho tomar — e isso é legítimo. A call serve
+          justamente pra mapear isso com você, sem pressão de fechar nada.
+        </p>
+        <div id="my-cal-inline-diag_estrategica" class="diag-cal-container"></div>
+      </div>
+
+      <!-- RESULTADO: Construir a base primeiro (sem Cal) -->
+      <div class="diag-step diag-thanks" data-step="thanks-diag_base">
+        <div class="diag-thanks-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Seu diagnóstico está pronto.</h3>
+        <p class="diag-scenario">
+          Seu cenário: faturamento <strong data-fill="faturamento">—</strong>,
+          operação <strong data-fill="tempo_empresa">—</strong>,
+          estrutura <strong data-fill="situacao_mkt">—</strong>.<br>
+          Principais incômodos: <strong data-fill="incomodo">—</strong>.<br>
+          Objetivo declarado: <strong data-fill="objetivo">—</strong>.
+        </p>
+        <div class="diag-route">
+          → Nesse momento, o caminho mais coerente pra você é: <strong>construir a base antes de investir em mentoria/implementação.</strong>
+        </div>
+        <p>
+          Uma mentoria ou implementação agora seria prematura — você sente a dor do problema, mas ainda
+          não tem o piso operacional/financeiro pra extrair valor desses programas. A rota honesta é
+          consumir conteúdo estruturado e voltar quando o cenário mudar.
+        </p>
+        <p style="font-size:14px;">
+          Sigo no Instagram conteúdo quase diário sobre isso:
+          <a href="https://www.instagram.com/mateusrucci_" target="_blank" rel="noopener" style="color:var(--c-ouro);font-weight:600;">@mateusrucci_</a>.
+        </p>
+      </div>
+
+      <!-- RESULTADO: Pré-validado (sem Cal) -->
+      <div class="diag-step diag-thanks" data-step="thanks-diag_pre_validado">
+        <div class="diag-thanks-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Seu diagnóstico está pronto.</h3>
+        <p class="diag-scenario">
+          Seu cenário: empresa com <strong data-fill="tempo_empresa">—</strong>, faturamento <strong data-fill="faturamento">—</strong>.<br>
+          Principais incômodos: <strong data-fill="incomodo">—</strong>.
+        </p>
+        <div class="diag-route">
+          → O caminho mais coerente pra você agora é: <strong>validar o modelo antes de investir em mídia estruturada.</strong>
+        </div>
+        <p>
+          Investir em tráfego pago ou mentoria nesse estágio amplifica um problema que ainda não é de
+          marketing: é de oferta e validação. Foque em gerar tração orgânica primeiro — e volte aqui
+          quando o modelo estiver provado.
+        </p>
+        <p style="font-size:14px;">
+          Materiais gratuitos sobre validação no meu Instagram:
+          <a href="https://www.instagram.com/mateusrucci_" target="_blank" rel="noopener" style="color:var(--c-ouro);font-weight:600;">@mateusrucci_</a>.
+        </p>
+      </div>
+
+      <!-- RESULTADO: Setor regulado (sem Cal) -->
+      <div class="diag-step diag-thanks" data-step="thanks-diag_regulado">
+        <div class="diag-thanks-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1A1F3D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3>Seu diagnóstico está pronto.</h3>
+        <p class="diag-scenario">
+          Seu setor: <strong data-fill="setor">—</strong>.
+        </p>
+        <div class="diag-route">
+          → Seu setor tem restrições severas de mídia e não é onde tenho expertise profunda.
+        </div>
+        <p>
+          Ser honesto aqui é mais útil que vender pra você uma solução que não domino. Se quiser, me
+          manda mensagem no Instagram que te indico pessoalmente alguém que atua bem nesse nicho:
+          <a href="https://www.instagram.com/mateusrucci_" target="_blank" rel="noopener" style="color:var(--c-ouro);font-weight:600;">@mateusrucci_</a>.
+        </p>
       </div>
 
     </div>
