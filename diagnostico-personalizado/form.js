@@ -45,6 +45,8 @@
   var counter = document.getElementById('diagCounter');
   var resultBase = document.getElementById('diagResultBase');
   var resultQualified = document.getElementById('diagResultQualified');
+  var modal = document.getElementById('diagModal');
+  var modalClose = document.getElementById('diagModalClose');
   var totalSteps = 7;
   var calLoaded = false;
 
@@ -336,6 +338,20 @@
     progress.style.width = ((state.currentStep / totalSteps) * 100) + '%';
   }
 
+  function openModal() {
+    if (!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
   function showStep(step) {
     state.currentStep = step;
     flow.querySelectorAll('.step').forEach(function(el) {
@@ -350,10 +366,10 @@
     var canProceed = false;
     if (step === 1) canProceed = !!state.answers.momento_atual;
     if (step === 2) canProceed = !!state.answers.operacao_atual;
-    if (step === 3) canProceed = !!state.answers.faturamento_faixa;
-    if (step === 4) canProceed = !!state.answers.investimento_mensal_faixa;
-    if (step === 5) canProceed = state.answers.dores.length > 0;
-    if (step === 6) canProceed = !!state.answers.meta_12_meses;
+    if (step === 3) canProceed = state.answers.dores.length > 0;
+    if (step === 4) canProceed = !!state.answers.meta_12_meses;
+    if (step === 5) canProceed = !!state.answers.faturamento_faixa;
+    if (step === 6) canProceed = !!state.answers.investimento_mensal_faixa;
     if (step === 7) {
       canProceed = !!(
         normalizedName() &&
@@ -578,6 +594,17 @@
     bindMulti('dores');
     bindInputs();
     updateProgress();
+
+    document.querySelectorAll('[data-open-diagnostic]').forEach(function(btn) {
+      btn.addEventListener('click', openModal);
+    });
+    document.querySelectorAll('[data-close-diagnostic]').forEach(function(btn) {
+      btn.addEventListener('click', closeModal);
+    });
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && modal && modal.classList.contains('open')) closeModal();
+    });
 
     flow.querySelectorAll('[data-next]').forEach(function(btn) {
       btn.addEventListener('click', nextStep);
