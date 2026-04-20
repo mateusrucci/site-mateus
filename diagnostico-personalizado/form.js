@@ -291,48 +291,57 @@
   }
 
   function sbInsert(data) {
-    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_personalizado_leads', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer': 'return=minimal',
-      },
-      body: JSON.stringify(data),
-    }).then(function(r) {
-      if (!r.ok) {
-        return r.text().then(function(t) {
-          console.error('[DP] INSERT falhou (' + r.status + '):', t);
-          return null;
-        });
-      }
-      return data.session_id;
-    }).catch(function() { return null; });
+    return postSupabase('/rest/v1/diagnostico_personalizado_leads', data, 'return=minimal');
   }
 
   function sbUpsert(data) {
-    return fetch(SUPABASE_URL + '/rest/v1/diagnostico_personalizado_leads?on_conflict=session_id', {
+    return postSupabase('/rest/v1/diagnostico_personalizado_leads?on_conflict=session_id', data, 'resolution=merge-duplicates,return=minimal')
+      .then(function(result) {
+        if (result !== '__UPSERT_CONFLICT__') return result;
+        return sbInsert(data);
+      });
+  }
+
+  function postSupabase(path, data, prefer, removedColumns) {
+    var stripped = removedColumns || [];
+    var payload = Object.assign({}, data);
+
+    stripped.forEach(function(key) {
+      delete payload[key];
+    });
+
+    return fetch(SUPABASE_URL + path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Prefer': 'resolution=merge-duplicates,return=minimal',
+        'Prefer': prefer,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     }).then(function(r) {
       if (!r.ok) {
         return r.text().then(function(t) {
-          console.error('[DP] UPSERT falhou (' + r.status + '):', t);
+          var missingColumn = getMissingSchemaColumn(t);
+          if (missingColumn && stripped.indexOf(missingColumn) === -1) {
+            console.warn('[DP] coluna ausente no schema cache, reenviando sem:', missingColumn);
+            return postSupabase(path, data, prefer, stripped.concat(missingColumn));
+          }
+
+          console.error('[DP] request falhou (' + r.status + '):', t);
           if (t.indexOf('42P10') !== -1 || t.indexOf('no unique or exclusion constraint') !== -1) {
-            return sbInsert(data);
+            return '__UPSERT_CONFLICT__';
           }
           return null;
         });
       }
-      return data.session_id;
+      return payload.session_id;
     }).catch(function() { return null; });
+  }
+
+  function getMissingSchemaColumn(message) {
+    var match = String(message || '').match(/Could not find the '([^']+)' column/);
+    return match ? match[1] : '';
   }
 
   function persistCurrent(step, partial) {

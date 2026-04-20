@@ -38,6 +38,21 @@ create table if not exists public.diagnostico_personalizado_leads (
 alter table public.diagnostico_personalizado_leads
 add column if not exists momento_atual text;
 
+alter table public.diagnostico_personalizado_leads
+add column if not exists clareza_metricas text;
+
+alter table public.diagnostico_personalizado_leads
+add column if not exists urgencia text;
+
+alter table public.diagnostico_personalizado_leads
+add column if not exists resultado_diagnostico text;
+
+alter table public.diagnostico_personalizado_leads
+add column if not exists recomendacao_oferta text;
+
+alter table public.diagnostico_personalizado_leads
+add column if not exists lead_score text;
+
 create unique index if not exists diagnostico_personalizado_leads_session_id_key
 on public.diagnostico_personalizado_leads (session_id);
 
