@@ -359,6 +359,14 @@
     document.body.style.overflow = '';
   }
 
+  window.__diagOpen = openModal;
+  window.__diagClose = closeModal;
+  window.__diagGo = function(url) {
+    try { window.open(url, '_self'); } catch (e) {}
+    try { window.location.assign(url); } catch (e) {}
+    window.location.href = url;
+  };
+
   function showStep(step) {
     state.currentStep = step;
     flow.querySelectorAll('.step').forEach(function(el) {

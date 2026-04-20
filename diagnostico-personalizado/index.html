@@ -1012,7 +1012,7 @@
                 </a>
                 <nav class="nav-links">
                     <a href="../index.html">Site principal</a>
-                    <button type="button" class="cta" data-open-diagnostic>Começar agora</button>
+                    <button type="button" class="cta" data-open-diagnostic onclick="window.__diagOpen && window.__diagOpen()">Começar agora</button>
                 </nav>
             </div>
         </header>
@@ -1029,7 +1029,7 @@
                         </p>
 
                         <div class="hero-actions">
-                            <button type="button" class="cta" data-open-diagnostic>Iniciar diagnóstico</button>
+                            <button type="button" class="cta" data-open-diagnostic onclick="window.__diagOpen && window.__diagOpen()">Iniciar diagnóstico</button>
                         </div>
                     </div>
                 </div>
@@ -1037,11 +1037,11 @@
         </main>
 
         <div class="diag-modal" id="diagModal" aria-hidden="true">
-            <div class="diag-modal-backdrop" data-close-diagnostic></div>
+            <div class="diag-modal-backdrop" data-close-diagnostic onclick="window.__diagClose && window.__diagClose()"></div>
             <div class="diag-modal-dialog">
                 <div class="diag-modal-panel">
                     <div class="modal-head">
-                        <button type="button" class="modal-close" id="diagModalClose" aria-label="Fechar diagnóstico">&times;</button>
+                        <button type="button" class="modal-close" id="diagModalClose" aria-label="Fechar diagnóstico" onclick="window.__diagClose && window.__diagClose()">&times;</button>
                     </div>
 
                     <div class="question-panel">
@@ -1325,7 +1325,7 @@
                                 </div>
                                 <div class="nav-row">
                                     <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
-                                    <a href="https://www.instagram.com/mateusrucci/" target="_blank" rel="noreferrer" class="btn-primary">Ir para o Instagram</a>
+                                    <a href="https://www.instagram.com/mateusrucci/" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://www.instagram.com/mateusrucci/'); return false;">Ir para o Instagram</a>
                                 </div>
                             </div>
 
@@ -1353,7 +1353,7 @@
                                 </div>
                                 <div class="nav-row">
                                     <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
-                                    <a href="https://call.ruccia.com.br/mateusrucci/diagnostico" target="_blank" rel="noreferrer" class="btn-primary">Agendar diagnóstico</a>
+                                    <a href="https://call.ruccia.com.br/mateusrucci/diagnostico" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://call.ruccia.com.br/mateusrucci/diagnostico'); return false;">Agendar diagnóstico</a>
                                 </div>
                             </div>
                     </div>
@@ -1369,7 +1369,28 @@
         </footer>
     </div>
 
-    <script src="./tracking.js?v=20260420-3"></script>
-    <script src="./form.js?v=20260420-3"></script>
+    <script>
+        window.__diagOpen = function () {
+            var modal = document.getElementById('diagModal');
+            if (!modal) return;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        };
+        window.__diagClose = function () {
+            var modal = document.getElementById('diagModal');
+            if (!modal) return;
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        };
+        window.__diagGo = function (url) {
+            try { window.open(url, '_self'); } catch (e) {}
+            try { window.location.assign(url); } catch (e) {}
+            window.location.href = url;
+        };
+    </script>
+    <script src="./tracking.js?v=20260420-5"></script>
+    <script src="./form.js?v=20260420-5"></script>
 </body>
 </html>
