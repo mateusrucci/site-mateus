@@ -47,11 +47,7 @@
   var resultQualified = document.getElementById('diagResultQualified');
   var modal = document.getElementById('diagModal');
   var modalClose = document.getElementById('diagModalClose');
-  var baseFinalCta = document.getElementById('baseFinalCta');
-  var qualifiedFinalCta = document.getElementById('qualifiedFinalCta');
   var totalSteps = 7;
-  var INSTAGRAM_URL = 'https://www.instagram.com/mateusrucci/';
-  var CAL_URL = 'https://call.ruccia.com.br/mateusrucci/diagnostico';
 
   var geoReady = fetch(GEO_ENDPOINT)
     .then(function(r) { return r.ok ? r.json() : null; })
@@ -363,10 +359,6 @@
     document.body.style.overflow = '';
   }
 
-  function goTo(url) {
-    window.location.href = url;
-  }
-
   function showStep(step) {
     state.currentStep = step;
     flow.querySelectorAll('.step').forEach(function(el) {
@@ -569,8 +561,6 @@
       btn.addEventListener('click', closeModal);
     });
     if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (baseFinalCta) baseFinalCta.addEventListener('click', function() { goTo(INSTAGRAM_URL); });
-    if (qualifiedFinalCta) qualifiedFinalCta.addEventListener('click', function() { goTo(CAL_URL); });
     document.addEventListener('keydown', function(event) {
       if (event.key === 'Escape' && modal && modal.classList.contains('open')) closeModal();
     });
