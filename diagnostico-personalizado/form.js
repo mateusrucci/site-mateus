@@ -364,6 +364,12 @@
   }
 
   function goTo(url) {
+    try {
+      window.open(url, '_self');
+    } catch (e) {}
+    try {
+      window.location.assign(url);
+    } catch (e) {}
     window.location.href = url;
   }
 
