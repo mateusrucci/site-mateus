@@ -228,59 +228,64 @@
     var result = inferResult();
     var primaryPain = getPrimaryPain();
     var exposure = getCurrentExposure();
-    var ambition = (state.answers.meta_12_meses || '').toLowerCase();
+    var ambition = state.answers.meta_12_meses || '';
     var revenue = state.answers.faturamento_faixa || 'uma faixa relevante de faturamento';
     var investment = state.answers.investimento_mensal_faixa || 'um nível relevante de investimento';
+    var canSchedule = shouldScheduleCall();
     var response = {
-      qualified: shouldScheduleCall(),
+      qualified: canSchedule,
       title: '',
       summary: '',
       blocks: []
     };
 
     if (result.oferta === 'implementacao_time_inhouse') {
-      response.title = 'Sua empresa já está num ponto em que execução terceirizada começa a custar caro demais.';
-      response.summary = 'Com ' + revenue.toLowerCase() + ' e ' + investment.toLowerCase() + ', o diagnóstico aponta uma empresa que já exige soberania operacional, governança e retenção de inteligência dentro de casa.';
+      response.title = 'Sua empresa já chegou num ponto em que marketing precisa operar com mais controle, governança e capacidade interna.';
+      response.summary = 'A leitura cruza estrutura atual, nível de investimento, maturidade da operação e o tipo de gargalo que hoje trava sua escala.';
       response.blocks = [
-        'O gargalo principal hoje parece ser ' + primaryPain + '.',
-        exposure,
-        'A rota recomendada é implementação de time in-house, com desenho de estrutura, critérios de gestão e transição de dependência para patrimônio interno.',
-        'Como existe fit claro entre estágio, verba e urgência, a agenda estratégica foi liberada para aprofundar a construção dessa operação.'
+        'Seu diagnóstico principal aponta ' + primaryPain + ', somado a um cenário em que a operação já exige mais estrutura e menos improviso.',
+        'No negócio, isso tende a manter verba relevante rodando sem pleno controle executivo, pressionando margem, previsibilidade e retenção de inteligência.',
+        canSchedule
+          ? 'Pelo seu momento atual, faz sentido aprofundar isso comigo em uma auditoria estratégica para mapear estrutura, gargalos e próximos movimentos.'
+          : 'Existe material suficiente para uma leitura estratégica, mas antes da auditoria o ideal é consolidar alguns fundamentos da operação.'
       ];
       return response;
     }
 
     if (result.oferta === 'consultoria_estrategica') {
-      response.title = 'O seu cenário pede direção executiva antes de mais esforço operacional.';
-      response.summary = 'A combinação entre ' + revenue.toLowerCase() + ', ' + investment.toLowerCase() + ' e os sintomas reportados indica uma empresa com potencial de escala, mas ainda sem clareza suficiente sobre onde ajustar a máquina.';
+      response.title = 'Seu cenário pede clareza estratégica antes de mais pressão operacional.';
+      response.summary = 'A combinação entre o que você respondeu sobre estrutura, dor, ambição e nível de investimento mostra uma operação com potencial de escala, mas sem uma leitura suficientemente precisa do que corrigir primeiro.';
       response.blocks = [
-        'O ponto mais sensível hoje parece ser ' + primaryPain + '.',
-        exposure,
-        'A rota recomendada é uma consultoria estratégica focada em posicionamento, aquisição, governança e soberania de marketing.',
-        'Seu perfil foi qualificado para uma conversa direta, porque o problema já é de decisão e arquitetura, não de curiosidade tática.'
+        'O diagnóstico principal indica ' + primaryPain + ', dentro de uma estrutura em que a decisão executiva ainda não está organizando a operação como deveria.',
+        'No negócio, isso costuma gerar crescimento irregular, desperdício de verba e baixa previsibilidade sobre o que realmente está funcionando.',
+        canSchedule
+          ? 'Faz sentido transformar isso em uma auditoria estratégica comigo, para revisar posicionamento, aquisição, governança e o desenho da operação.'
+          : 'Antes de uma auditoria completa, o mais coerente é amadurecer alguns pontos da base e seguir acompanhando minha linha de raciocínio.'
       ];
       return response;
     }
 
     if (result.oferta === 'mentoria_individual') {
-      response.title = 'A prioridade agora parece ser elevar repertório, clareza e liderança da operação.';
-      response.summary = 'Você já tem base para crescer, mas ainda não no ponto em que uma agenda estratégica pesada seja o melhor primeiro movimento. O maior ganho vem de melhorar leitura, decisão e comando sobre o marketing.';
+      response.title = 'Hoje, o maior ganho parece estar em clareza, critério e liderança sobre o marketing.';
+      response.summary = 'A leitura do seu diagnóstico sugere uma empresa com espaço para evoluir rápido, desde que a base de decisão e a leitura estratégica fiquem mais sólidas.';
       response.blocks = [
-        'O gargalo mais claro hoje é ' + primaryPain + '.',
-        'Sem consolidar essa camada de leitura, a tendência é continuar variando entre tentativa, dependência e pouca previsibilidade.',
-        'A recomendação mais coerente é mentoria individual com foco em soberania, posicionamento e tomada de decisão.',
-        ambition.indexOf('internalizar') !== -1 ? 'Antes de internalizar mais estrutura, faz sentido consolidar critério, linguagem e visão de liderança.' : 'O próximo passo é consolidar base estratégica antes de liberar uma agenda de prescrição mais profunda.'
+        'O diagnóstico principal mostra ' + primaryPain + ', em uma fase na qual clareza e direção pesam mais do que ampliar a complexidade da operação.',
+        'No negócio, isso costuma manter a empresa presa entre tentativa, dependência e baixa consistência na tomada de decisão.',
+        canSchedule
+          ? 'Se quiser aprofundar esse cenário, você já pode transformar essa leitura em uma auditoria estratégica comigo.'
+          : 'Meu ponto aqui seria primeiro consolidar base, linguagem e leitura de mercado; depois disso, uma auditoria tende a render muito mais.'
       ];
       return response;
     }
 
-    response.title = 'Antes de sofisticar a escala, a sua empresa precisa organizar a base certa.';
-    response.summary = '';
+    response.title = 'Antes de sofisticar a escala, a sua empresa precisa organizar melhor a base de crescimento.';
+    response.summary = 'O objetivo do diagnóstico aqui não é inflar complexidade cedo demais, e sim mostrar com honestidade o que hoje mais trava a evolução da sua operação.';
     response.blocks = [
-      'Hoje, o ponto de maior atrito parece ser ' + primaryPain + '.',
-      'Pular essa etapa tende a transformar verba e esforço em ruído, não em patrimônio de aquisição.',
-      'A rota mais coerente é um direcionamento estratégico inicial para alinhar posicionamento, estrutura e critério de decisão.',
-      'Neste momento, a agenda estratégica não é liberada. Primeiro faz sentido organizar a base para depois aumentar a alavancagem.'
+      'O diagnóstico principal mostra ' + primaryPain + ', em uma estrutura que ainda precisa ganhar consistência antes de buscar mais alavancagem.',
+      'No negócio, isso tende a converter esforço e verba em oscilação, sem construir um sistema mais previsível de aquisição e crescimento.',
+      canSchedule
+        ? 'Quando fizer sentido aprofundar essa leitura, você pode transformar isso em uma auditoria estratégica comigo.'
+        : 'Quando essa base estiver mais madura, uma auditoria estratégica comigo tende a ser muito mais útil. Por enquanto, no botão abaixo eu te levo para meu Instagram.'
     ];
     return response;
   }
@@ -450,14 +455,12 @@
       document.getElementById('qualifiedBlock1').textContent = blocks[0];
       document.getElementById('qualifiedBlock2').textContent = blocks[1];
       document.getElementById('qualifiedBlock3').textContent = blocks[2];
-      document.getElementById('qualifiedBlock4').textContent = blocks[3];
     } else {
       document.getElementById('resultTitle').textContent = title;
       document.getElementById('resultSummary').textContent = summary;
       document.getElementById('resultBlock1').textContent = blocks[0];
       document.getElementById('resultBlock2').textContent = blocks[1];
       document.getElementById('resultBlock3').textContent = blocks[2];
-      document.getElementById('resultBlock4').textContent = blocks[3];
     }
   }
 

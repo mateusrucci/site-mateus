@@ -701,31 +701,6 @@
             display: block;
         }
 
-        .result-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: .14em;
-            margin-bottom: 18px;
-        }
-
-        .result-badge.qualificado {
-            color: var(--gold-2);
-            background: rgba(201,169,110,.11);
-            border: 1px solid rgba(201,169,110,.24);
-        }
-
-        .result-badge.base {
-            color: #bfd6c8;
-            background: rgba(78,123,99,.14);
-            border: 1px solid rgba(78,123,99,.26);
-        }
-
         .result-card h3 {
             font-size: clamp(24px, 2.8vw, 34px);
             line-height: 1.08;
@@ -742,7 +717,7 @@
 
         .diagnostic-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 14px;
             margin-bottom: 22px;
         }
@@ -1304,25 +1279,20 @@
                             </div>
 
                             <div class="result-card" id="diagResultBase">
-                                <div class="result-badge base">Diagnóstico estratégico</div>
                                 <h3 id="resultTitle">Seu diagnóstico está pronto.</h3>
                                 <p class="result-summary" id="resultSummary"></p>
                                 <div class="diagnostic-grid">
                                     <div class="diagnostic-block">
-                                        <span>O que está travando</span>
+                                        <span>Diagnóstico principal</span>
                                         <p id="resultBlock1"></p>
                                     </div>
                                     <div class="diagnostic-block">
-                                        <span>O custo de continuar assim</span>
+                                        <span>Impacto no negócio</span>
                                         <p id="resultBlock2"></p>
                                     </div>
                                     <div class="diagnostic-block">
-                                        <span>Rota recomendada</span>
+                                        <span>Auditoria estratégica</span>
                                         <p id="resultBlock3"></p>
-                                    </div>
-                                    <div class="diagnostic-block">
-                                        <span>Próximo passo</span>
-                                        <p id="resultBlock4"></p>
                                     </div>
                                 </div>
                                 <div class="nav-row">
@@ -1332,8 +1302,7 @@
                             </div>
 
                             <div class="result-card" id="diagResultQualified">
-                                <div class="result-badge qualificado">Perfil qualificado</div>
-                                <h3 id="qualifiedTitle">Existe fit claro para uma conversa estratégica.</h3>
+                                <h3 id="qualifiedTitle">Existe uma rota clara para destravar sua próxima fase de crescimento.</h3>
                                 <p class="result-summary" id="qualifiedSummary"></p>
                                 <div class="diagnostic-grid">
                                     <div class="diagnostic-block">
@@ -1345,17 +1314,13 @@
                                         <p id="qualifiedBlock2"></p>
                                     </div>
                                     <div class="diagnostic-block">
-                                        <span>Prescrição</span>
+                                        <span>Auditoria estratégica</span>
                                         <p id="qualifiedBlock3"></p>
-                                    </div>
-                                    <div class="diagnostic-block">
-                                        <span>Próximo movimento</span>
-                                        <p id="qualifiedBlock4"></p>
                                     </div>
                                 </div>
                                 <div class="nav-row">
                                     <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
-                                    <a href="https://call.ruccia.com.br/mateusrucci/diagnostico" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://call.ruccia.com.br/mateusrucci/diagnostico'); return false;">Agendar diagnóstico</a>
+                                    <a href="https://call.ruccia.com.br/mateusrucci/diagnostico" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://call.ruccia.com.br/mateusrucci/diagnostico'); return false;">Agendar auditoria</a>
                                 </div>
                             </div>
                     </div>
