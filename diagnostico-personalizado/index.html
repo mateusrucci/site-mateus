@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Personalizado | Mateus Rucci</title>
+    <meta name="description" content="Diagnóstico personalizado para CEOs e empresários que querem clareza sobre posicionamento, aquisição, governança e soberania de marketing.">
+    <meta name="theme-color" content="#101528">
+
+    <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','2019673242315210');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=2019673242315210&ev=PageView&noscript=1"/></noscript>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+
+    <style>
+        :root {
+            --bg: #0b0f1c;
+            --surface: rgba(18, 24, 42, 0.78);
+            --surface-strong: #11182b;
+            --surface-soft: rgba(255,255,255,.05);
+            --text: #f6f4ef;
+            --text-soft: rgba(246, 244, 239, .74);
+            --text-muted: rgba(246, 244, 239, .52);
+            --line: rgba(255,255,255,.09);
+            --line-strong: rgba(201, 169, 110, .22);
+            --gold: #c9a96e;
+            --gold-2: #e0c58f;
+            --navy: #1a1f3d;
+            --red: #b2574a;
+            --green: #4e7b63;
+            --radius-sm: 10px;
+            --radius-md: 18px;
+            --radius-lg: 28px;
+            --shadow: 0 24px 80px rgba(0,0,0,.34);
+            --ease: cubic-bezier(.16,1,.3,1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { display: block; max-width: 100%; }
+        button, input, select, textarea { font: inherit; }
+
+        .page {
+            min-height: 100vh;
+            background:
+                linear-gradient(180deg, rgba(6,9,18,.68), rgba(11,15,28,.96) 40%, #0b0f1c 100%),
+                url('../hero.jpg') center top / cover no-repeat fixed;
+        }
+
+        .page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 12% 20%, rgba(201,169,110,.14), transparent 24%),
+                radial-gradient(circle at 82% 18%, rgba(255,255,255,.06), transparent 18%),
+                radial-gradient(circle at 68% 76%, rgba(26,31,61,.34), transparent 26%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(18px);
+            background: rgba(7,10,18,.56);
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+
+        .nav-inner, .container {
+            width: min(1180px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 72px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #0b0f1c;
+            background: linear-gradient(135deg, var(--gold-2), var(--gold));
+            box-shadow: 0 12px 30px rgba(201,169,110,.24);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            color: var(--text-soft);
+            font-size: 14px;
+        }
+
+        .nav-links a:last-child,
+        .cta {
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(201,169,110,.92), rgba(224,197,143,.92));
+            color: #11131b;
+            font-weight: 800;
+            letter-spacing: .04em;
+            box-shadow: 0 14px 40px rgba(201,169,110,.24);
+        }
+
+        .hero {
+            position: relative;
+            z-index: 1;
+            padding: 90px 0 52px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+            gap: 36px;
+            align-items: stretch;
+        }
+
+        .hero-copy {
+            padding: 26px 0 12px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--line-strong);
+            background: rgba(255,255,255,.03);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .16em;
+            color: var(--gold-2);
+            margin-bottom: 24px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 0 6px rgba(201,169,110,.12);
+        }
+
+        h1 {
+            font-size: clamp(42px, 7vw, 78px);
+            line-height: .98;
+            letter-spacing: -.045em;
+            max-width: 720px;
+            margin-bottom: 22px;
+        }
+
+        .gold {
+            color: var(--gold-2);
+            font-style: italic;
+            font-weight: 700;
+        }
+
+        .hero-lead {
+            max-width: 660px;
+            font-size: clamp(18px, 2.1vw, 22px);
+            line-height: 1.5;
+            color: var(--text-soft);
+            margin-bottom: 18px;
+        }
+
+        .hero-support {
+            max-width: 630px;
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 34px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .ghost {
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            color: var(--text-soft);
+            font-weight: 600;
+            background: rgba(255,255,255,.03);
+        }
+
+        .hero-points {
+            display: grid;
+            gap: 14px;
+            max-width: 700px;
+        }
+
+        .hero-point {
+            display: grid;
+            grid-template-columns: 22px 1fr;
+            gap: 12px;
+            align-items: flex-start;
+            color: var(--text-soft);
+            font-size: 15px;
+        }
+
+        .hero-point-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(201,169,110,.14);
+            border: 1px solid rgba(201,169,110,.22);
+            color: var(--gold-2);
+            font-size: 12px;
+            margin-top: 1px;
+        }
+
+        .hero-panel,
+        .section-panel,
+        .result-card,
+        .question-panel {
+            background: linear-gradient(180deg, rgba(17,24,43,.94), rgba(11,15,28,.96));
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-panel {
+            border-radius: var(--radius-lg);
+            padding: 26px;
+            align-self: start;
+        }
+
+        .panel-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .16em;
+            color: var(--gold-2);
+            margin-bottom: 18px;
+        }
+
+        .signal-list {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .signal {
+            padding: 15px 16px;
+            border-radius: 14px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.05);
+        }
+
+        .signal h3 {
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .signal p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .authority-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .metric {
+            padding: 16px 14px;
+            border-radius: 14px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.05);
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 20px;
+            letter-spacing: -.04em;
+            margin-bottom: 6px;
+        }
+
+        .metric span {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .section {
+            position: relative;
+            z-index: 1;
+            padding: 38px 0 0;
+        }
+
+        .section-panel {
+            border-radius: var(--radius-lg);
+            padding: 30px;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .insight-card {
+            padding: 20px;
+            border-radius: 18px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.05);
+        }
+
+        .insight-kicker {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: var(--gold-2);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .insight-card h3 {
+            font-size: 19px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .insight-card p {
+            font-size: 14px;
+            color: var(--text-soft);
+        }
+
+        .diagnosis-shell {
+            display: grid;
+            grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .sticky-column {
+            position: sticky;
+            top: 94px;
+        }
+
+        .brief-card,
+        .question-panel,
+        .result-card {
+            border-radius: 24px;
+            padding: 26px;
+        }
+
+        .brief-card {
+            background: linear-gradient(180deg, rgba(17,24,43,.92), rgba(13,18,33,.98));
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+        }
+
+        .brief-card h2 {
+            font-size: clamp(28px, 3vw, 36px);
+            line-height: 1.08;
+            letter-spacing: -.04em;
+            margin-bottom: 14px;
+        }
+
+        .brief-card p {
+            color: var(--text-soft);
+            font-size: 15px;
+            line-height: 1.65;
+            margin-bottom: 22px;
+        }
+
+        .brief-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .brief-item {
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.05);
+            color: var(--text-soft);
+            font-size: 14px;
+        }
+
+        .brief-item strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .progress-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: var(--gold-2);
+            font-weight: 700;
+        }
+
+        .progress-counter {
+            font-size: 13px;
+            color: var(--text-soft);
+            font-weight: 600;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.06);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--gold), var(--gold-2));
+            border-radius: inherit;
+            transition: width .35s var(--ease);
+        }
+
+        .question-panel {
+            min-height: 620px;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .step-kicker {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: var(--gold-2);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step h3 {
+            font-size: clamp(28px, 3vw, 38px);
+            line-height: 1.08;
+            letter-spacing: -.04em;
+            margin-bottom: 12px;
+        }
+
+        .step p.step-sub {
+            color: var(--text-soft);
+            font-size: 15px;
+            line-height: 1.65;
+            margin-bottom: 24px;
+            max-width: 720px;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 26px;
+        }
+
+        .option {
+            position: relative;
+            padding: 18px 18px 18px 54px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.03);
+            cursor: pointer;
+            transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+        }
+
+        .option:hover {
+            transform: translateY(-1px);
+            border-color: rgba(201,169,110,.26);
+            background: rgba(255,255,255,.045);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, rgba(201,169,110,.16), rgba(26,31,61,.22));
+            border-color: rgba(201,169,110,.4);
+        }
+
+        .option .indicator {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255,255,255,.22);
+            display: grid;
+            place-items: center;
+            color: transparent;
+            font-size: 12px;
+            transition: all .25s var(--ease);
+        }
+
+        .option.multi .indicator {
+            border-radius: 7px;
+        }
+
+        .option.selected .indicator {
+            color: #101528;
+            background: linear-gradient(135deg, var(--gold), var(--gold-2));
+            border-color: transparent;
+        }
+
+        .option-title {
+            display: block;
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .option-text {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .input-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-bottom: 22px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--gold-2);
+        }
+
+        .field input,
+        .field textarea,
+        .ddi-select,
+        .phone-input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.04);
+            color: var(--text);
+            outline: none;
+        }
+
+        .field textarea {
+            min-height: 112px;
+            resize: vertical;
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .field input:focus,
+        .field textarea:focus,
+        .ddi-select:focus,
+        .phone-input:focus {
+            border-color: rgba(201,169,110,.42);
+            box-shadow: 0 0 0 4px rgba(201,169,110,.08);
+        }
+
+        .phone-group {
+            display: grid;
+            grid-template-columns: 110px minmax(0, 1fr);
+            gap: 10px;
+        }
+
+        .nav-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-secondary {
+            padding: 13px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,.1);
+            background: rgba(255,255,255,.03);
+            color: var(--text-soft);
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-2));
+            color: #101528;
+            font-weight: 800;
+            letter-spacing: .04em;
+            box-shadow: 0 14px 34px rgba(201,169,110,.22);
+        }
+
+        .btn-primary:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .result-card {
+            display: none;
+        }
+
+        .result-card.active {
+            display: block;
+        }
+
+        .result-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            margin-bottom: 18px;
+        }
+
+        .result-badge.qualificado {
+            color: var(--gold-2);
+            background: rgba(201,169,110,.11);
+            border: 1px solid rgba(201,169,110,.24);
+        }
+
+        .result-badge.base {
+            color: #bfd6c8;
+            background: rgba(78,123,99,.14);
+            border: 1px solid rgba(78,123,99,.26);
+        }
+
+        .result-card h3 {
+            font-size: clamp(30px, 3.4vw, 42px);
+            line-height: 1.06;
+            letter-spacing: -.045em;
+            margin-bottom: 12px;
+        }
+
+        .result-summary {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-soft);
+            margin-bottom: 24px;
+        }
+
+        .diagnostic-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .diagnostic-block {
+            padding: 18px;
+            border-radius: 18px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.05);
+        }
+
+        .diagnostic-block span {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--gold-2);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .diagnostic-block p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-soft);
+        }
+
+        .cal-shell {
+            margin-top: 18px;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.03);
+            min-height: 620px;
+        }
+
+        .cal-shell iframe {
+            width: 100% !important;
+            min-height: 620px;
+            border: none;
+        }
+
+        .footer {
+            position: relative;
+            z-index: 1;
+            padding: 34px 0 42px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,.08);
+        }
+
+        @media (max-width: 1080px) {
+            .hero-grid,
+            .diagnosis-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .sticky-column {
+                position: static;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .nav-inner, .container {
+                width: min(100%, calc(100% - 28px));
+            }
+
+            .nav-links a:not(:last-child) {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 54px;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
+
+            .section-grid,
+            .authority-metrics,
+            .diagnostic-grid,
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phone-group {
+                grid-template-columns: 1fr;
+            }
+
+            .question-panel,
+            .brief-card,
+            .result-card,
+            .hero-panel,
+            .section-panel {
+                padding: 22px 18px;
+                border-radius: 20px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="nav">
+            <div class="nav-inner">
+                <a href="../index.html" class="brand">
+                    <span class="brand-mark">MR</span>
+                    <span>Mateus Rucci</span>
+                </a>
+                <nav class="nav-links">
+                    <a href="#estrutura">Estrutura</a>
+                    <a href="#diagnostico">Diagnóstico</a>
+                    <a href="#diagnostico" class="cta">Começar agora</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div class="hero-copy">
+                            <div class="eyebrow">Diagnóstico Personalizado para CEOs</div>
+                            <h1>
+                                Descubra o que está travando a <span class="gold">performance e a soberania</span> do marketing da sua empresa.
+                            </h1>
+                            <p class="hero-lead">
+                                Uma sessão diagnóstica construída para empresários que já faturam, já investem e precisam entender com precisão se o problema está em posicionamento, governança, aquisição ou estrutura interna.
+                            </p>
+                            <p class="hero-support">
+                                Não é um formulário comum. É um filtro estratégico baseado em perfil de operação, verba, maturidade e ambição, para indicar a rota correta: clareza executiva, mentoria, consultoria ou implementação in-house.
+                            </p>
+
+                            <div class="hero-actions">
+                                <a href="#diagnostico" class="cta">Iniciar diagnóstico</a>
+                                <a href="#estrutura" class="ghost">Como funciona</a>
+                            </div>
+
+                            <div class="hero-points">
+                                <div class="hero-point">
+                                    <div class="hero-point-dot">✓</div>
+                                    <div>Começamos por perguntas de engajamento e contexto, antes de pedir dados sensíveis, seguindo a lógica do método Ask para maximizar resposta.</div>
+                                </div>
+                                <div class="hero-point">
+                                    <div class="hero-point-dot">✓</div>
+                                    <div>O resultado final não é genérico: ele muda conforme faturamento, investimento, maturidade, dor principal e momento de mercado.</div>
+                                </div>
+                                <div class="hero-point">
+                                    <div class="hero-point-dot">✓</div>
+                                    <div>Leads qualificados seguem para o mesmo calendário da home. Leads não qualificados recebem um parecer estratégico sem passar pela agenda.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <aside class="hero-panel">
+                            <div class="panel-label">Leitura executiva</div>
+                            <div class="signal-list">
+                                <div class="signal">
+                                    <h3>Dependência invisível</h3>
+                                    <p>Quando a inteligência do tráfego está com terceiros, a empresa cresce sem patrimônio de aquisição.</p>
+                                </div>
+                                <div class="signal">
+                                    <h3>Caixa-preta financeira</h3>
+                                    <p>Sem clareza de CAC, ROI e governança, o marketing vira custo variável com narrativa bonita.</p>
+                                </div>
+                                <div class="signal">
+                                    <h3>Teto de escala</h3>
+                                    <p>Muitas empresas não têm problema de mídia. Têm problema de estrutura, operação e posicionamento de oferta.</p>
+                                </div>
+                            </div>
+
+                            <div class="authority-metrics">
+                                <div class="metric">
+                                    <strong>+R$200M</strong>
+                                    <span>gerenciados em mídia</span>
+                                </div>
+                                <div class="metric">
+                                    <strong>+400</strong>
+                                    <span>operações analisadas</span>
+                                </div>
+                                <div class="metric">
+                                    <strong>8+ anos</strong>
+                                    <span>em performance e estrutura</span>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="estrutura">
+                <div class="container">
+                    <div class="section-panel">
+                        <div class="eyebrow">O que este diagnóstico lê</div>
+                        <div class="section-grid">
+                            <article class="insight-card">
+                                <div class="insight-kicker">Posicionamento</div>
+                                <h3>Se a sua comunicação sustenta ticket alto ou só gera curiosidade sem convicção.</h3>
+                                <p>O diagnóstico cruza momento de empresa, proposta de valor e tipo de dor para indicar se a falha está na mensagem, na oferta ou na narrativa de autoridade.</p>
+                            </article>
+                            <article class="insight-card">
+                                <div class="insight-kicker">Operação</div>
+                                <h3>Se o problema está em aquisição, gestão, governança ou dependência de terceiros.</h3>
+                                <p>Nem toda empresa precisa internalizar imediatamente. Algumas precisam de clareza e algumas precisam de estrutura pesada. O filtro existe para separar isso.</p>
+                            </article>
+                            <article class="insight-card">
+                                <div class="insight-kicker">Prescrição</div>
+                                <h3>Qual caminho faz sentido agora: mentoria, consultoria, implementação ou ajuste prévio.</h3>
+                                <p>Ao final, a recomendação vem acompanhada do porquê, do risco de continuar igual e da rota sugerida para o próximo ciclo de crescimento.</p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="diagnostico">
+                <div class="container">
+                    <div class="diagnosis-shell">
+                        <div class="sticky-column">
+                            <div class="brief-card">
+                                <div class="eyebrow">Como esta sessão funciona</div>
+                                <h2>Primeiro contexto. Depois sensibilidade. Por fim, prescrição.</h2>
+                                <p>
+                                    A sequência foi desenhada para gerar resposta de qualidade sem criar atrito logo no início. Começamos pelo que o empresário gosta de discutir: cenário, dor, ambição e gargalo. Só no final entram dados mais sensíveis.
+                                </p>
+
+                                <div class="brief-list">
+                                    <div class="brief-item">
+                                        <strong>1. Engajamento</strong>
+                                        Perguntas amplas sobre estágio, dor e ambição para abrir a conversa pelo que importa.
+                                    </div>
+                                    <div class="brief-item">
+                                        <strong>2. Diagnóstico de negócio</strong>
+                                        Faturamento, investimento, estrutura e maturidade entram como múltipla escolha para permitir leitura estratégica.
+                                    </div>
+                                    <div class="brief-item">
+                                        <strong>3. Resultado personalizado</strong>
+                                        O sistema classifica o nível de maturidade e prescreve a rota mais coerente para o seu momento.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question-panel">
+                            <div id="diagFlow">
+                                <div class="progress-row">
+                                    <div class="progress-label">Diagnóstico Estratégico</div>
+                                    <div class="progress-counter" id="diagCounter">1 de 7</div>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-fill" id="diagProgress"></div>
+                                </div>
+
+                                <div class="step active" data-step="1">
+                                    <div class="step-kicker">Engajamento</div>
+                                    <h3>Qual dessas frases mais descreve o momento da sua empresa hoje?</h3>
+                                    <p class="step-sub">Começamos pelo contexto. O objetivo aqui é entender a natureza do gargalo antes de falar de verba, time ou operação.</p>
+                                    <div class="options">
+                                        <div class="option" data-field="momento_atual" data-value="Crescemos, mas o marketing virou uma caixa-preta">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Crescemos, mas o marketing virou uma caixa-preta.</span>
+                                            <span class="option-text">Existe investimento e volume, mas pouca clareza real sobre o que está funcionando.</span>
+                                        </div>
+                                        <div class="option" data-field="momento_atual" data-value="Dependemos demais de agência ou terceiros">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Dependemos demais de agência ou terceiros.</span>
+                                            <span class="option-text">A operação continua rodando, mas a inteligência crítica não está dentro da empresa.</span>
+                                        </div>
+                                        <div class="option" data-field="momento_atual" data-value="A verba existe, mas a escala estagnou">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">A verba existe, mas a escala estagnou.</span>
+                                            <span class="option-text">O problema não parece mais ser “colocar campanha no ar”, e sim sustentar performance.</span>
+                                        </div>
+                                        <div class="option" data-field="momento_atual" data-value="O digital deveria contribuir mais, mas ainda não tem estrutura">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">O digital deveria contribuir mais, mas ainda não tem estrutura.</span>
+                                            <span class="option-text">A empresa fatura, vende e opera, mas o marketing ainda não virou máquina previsível.</span>
+                                        </div>
+                                    </div>
+                                    <div class="nav-row">
+                                        <span></span>
+                                        <button class="btn-primary" data-next disabled>Continuar</button>
+                                    </div>
+                                </div>
+
+                                <div class="step" data-step="2">
+                                    <div class="step-kicker">Estrutura atual</div>
+                                    <h3>Hoje, quem realmente controla a operação de marketing e performance?</h3>
+                                    <p class="step-sub">Essa resposta revela o nível de soberania da empresa e quanto do patrimônio de aquisição está dentro ou fora da operação.</p>
+                                    <div class="options">
+                                        <div class="option" data-field="operacao_atual" data-value="Agência externa">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Agência externa</span>
+                                            <span class="option-text">A execução e a leitura ficam concentradas em um parceiro de fora.</span>
+                                        </div>
+                                        <div class="option" data-field="operacao_atual" data-value="Freelancer ou consultor pontual">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Freelancer ou consultor pontual</span>
+                                            <span class="option-text">Existe capacidade operacional, mas sem estrutura robusta, processo ou continuidade.</span>
+                                        </div>
+                                        <div class="option" data-field="operacao_atual" data-value="Time interno sem liderança forte">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Time interno sem liderança forte</span>
+                                            <span class="option-text">A empresa já internalizou parte do marketing, mas ainda sem clareza técnica e governança.</span>
+                                        </div>
+                                        <div class="option" data-field="operacao_atual" data-value="Founder-led ou sócio centraliza">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Founder-led ou sócio centraliza</span>
+                                            <span class="option-text">O dono ainda é o teto da operação e o digital depende demais da sua presença.</span>
+                                        </div>
+                                    </div>
+                                    <div class="nav-row">
+                                        <button class="btn-secondary" data-back>Voltar</button>
+                                        <button class="btn-primary" data-next disabled>Continuar</button>
+                                    </div>
+                                </div>
+
+                                <div class="step" data-step="3">
+                                    <div class="step-kicker">Filtro de negócio</div>
+                                    <h3>Em qual faixa de faturamento anual sua empresa está hoje?</h3>
+                                    <p class="step-sub">Mantemos isso em múltipla escolha para acelerar o filtro e evitar fricção desnecessária. Não buscamos precisão contábil, e sim leitura estratégica.</p>
+                                    <div class="options">
+                                        <div class="option" data-field="faturamento_faixa" data-value="Até R$ 500 mil/ano">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Até R$ 500 mil/ano</span>
+                                            <span class="option-text">Base ainda em consolidação.</span>
+                                        </div>
+                                        <div class="option" data-field="faturamento_faixa" data-value="De R$ 500 mil a R$ 3 milhões/ano">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">De R$ 500 mil a R$ 3 milhões/ano</span>
+                                            <span class="option-text">Faixa típica de empresas prontas para elevar clareza e governança.</span>
+                                        </div>
+                                        <div class="option" data-field="faturamento_faixa" data-value="De R$ 3 milhões a R$ 10 milhões/ano">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">De R$ 3 milhões a R$ 10 milhões/ano</span>
+                                            <span class="option-text">Estrutura já validada, com espaço claro para internalização e performance.</span>
+                                        </div>
+                                        <div class="option" data-field="faturamento_faixa" data-value="De R$ 10 milhões a R$ 50 milhões/ano">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">De R$ 10 milhões a R$ 50 milhões/ano</span>
+                                            <span class="option-text">Operação madura, normalmente com custo alto de dependência e ineficiência.</span>
+                                        </div>
+                                        <div class="option" data-field="faturamento_faixa" data-value="Acima de R$ 50 milhões/ano">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Acima de R$ 50 milhões/ano</span>
+                                            <span class="option-text">Cenário em que aquisição, governança e escala precisam conversar em nível executivo.</span>
+                                        </div>
+                                    </div>
+                                    <div class="nav-row">
+                                        <button class="btn-secondary" data-back>Voltar</button>
+                                        <button class="btn-primary" data-next disabled>Continuar</button>
+                                    </div>
+                                </div>
+
+                                <div class="step" data-step="4">
+                                    <div class="step-kicker">Investimento</div>
+                                    <h3>Qual faixa de investimento mensal em marketing e tráfego faz parte da sua realidade hoje?</h3>
+                                    <p class="step-sub">A leitura aqui ajuda a diferenciar se o gargalo é de estrutura básica, governança de performance ou time interno de alta alavancagem.</p>
+                                    <div class="options">
+                                        <div class="option" data-field="investimento_mensal_faixa" data-value="Ainda não temos investimento recorrente">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Ainda não temos investimento recorrente</span>
+                                            <span class="option-text">A empresa ainda não opera mídia paga com consistência.</span>
+                                        </div>
+                                        <div class="option" data-field="investimento_mensal_faixa" data-value="Até R$ 10 mil/mês">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Até R$ 10 mil/mês</span>
+                                            <span class="option-text">Existe teste e alguma tração, mas ainda sem profundidade estrutural.</span>
+                                        </div>
+                                        <div class="option" data-field="investimento_mensal_faixa" data-value="De R$ 10 mil a R$ 30 mil/mês">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">De R$ 10 mil a R$ 30 mil/mês</span>
+                                            <span class="option-text">Faixa em que clareza de decisão já começa a mudar a economia da operação.</span>
+                                        </div>
+                                        <div class="option" data-field="investimento_mensal_faixa" data-value="De R$ 30 mil a R$ 100 mil/mês">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">De R$ 30 mil a R$ 100 mil/mês</span>
+                                            <span class="option-text">Patamar onde dependência de terceiros tende a ficar cara demais.</span>
+                                        </div>
+                                        <div class="option" data-field="investimento_mensal_faixa" data-value="Acima de R$ 100 mil/mês">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Acima de R$ 100 mil/mês</span>
+                                            <span class="option-text">Aqui, qualquer desalinhamento de posicionamento, governança ou time vira vazamento relevante de margem.</span>
+                                        </div>
+                                    </div>
+                                    <div class="nav-row">
+                                        <button class="btn-secondary" data-back>Voltar</button>
+                                        <button class="btn-primary" data-next disabled>Continuar</button>
+                                    </div>
+                                </div>
+
+                                <div class="step" data-step="5">
+                                    <div class="step-kicker">Dor principal</div>
+                                    <h3>Quais sintomas hoje mais drenam resultado, margem ou clareza?</h3>
+                                    <p class="step-sub">Selecione os sinais mais presentes. O objetivo é identificar se a falha está na aquisição, na oferta, no processo ou na ausência de soberania.</p>
+                                    <div class="options">
+                                        <div class="option multi" data-field="dores" data-value="Falta de clareza sobre CAC, ROI ou previsibilidade">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Falta de clareza sobre CAC, ROI ou previsibilidade</span>
+                                            <span class="option-text">O marketing roda, mas a empresa não consegue tomar decisão com confiança.</span>
+                                        </div>
+                                        <div class="option multi" data-field="dores" data-value="Dependência excessiva de agência, freelancer ou operador externo">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Dependência excessiva de agência, freelancer ou operador externo</span>
+                                            <span class="option-text">O crescimento depende de terceiros e a inteligência não fica dentro da empresa.</span>
+                                        </div>
+                                        <div class="option multi" data-field="dores" data-value="Escala travada mesmo com verba e operação comercial">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Escala travada mesmo com verba e operação comercial</span>
+                                            <span class="option-text">O problema parece ser estrutural, e não só de tráfego.</span>
+                                        </div>
+                                        <div class="option multi" data-field="dores" data-value="Mensagem, posicionamento ou oferta não convertem como deveriam">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Mensagem, posicionamento ou oferta não convertem como deveriam</span>
+                                            <span class="option-text">Existe tráfego ou esforço comercial, mas a narrativa não transforma atenção em convicção.</span>
+                                        </div>
+                                        <div class="option multi" data-field="dores" data-value="Time interno ou gestor atual não sustenta o nível que a empresa precisa">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Time interno ou gestor atual não sustenta o nível que a empresa precisa</span>
+                                            <span class="option-text">Já existe estrutura parcial, mas sem referência, processo ou liderança suficiente.</span>
+                                        </div>
+                                    </div>
+                                    <div class="nav-row">
+                                        <button class="btn-secondary" data-back>Voltar</button>
+                                        <button class="btn-primary" data-next disabled>Continuar</button>
+                                    </div>
+                                </div>
+
+                                <div class="step" data-step="6">
+                                    <div class="step-kicker">Ambição</div>
+                                    <h3>Qual é a meta que mais importa para os próximos 12 meses?</h3>
+                                    <p class="step-sub">A recomendação final depende tanto da dor quanto da ambição. Uma empresa pode ter o mesmo gargalo técnico, mas precisar de rotas diferentes.</p>
+                                    <div class="options">
+                                        <div class="option" data-field="meta_12_meses" data-value="Ganhar clareza estratégica para escalar com segurança">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Ganhar clareza estratégica para escalar com segurança</span>
+                                            <span class="option-text">O foco é sair da caixa-preta e decidir melhor antes de acelerar.</span>
+                                        </div>
+                                        <div class="option" data-field="meta_12_meses" data-value="Reduzir dependência e internalizar a inteligência de marketing">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Reduzir dependência e internalizar a inteligência de marketing</span>
+                                            <span class="option-text">A prioridade é construir soberania e preservar patrimônio de aquisição.</span>
+                                        </div>
+                                        <div class="option" data-field="meta_12_meses" data-value="Escalar investimento com ROI e governança">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Escalar investimento com ROI e governança</span>
+                                            <span class="option-text">A empresa já investe e quer sustentar crescimento sem perder margem.</span>
+                                        </div>
+                                        <div class="option" data-field="meta_12_meses" data-value="Montar ou reestruturar um time interno de alta performance">
+                                            <span class="indicator">✓</span>
+                                            <span class="option-title">Montar ou reestruturar um time interno de alta performance</span>
+                                            <span class="option-text">O objetivo é sair da dependência operacional e profissionalizar a máquina de aquisição.</span>
+                                        </div>
+                                    </div>
+                                    <div class="nav-row">
+                                        <button class="btn-secondary" data-back>Voltar</button>
+                                        <button class="btn-primary" data-next disabled>Continuar</button>
+                                    </div>
+                                </div>
+
+                                <div class="step" data-step="7">
+                                    <div class="step-kicker">Contato executivo</div>
+                                    <h3>Perfeito. Agora, para te entregar a leitura certa:</h3>
+                                    <p class="step-sub">Os dados abaixo só entram no final. A partir daqui, o sistema monta seu parecer e decide se faz sentido liberar agenda estratégica.</p>
+                                    <div class="input-grid">
+                                        <div class="field">
+                                            <label for="diagNome">Nome</label>
+                                            <input type="text" id="diagNome" placeholder="Seu nome completo" autocomplete="name">
+                                        </div>
+                                        <div class="field">
+                                            <label for="diagCargo">Cargo</label>
+                                            <input type="text" id="diagCargo" placeholder="CEO, fundador, sócio..." autocomplete="organization-title">
+                                        </div>
+                                        <div class="field">
+                                            <label for="diagEmpresa">Empresa</label>
+                                            <input type="text" id="diagEmpresa" placeholder="Nome da empresa" autocomplete="organization">
+                                        </div>
+                                        <div class="field">
+                                            <label for="diagEmail">Email</label>
+                                            <input type="email" id="diagEmail" placeholder="seuemail@empresa.com" autocomplete="email">
+                                        </div>
+                                        <div class="field full">
+                                            <label for="diagTelefone">WhatsApp</label>
+                                            <div class="phone-group">
+                                                <select id="diagDdi" class="ddi-select" autocomplete="tel-country-code">
+                                                    <option value="55">🇧🇷 +55</option>
+                                                    <option value="1">🇺🇸 +1</option>
+                                                    <option value="351">🇵🇹 +351</option>
+                                                    <option value="54">🇦🇷 +54</option>
+                                                    <option value="57">🇨🇴 +57</option>
+                                                    <option value="52">🇲🇽 +52</option>
+                                                    <option value="56">🇨🇱 +56</option>
+                                                    <option value="34">🇪🇸 +34</option>
+                                                    <option value="44">🇬🇧 +44</option>
+                                                </select>
+                                                <input type="tel" id="diagTelefone" class="phone-input" placeholder="(11) 99999-9999" autocomplete="tel-national">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="nav-row">
+                                        <button class="btn-secondary" data-back>Voltar</button>
+                                        <button class="btn-primary" data-submit disabled>Ver meu diagnóstico</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="result-card" id="diagResultBase">
+                                <div class="result-badge base">Diagnóstico estratégico</div>
+                                <h3 id="resultTitle">Seu diagnóstico está pronto.</h3>
+                                <p class="result-summary" id="resultSummary"></p>
+                                <div class="diagnostic-grid">
+                                    <div class="diagnostic-block">
+                                        <span>O que está travando</span>
+                                        <p id="resultBlock1"></p>
+                                    </div>
+                                    <div class="diagnostic-block">
+                                        <span>O custo de continuar assim</span>
+                                        <p id="resultBlock2"></p>
+                                    </div>
+                                    <div class="diagnostic-block">
+                                        <span>Rota recomendada</span>
+                                        <p id="resultBlock3"></p>
+                                    </div>
+                                    <div class="diagnostic-block">
+                                        <span>Próximo passo</span>
+                                        <p id="resultBlock4"></p>
+                                    </div>
+                                </div>
+                                <div class="nav-row">
+                                    <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
+                                    <a href="https://www.linkedin.com/in/mateus-rucci-576ab2113/" target="_blank" rel="noreferrer" class="btn-primary">Continuar acompanhando no LinkedIn</a>
+                                </div>
+                            </div>
+
+                            <div class="result-card" id="diagResultQualified">
+                                <div class="result-badge qualificado">Perfil qualificado</div>
+                                <h3 id="qualifiedTitle">Existe fit claro para uma conversa estratégica.</h3>
+                                <p class="result-summary" id="qualifiedSummary"></p>
+                                <div class="diagnostic-grid">
+                                    <div class="diagnostic-block">
+                                        <span>Diagnóstico principal</span>
+                                        <p id="qualifiedBlock1"></p>
+                                    </div>
+                                    <div class="diagnostic-block">
+                                        <span>Impacto no negócio</span>
+                                        <p id="qualifiedBlock2"></p>
+                                    </div>
+                                    <div class="diagnostic-block">
+                                        <span>Prescrição</span>
+                                        <p id="qualifiedBlock3"></p>
+                                    </div>
+                                    <div class="diagnostic-block">
+                                        <span>Próximo movimento</span>
+                                        <p id="qualifiedBlock4"></p>
+                                    </div>
+                                </div>
+                                <div class="cal-shell">
+                                    <div id="my-cal-inline-diagnostico"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container footer-inner">
+                <div>Diagnóstico Personalizado · Mateus Rucci</div>
+                <div>Estratégia, performance e soberania de marketing para empresas que já faturam e precisam de clareza real.</div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="./tracking.js?v=20260420-2"></script>
+    <script src="./form.js?v=20260420-2"></script>
+</body>
+</html>

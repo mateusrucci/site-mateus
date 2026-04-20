@@ -8,6 +8,7 @@ deployment:
     - /bin/cp -f  api-tracking.php  $DEPLOYPATH
     - /bin/cp -f  api-diagnostico.php  $DEPLOYPATH
     - /bin/cp -rf assets/           $DEPLOYPATH
+    - /bin/cp -rf diagnostico-personalizado/  $DEPLOYPATH
     - /bin/cp -rf consultoria/      $DEPLOYPATH
     - /bin/cp -rf mentoria/         $DEPLOYPATH
     - /bin/cp -rf implementaca-de-funis/                    $DEPLOYPATH
