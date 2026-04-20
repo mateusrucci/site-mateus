@@ -46,6 +46,16 @@ const Tracker = {
         return null;
     },
 
+    getFbp: function () {
+        const cookie = this.getCookie('_fbp');
+        if (cookie) return cookie;
+
+        const seed = Math.floor(Math.random() * 1e10);
+        const fbp = 'fb.1.' + Date.now() + '.' + seed;
+        this.setCookie('_fbp', fbp, 90);
+        return fbp;
+    },
+
     normalizeEmail: function (email) {
         return String(email || '').trim().toLowerCase() || null;
     },
@@ -79,6 +89,8 @@ const Tracker = {
     track: function (eventName, customData = {}, userData = {}) {
         // eventID único — garante deduplicação entre Pixel e CAPI
         const eventId = 'evt_' + Math.random().toString(36).slice(2) + '_' + Date.now();
+        const fbp = this.getFbp();
+        const fbc = this.getFbc();
 
         // 1. Pixel client-side (com eventID para deduplicação)
         if (typeof fbq === 'function') {
@@ -92,8 +104,8 @@ const Tracker = {
             eventName,
             eventId,
             eventUrl:    window.location.href,
-            fbp:         this.getCookie('_fbp') || null,
-            fbc:         this.getFbc(),
+            fbp:         fbp,
+            fbc:         fbc,
             external_id: userData.external_id || this.getExternalId(),
             email:       this.normalizeEmail(userData.email),
             phone:       this.normalizePhone(userData.phone),   // E.164 sem + quando vier do form

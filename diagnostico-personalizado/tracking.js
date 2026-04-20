@@ -33,6 +33,15 @@ const Tracker = {
         return null;
     },
 
+    getFbp() {
+        const cookie = this.getCookie('_fbp');
+        if (cookie) return cookie;
+        const seed = Math.floor(Math.random() * 1e10);
+        const fbp = 'fb.1.' + Date.now() + '.' + seed;
+        this.setCookie('_fbp', fbp, 90);
+        return fbp;
+    },
+
     normalizeEmail(email) {
         return String(email || '').trim().toLowerCase() || null;
     },
@@ -56,6 +65,8 @@ const Tracker = {
 
     track(eventName, customData = {}, userData = {}) {
         const eventId = 'evt_' + Math.random().toString(36).slice(2) + '_' + Date.now();
+        const fbp = this.getFbp();
+        const fbc = this.getFbc();
 
         if (typeof fbq === 'function') {
             fbq('track', eventName, customData, { eventID: eventId });
@@ -65,8 +76,8 @@ const Tracker = {
             eventName,
             eventId,
             eventUrl: window.location.href,
-            fbp: this.getCookie('_fbp') || null,
-            fbc: this.getFbc(),
+            fbp: fbp,
+            fbc: fbc,
             external_id: userData.external_id || this.getExternalId(),
             email: this.normalizeEmail(userData.email),
             phone: this.normalizePhone(userData.phone),

@@ -48,9 +48,13 @@ $userData = [
 // IDs do Facebook coletados pelo cookie no navegador da pessoa
 if (!empty($input['fbp'])) {
     $userData['fbp'] = $input['fbp'];
+} elseif (!empty($_COOKIE['_fbp'])) {
+    $userData['fbp'] = $_COOKIE['_fbp'];
 }
 if (!empty($input['fbc'])) {
     $userData['fbc'] = $input['fbc'];
+} elseif (!empty($_COOKIE['_fbc'])) {
+    $userData['fbc'] = $_COOKIE['_fbc'];
 }
 
 // 🔐 CRIPTOGRAFIA EXIGIDA PELO META (SHA-256)
