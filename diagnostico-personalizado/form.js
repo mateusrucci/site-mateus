@@ -48,7 +48,6 @@
   var modal = document.getElementById('diagModal');
   var modalClose = document.getElementById('diagModalClose');
   var totalSteps = 7;
-  var calLoaded = false;
 
   var geoReady = fetch(GEO_ENDPOINT)
     .then(function(r) { return r.ok ? r.json() : null; })
@@ -115,7 +114,7 @@
       urgencia: inferUrgency(),
       resultado_diagnostico: diagnostic.resultado,
       recomendacao_oferta: diagnostic.oferta,
-      lead_score: diagnostic.qualificado ? 'qualificado' : 'base',
+      lead_score: shouldScheduleCall() ? 'qualificado' : 'base',
       parcial: partial,
       etapa_atual: step,
       utm_source: tracking.utm_source,
@@ -152,6 +151,14 @@
     if (/caixa-preta|cac|roi|previsibilidade/.test(source)) return 'baixa';
     if (/escala|depend/.test(source)) return 'media';
     return 'alta';
+  }
+
+  function shouldScheduleCall() {
+    var investimento = state.answers.investimento_mensal_faixa || '';
+    var faturamento = state.answers.faturamento_faixa || '';
+    var investsEnough = /De R\$ 10 mil a R\$ 30 mil\/mês|De R\$ 30 mil a R\$ 100 mil\/mês|Acima de R\$ 100 mil\/mês/.test(investimento);
+    var billsEnough = /De R\$ 500 mil a R\$ 3 milhões\/ano|De R\$ 3 milhões a R\$ 10 milhões\/ano|De R\$ 10 milhões a R\$ 50 milhões\/ano|Acima de R\$ 50 milhões\/ano/.test(faturamento);
+    return investsEnough || billsEnough;
   }
 
   function inferResult() {
@@ -225,7 +232,7 @@
     var revenue = state.answers.faturamento_faixa || 'uma faixa relevante de faturamento';
     var investment = state.answers.investimento_mensal_faixa || 'um nível relevante de investimento';
     var response = {
-      qualified: result.qualificado,
+      qualified: shouldScheduleCall(),
       title: '',
       summary: '',
       blocks: []
@@ -436,7 +443,6 @@
       document.getElementById('qualifiedBlock2').textContent = blocks[1];
       document.getElementById('qualifiedBlock3').textContent = blocks[2];
       document.getElementById('qualifiedBlock4').textContent = blocks[3];
-      initCal();
     } else {
       document.getElementById('resultTitle').textContent = title;
       document.getElementById('resultSummary').textContent = summary;
@@ -445,53 +451,6 @@
       document.getElementById('resultBlock3').textContent = blocks[2];
       document.getElementById('resultBlock4').textContent = blocks[3];
     }
-  }
-
-  function initCal() {
-    if (calLoaded) return;
-    calLoaded = true;
-
-    (function (C, A, L) {
-      var p = function (a, ar) { a.q.push(ar); };
-      var d = C.document;
-      C.Cal = C.Cal || function () {
-        var cal = C.Cal;
-        var ar = arguments;
-        if (!cal.loaded) {
-          cal.ns = {}; cal.q = cal.q || [];
-          d.head.appendChild(d.createElement('script')).src = A;
-          cal.loaded = true;
-        }
-        if (ar[0] === L) {
-          var api = function () { p(api, arguments); };
-          var namespace = ar[1];
-          api.q = api.q || [];
-          if (typeof namespace === 'string') {
-            cal.ns[namespace] = cal.ns[namespace] || api;
-            p(cal.ns[namespace], ar);
-            p(cal, ['initNamespace', namespace]);
-          } else { p(cal, ar); }
-          return;
-        }
-        p(cal, ar);
-      };
-    })(window, 'https://call.ruccia.com.br/embed/embed.js', 'init');
-
-    Cal('init', 'diagnostico', { origin: 'https://call.ruccia.com.br' });
-    Cal.ns.diagnostico('inline', {
-      elementOrSelector: '#my-cal-inline-diagnostico',
-      config: {
-        layout: 'month_view',
-        useSlotsViewOnSmallScreen: 'true',
-        theme: 'light',
-      },
-      calLink: 'mateusrucci/diagnostico',
-    });
-    Cal.ns.diagnostico('ui', {
-      theme: 'light',
-      hideEventTypeDetails: false,
-      layout: 'month_view',
-    });
   }
 
   function nextStep() {
@@ -513,7 +472,7 @@
       form_type: 'diagnostico_personalizado',
       resultado_diagnostico: result.resultado,
       recomendacao_oferta: result.oferta,
-      lead_score: result.qualificado ? 'qualificado' : 'base',
+      lead_score: shouldScheduleCall() ? 'qualificado' : 'base',
       faturamento_faixa: state.answers.faturamento_faixa,
       investimento_mensal_faixa: state.answers.investimento_mensal_faixa,
       cidade: state.geo.cidade || '',

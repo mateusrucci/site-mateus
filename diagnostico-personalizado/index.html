@@ -62,22 +62,33 @@
         button, input, select, textarea { font: inherit; }
 
         .page {
+            position: relative;
+            isolation: isolate;
             min-height: 100vh;
-            background:
-                linear-gradient(180deg, rgba(6,9,18,.68), rgba(11,15,28,.96) 40%, #0b0f1c 100%),
-                url('./hero.jpg') center top / cover no-repeat fixed;
+            background: #0b0f1c;
         }
 
         .page::before {
             content: '';
             position: fixed;
             inset: 0;
+            background: url('./hero.jpg') center top / cover no-repeat;
+            opacity: .4;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .page::after {
+            content: '';
+            position: fixed;
+            inset: 0;
             background:
+                linear-gradient(180deg, rgba(6,9,18,.52), rgba(11,15,28,.88) 40%, #0b0f1c 100%),
                 radial-gradient(circle at 12% 20%, rgba(201,169,110,.14), transparent 24%),
                 radial-gradient(circle at 82% 18%, rgba(255,255,255,.06), transparent 18%),
                 radial-gradient(circle at 68% 76%, rgba(26,31,61,.34), transparent 26%);
             pointer-events: none;
-            z-index: 0;
+            z-index: -1;
         }
 
         .nav {
@@ -1310,7 +1321,7 @@
                                 </div>
                                 <div class="nav-row">
                                     <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
-                                    <a href="https://www.linkedin.com/in/mateus-rucci-576ab2113/" target="_blank" rel="noreferrer" class="btn-primary">Continuar acompanhando no LinkedIn</a>
+                                    <a href="https://www.instagram.com/mateusrucci/" target="_blank" rel="noreferrer" class="btn-primary">Ir para o Instagram</a>
                                 </div>
                             </div>
 
@@ -1336,8 +1347,9 @@
                                         <p id="qualifiedBlock4"></p>
                                     </div>
                                 </div>
-                                <div class="cal-shell">
-                                    <div id="my-cal-inline-diagnostico"></div>
+                                <div class="nav-row">
+                                    <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
+                                    <a href="https://call.ruccia.com.br/mateusrucci/diagnostico" target="_blank" rel="noreferrer" class="btn-primary">Agendar diagnóstico</a>
                                 </div>
                             </div>
                     </div>
