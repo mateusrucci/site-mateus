@@ -268,7 +268,7 @@
     }
 
     response.title = 'Antes de sofisticar a escala, a sua empresa precisa organizar a base certa.';
-    response.summary = 'O diagnóstico mostra mais sinais de fundação incompleta do que de gargalo em operação high-ticket. Isso não invalida crescimento; só muda a ordem correta dos movimentos.';
+    response.summary = '';
     response.blocks = [
       'Hoje, o ponto de maior atrito parece ser ' + primaryPain + '.',
       'Pular essa etapa tende a transformar verba e esforço em ruído, não em patrimônio de aquisição.',
