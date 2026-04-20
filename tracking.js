@@ -7,6 +7,11 @@
 const Tracker = {
     endpoint: './api-tracking.php',
     geoEndpoint: './api-diagnostico.php',
+    storageKeys: {
+        fbc: 'mr_site_fbc',
+        fbp: 'mr_site_fbp',
+        externalId: 'mr_site_external_id',
+    },
 
     /* ── Cookie helper ──────────────────────────────────────────── */
     getCookie: function (name) {
@@ -19,13 +24,28 @@ const Tracker = {
         document.cookie = name + '=' + value + ';expires=' + expires + ';path=/;SameSite=Lax';
     },
 
+    getStored: function (key) {
+        try {
+            return window.localStorage.getItem(key);
+        } catch (_) {
+            return null;
+        }
+    },
+
+    setStored: function (key, value) {
+        try {
+            window.localStorage.setItem(key, value);
+        } catch (_) {}
+    },
+
     /* ── external_id persistente (180 dias) ─────────────────────── */
     // Identifica o mesmo navegador entre sessões (+51% EMQ)
     getExternalId: function () {
-        let id = this.getCookie('_ext_id');
+        let id = this.getCookie('_ext_id') || this.getStored(this.storageKeys.externalId);
         if (!id) {
             id = 'eid_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
             this.setCookie('_ext_id', id, 180);
+            this.setStored(this.storageKeys.externalId, id);
         }
         return id;
     },
@@ -35,24 +55,38 @@ const Tracker = {
     // Se o cookie não existir mas fbclid estiver na URL, formatamos manualmente.
     getFbc: function () {
         const cookie = this.getCookie('_fbc');
-        if (cookie) return cookie;
+        if (cookie) {
+            this.setStored(this.storageKeys.fbc, cookie);
+            return cookie;
+        }
 
         const match = window.location.search.match(/fbclid=([^&]*)/);
         if (match) {
             const fbc = 'fb.1.' + Date.now() + '.' + match[1];
             this.setCookie('_fbc', fbc, 90); // persiste para próximas páginas
+            this.setStored(this.storageKeys.fbc, fbc);
             return fbc;
         }
-        return null;
+        return this.getStored(this.storageKeys.fbc);
     },
 
     getFbp: function () {
         const cookie = this.getCookie('_fbp');
-        if (cookie) return cookie;
+        if (cookie) {
+            this.setStored(this.storageKeys.fbp, cookie);
+            return cookie;
+        }
+
+        const stored = this.getStored(this.storageKeys.fbp);
+        if (stored) {
+            this.setCookie('_fbp', stored, 90);
+            return stored;
+        }
 
         const seed = Math.floor(Math.random() * 1e10);
         const fbp = 'fb.1.' + Date.now() + '.' + seed;
         this.setCookie('_fbp', fbp, 90);
+        this.setStored(this.storageKeys.fbp, fbp);
         return fbp;
     },
 
