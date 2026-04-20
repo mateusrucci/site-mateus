@@ -63,32 +63,34 @@
 
         .page {
             position: relative;
-            isolation: isolate;
             min-height: 100vh;
             background: #0b0f1c;
         }
 
-        .page::before {
-            content: '';
+        .page-bg,
+        .page-overlay {
             position: fixed;
             inset: 0;
-            background: url('./hero.jpg') center top / cover no-repeat;
-            opacity: .4;
             pointer-events: none;
-            z-index: -2;
+            z-index: 0;
         }
 
-        .page::after {
-            content: '';
-            position: fixed;
-            inset: 0;
+        .page-bg {
+            background: url('./hero.jpg') center top / cover no-repeat;
+            opacity: .4;
+        }
+
+        .page-overlay {
             background:
                 linear-gradient(180deg, rgba(6,9,18,.52), rgba(11,15,28,.88) 40%, #0b0f1c 100%),
                 radial-gradient(circle at 12% 20%, rgba(201,169,110,.14), transparent 24%),
                 radial-gradient(circle at 82% 18%, rgba(255,255,255,.06), transparent 18%),
                 radial-gradient(circle at 68% 76%, rgba(26,31,61,.34), transparent 26%);
-            pointer-events: none;
-            z-index: -1;
+        }
+
+        .page > *:not(.page-bg):not(.page-overlay) {
+            position: relative;
+            z-index: 1;
         }
 
         .nav {
@@ -1000,6 +1002,8 @@
 </head>
 <body>
     <div class="page">
+        <div class="page-bg" aria-hidden="true"></div>
+        <div class="page-overlay" aria-hidden="true"></div>
         <header class="nav">
             <div class="nav-inner">
                 <a href="../index.html" class="brand">
