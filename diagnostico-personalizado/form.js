@@ -24,6 +24,7 @@
     geo: {},
     saving: Promise.resolve(),
     contactSaveTimer: null,
+    autoAdvanceTimer: null,
     answers: {
       momento_atual: '',
       operacao_atual: '',
@@ -399,12 +400,15 @@
   };
 
   function showStep(step) {
+    clearTimeout(state.autoAdvanceTimer);
     state.currentStep = step;
     flow.querySelectorAll('.step').forEach(function(el) {
       el.classList.toggle('active', Number(el.dataset.step) === step);
     });
     updateProgress();
     validateCurrentStep();
+    var activeStep = flow.querySelector('.step.active');
+    if (activeStep) activeStep.scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
 
   function validateCurrentStep() {
@@ -435,6 +439,7 @@
     flow.querySelectorAll('.option[data-field="' + field + '"]:not(.multi)').forEach(function(opt) {
       opt.addEventListener('click', function() {
         var step = opt.closest('.step');
+        var stepNumber = Number(step.dataset.step);
         step.querySelectorAll('.option[data-field="' + field + '"]').forEach(function(el) {
           el.classList.remove('selected');
         });
@@ -442,6 +447,13 @@
         state.answers[field] = opt.dataset.value;
         if (!state.sessionId) state.sessionId = genSessionId();
         validateCurrentStep();
+        var nextBtn = step.querySelector('[data-next]');
+        if (nextBtn && !nextBtn.disabled) {
+          clearTimeout(state.autoAdvanceTimer);
+          state.autoAdvanceTimer = setTimeout(function() {
+            if (state.currentStep === stepNumber) nextStep();
+          }, 180);
+        }
       });
     });
   }
