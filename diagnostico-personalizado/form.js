@@ -158,11 +158,15 @@
     var investimento = state.answers.investimento_mensal_faixa || '';
     var faturamento = state.answers.faturamento_faixa || '';
     var investsEnough = /De R\$ 10 mil a R\$ 30 mil\/mês|De R\$ 30 mil a R\$ 100 mil\/mês|Acima de R\$ 100 mil\/mês/.test(investimento);
-    var billsEnough = /De R\$ 500 mil a R\$ 3 milhões\/ano|De R\$ 3 milhões a R\$ 10 milhões\/ano|De R\$ 10 milhões a R\$ 50 milhões\/ano|Acima de R\$ 50 milhões\/ano/.test(faturamento);
-    return investsEnough || billsEnough;
+    var billsEnough = /De R\$ 100 mil a R\$ 500 mil\/ano|De R\$ 500 mil a R\$ 3 milhões\/ano|De R\$ 3 milhões a R\$ 10 milhões\/ano|De R\$ 10 milhões a R\$ 50 milhões\/ano|Acima de R\$ 50 milhões\/ano/.test(faturamento);
+    return investsEnough && billsEnough;
   }
 
   function inferResult() {
+    if (!shouldScheduleCall()) {
+      return { resultado: 'base_antes_da_escala', oferta: 'direcionamento_estrategico', qualificado: false };
+    }
+
     var faturamento = state.answers.faturamento_faixa;
     var investimento = state.answers.investimento_mensal_faixa;
     var dores = state.answers.dores.join(' | ').toLowerCase();
@@ -179,7 +183,8 @@
     if (/acima de r\$ 50 milhões|de r\$ 10 milhões a r\$ 50 milhões/.test(faturamento)) revenueScore = 4;
     else if (/de r\$ 3 milhões a r\$ 10 milhões/.test(faturamento)) revenueScore = 3;
     else if (/de r\$ 500 mil a r\$ 3 milhões/.test(faturamento)) revenueScore = 2;
-    else revenueScore = 1;
+    else if (/de r\$ 100 mil a r\$ 500 mil/.test(faturamento)) revenueScore = 1;
+    else revenueScore = 0;
 
     if (/acima de r\$ 100 mil|de r\$ 30 mil a r\$ 100 mil/.test(investimento)) investmentScore = 4;
     else if (/de r\$ 10 mil a r\$ 30 mil/.test(investimento)) investmentScore = 2;
@@ -190,19 +195,15 @@
     if (/entra lead\. não entra venda|funil/.test(contexto)) positioningScore = 2;
     if (/time interno|reestruturar um time interno|meu time atual/.test(contexto)) teamScore = 3;
 
-    if (revenueScore >= 3 && investmentScore >= 4 && (dependencyScore >= 3 || teamScore >= 3)) {
+    if (/controle pra dentro|time interno forte/.test(contexto) || ((dependencyScore >= 3 || teamScore >= 3) && (revenueScore >= 2 || investmentScore >= 2))) {
       return { resultado: 'controle_interno_e_escala', oferta: 'implementacao_time_inhouse', qualificado: true };
     }
 
-    if (revenueScore >= 2 && investmentScore >= 2 && (dependencyScore >= 3 || governanceScore >= 3 || positioningScore >= 2)) {
+    if (/escalar investimento/.test(contexto) || governanceScore >= 3 || positioningScore >= 2) {
       return { resultado: 'clareza_para_destravar_escala', oferta: 'consultoria_estrategica', qualificado: true };
     }
 
-    if (revenueScore >= 2) {
-      return { resultado: 'clareza_e_lideranca_de_marketing', oferta: 'mentoria_individual', qualificado: true };
-    }
-
-    return { resultado: 'base_antes_da_escala', oferta: 'direcionamento_estrategico', qualificado: false };
+    return { resultado: 'clareza_e_lideranca_de_marketing', oferta: 'mentoria_individual', qualificado: true };
   }
 
   function getPrimaryPain() {
@@ -225,23 +226,30 @@
     return 'Há sinais de desalinhamento entre crescimento, decisão e estrutura operacional.';
   }
 
-  function getCostOfDelay() {
+  function getQualificationInvite() {
     var investimento = state.answers.investimento_mensal_faixa || '';
-    if (/Acima de R\$ 100 mil\/mês/.test(investimento)) return 'No seu nível atual, qualquer desalinhamento pode virar dezenas de milhares por mês em margem perdida.';
-    if (/De R\$ 30 mil a R\$ 100 mil\/mês/.test(investimento)) return 'Na sua faixa atual, cada ponto de ROI perdido pode custar algo entre R$ 3 mil e R$ 10 mil por mês de margem.';
-    if (/De R\$ 10 mil a R\$ 30 mil\/mês/.test(investimento)) return 'Nessa faixa, insistir no modelo atual costuma custar meses de verba aprendendo o que já deveria estar claro.';
-    if (/Até R\$ 10 mil\/mês/.test(investimento)) return 'O custo aqui aparece menos em volume de verba e mais em tempo perdido, decisões ruins e aprendizado lento.';
-    return 'O custo de manter o modelo atual aparece em tempo perdido, decisões no escuro e crescimento irregular.';
+    var faturamento = state.answers.faturamento_faixa || '';
+    var investsEnough = /De R\$ 10 mil a R\$ 30 mil\/mês|De R\$ 30 mil a R\$ 100 mil\/mês|Acima de R\$ 100 mil\/mês/.test(investimento);
+    var billsEnough = /De R\$ 100 mil a R\$ 500 mil\/ano|De R\$ 500 mil a R\$ 3 milhões\/ano|De R\$ 3 milhões a R\$ 10 milhões\/ano|De R\$ 10 milhões a R\$ 50 milhões\/ano|Acima de R\$ 50 milhões\/ano/.test(faturamento);
+
+    if (investsEnough && billsEnough) {
+      return 'Você bateu os critérios de entrada para essa conversa: investimento acima de R$ 10 mil/mês e faturamento acima de R$ 100 mil/ano.';
+    }
+    if (investsEnough) {
+      return 'Você bateu pelo menos um dos critérios de entrada para essa conversa: investimento acima de R$ 10 mil/mês.';
+    }
+    if (billsEnough) {
+      return 'Você bateu pelo menos um dos critérios de entrada para essa conversa: faturamento acima de R$ 100 mil/ano.';
+    }
+    return 'Quando sua operação avançar mais um pouco, esse convite passa a fazer mais sentido.';
   }
 
   function buildNarrative() {
     var result = inferResult();
     var primaryPain = getPrimaryPain();
     var exposure = getCurrentExposure();
-    var revenue = state.answers.faturamento_faixa || 'uma faixa relevante de faturamento';
-    var operation = state.answers.operacao_atual || 'uma estrutura ainda indefinida';
     var canSchedule = shouldScheduleCall();
-    var delayCost = getCostOfDelay();
+    var qualificationInvite = getQualificationInvite();
     var response = {
       qualified: canSchedule,
       title: '',
@@ -253,56 +261,56 @@
     };
 
     if (result.oferta === 'implementacao_time_inhouse' && canSchedule) {
-      response.title = 'O caminho mais coerente pro seu momento: Implementação de Time Interno (90 dias).';
-      response.summary = 'Porte ' + revenue + ' + estrutura atual ' + operation.toLowerCase() + ' + intenção de trazer o controle para dentro colocam você no perfil da Implementação. Você não vai aprender a fazer. Vai instalar o processo completo dentro da empresa.';
+      response.title = 'Seu diagnóstico está pronto.';
+      response.summary = 'O seu cenário aponta para Implementação de Time Interno: hoje a operação já pede mais controle, processo e capacidade dentro da empresa.';
       response.blocks = [
-        'Hoje o principal vazamento está em ' + primaryPain + '. ' + exposure,
-        delayCost,
-        'A Implementação instala gestor, processo, atribuição e acompanhamento por 90 dias. Trabalho com até 4 empresas por trimestre.'
+        primaryPain + '. ' + exposure,
+        'A Implementação instala gestor, processo, atribuição e acompanhamento por 90 dias para tirar a operação da dependência e colocar controle dentro da empresa.',
+        qualificationInvite + ' Se quiser, eu analiso sua operação ao vivo e te digo se entra no próximo ciclo.'
       ];
-      response.note = '30 minutos. Análise ao vivo da sua operação. Sem deck, sem SDR. Eu te digo se encaixa no próximo ciclo ou não.';
+      response.note = '30 minutos. Análise ao vivo da sua operação. Sem deck, sem SDR.';
       response.ctaText = 'Conversar com o Mateus →';
       response.ctaUrl = 'https://call.ruccia.com.br/mateusrucci/diagnostico';
       return response;
     }
 
     if (result.oferta === 'consultoria_estrategica' && canSchedule) {
-      response.title = 'O caminho mais coerente pro seu momento: Consultoria Estratégica.';
-      response.summary = 'Você já tem operação, verba ou responsabilidade suficiente para crescer, mas hoje falta uma leitura precisa do que corrigir primeiro. Aqui o ganho não é aumentar esforço. É parar de decidir no escuro.';
+      response.title = 'Seu diagnóstico está pronto.';
+      response.summary = 'O seu cenário aponta para Consultoria Estratégica: existe potencial de crescimento, mas hoje falta direção mais precisa sobre o que corrigir primeiro.';
       response.blocks = [
-        'O que mais trava hoje é ' + primaryPain + '. ' + exposure,
-        delayCost,
-        'Na Consultoria eu entro para revisar aquisição, funil, oferta, processo e decisões críticas sem te empurrar para um programa maior.'
+        primaryPain + '. ' + exposure,
+        'Na Consultoria eu entro para revisar aquisição, funil, oferta, processo e decisões críticas para destravar crescimento com direção clara.',
+        qualificationInvite + ' Se fizer sentido, eu entro na sua operação por 30 minutos e te digo o que faz sentido atacar primeiro.'
       ];
-      response.note = 'Agenda abaixo. Sem SDR. Sem proposta empurrada.';
+      response.note = '30 minutos. Conversa direta sobre o que precisa ser atacado primeiro.';
       response.ctaText = 'Conversar 30 min comigo →';
       response.ctaUrl = 'https://call.ruccia.com.br/mateusrucci/diagnostico';
       return response;
     }
 
     if (result.oferta === 'mentoria_individual' && canSchedule) {
-      response.title = 'O caminho mais coerente pro seu momento: Mentoria Individual.';
-      response.summary = 'Pelas suas respostas — faturamento ' + revenue + ', operação ' + operation.toLowerCase() + ' e dor principal em ' + primaryPain + ' — você está no perfil da Mentoria: empresário que já tem operação rodando e quer assumir o controle do próprio marketing sem virar especialista.';
+      response.title = 'Seu diagnóstico está pronto.';
+      response.summary = 'O seu cenário aponta para Mentoria Individual: agora o principal ganho está em organizar a leitura da operação e assumir o controle das decisões de marketing.';
       response.blocks = [
-        'Hoje o que mais trava é ' + primaryPain + '. ' + exposure,
-        'Se isso continuar, você segue terceirizando decisões que deveriam ficar dentro da empresa e perde dinheiro toda vez que troca de operador.',
-        'Na Mentoria são 60 minutos semanais comigo, método ETF aplicado ao seu cenário e acompanhamento direto até a operação ganhar autonomia. Trabalho com até 6 vagas por mês.'
+        primaryPain + '. ' + exposure,
+        'O que precisa ser feito agora é organizar a leitura da operação e assumir o controle das decisões de marketing sem depender de terceiros para pensar por você.',
+        qualificationInvite + ' Na Mentoria eu entro com você por 60 minutos semanais para organizar, priorizar e fazer a operação rodar com clareza.'
       ];
-      response.note = 'Agenda abaixo. Sem SDR. Sem proposta empurrada.';
+      response.note = '60 minutos comigo por semana, aplicados ao seu cenário atual.';
       response.ctaText = 'Conversar 30 min comigo →';
       response.ctaUrl = 'https://call.ruccia.com.br/mateusrucci/diagnostico';
       return response;
     }
 
     response.qualified = false;
-    response.title = 'Esse ainda não é o momento pra Mentoria ou Implementação.';
-    response.summary = 'Ser honesto aqui é mais útil do que te vender algo antes da hora. Pelo que você respondeu, o próximo passo certo é construir base operacional antes de entrar em um programa comigo.';
+    response.title = 'Seu diagnóstico está pronto.';
+    response.summary = 'O diagnóstico mostra uma fase de estruturação antes de avançar. Agora o foco é organizar a base da operação.';
     response.blocks = [
-      'Onde você está agora: ' + primaryPain + '. ' + exposure,
+      primaryPain + '. ' + exposure,
       'Antes de qualquer programa, falta consolidar base mínima de operação, leitura de números e consistência para o marketing não depender só de esforço.',
-      'Caminho honesto: acompanha meu conteúdo no Instagram, organiza essa base e volta aqui quando o cenário mudar.'
+      'Quando sua operação avançar mais um pouco, esse convite passa a fazer mais sentido.'
     ];
-    response.note = 'Quando a base amadurecer, esse diagnóstico passa a apontar com mais precisão se Mentoria, Implementação ou Consultoria fazem sentido.';
+    response.note = '';
     response.ctaText = 'Seguir @mateusrucci no Instagram →';
     response.ctaUrl = 'https://www.instagram.com/mateusrucci/';
     return response;
@@ -497,6 +505,7 @@
       document.getElementById('qualifiedBlock2').textContent = blocks[1];
       document.getElementById('qualifiedBlock3').textContent = blocks[2];
       document.getElementById('qualifiedNote').textContent = note;
+      document.getElementById('qualifiedNote').style.display = note ? '' : 'none';
       document.getElementById('qualifiedCta').textContent = ctaText;
       document.getElementById('qualifiedCta').setAttribute('href', ctaUrl);
       document.getElementById('qualifiedCta').setAttribute('onclick', "window.__diagGo && window.__diagGo('" + ctaUrl + "'); return false;");
@@ -507,6 +516,7 @@
       document.getElementById('resultBlock2').textContent = blocks[1];
       document.getElementById('resultBlock3').textContent = blocks[2];
       document.getElementById('resultNote').textContent = note;
+      document.getElementById('resultNote').style.display = note ? '' : 'none';
       document.getElementById('resultCta').textContent = ctaText;
       document.getElementById('resultCta').setAttribute('href', ctaUrl);
       document.getElementById('resultCta').setAttribute('onclick', "window.__diagGo && window.__diagGo('" + ctaUrl + "'); return false;");
