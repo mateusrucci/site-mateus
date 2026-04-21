@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico Personalizado | Mateus Rucci</title>
-    <meta name="description" content="Diagnóstico personalizado para CEOs e empresários que querem clareza sobre posicionamento, aquisição, governança e soberania de marketing.">
+    <title>Diagnóstico Estratégico | Mateus Rucci</title>
+    <meta name="description" content="7 perguntas. 2 minutos. Uma leitura honesta sobre o que trava o marketing da sua empresa e qual é o próximo passo certo para o seu momento.">
     <meta name="theme-color" content="#101528">
 
     <script>
@@ -715,6 +715,13 @@
             margin-bottom: 20px;
         }
 
+        .result-note {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
         .diagnostic-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -989,7 +996,7 @@
                 </a>
                 <nav class="nav-links">
                     <a href="../index.html">Site principal</a>
-                    <button type="button" class="cta" data-open-diagnostic onclick="window.__diagOpen && window.__diagOpen()">Começar agora</button>
+                    <button type="button" class="cta" data-open-diagnostic onclick="window.__diagOpen && window.__diagOpen()">Iniciar diagnóstico (2 min) →</button>
                 </nav>
             </div>
         </header>
@@ -997,17 +1004,56 @@
         <main>
             <section class="hero hero-minimal">
                 <div class="container">
-                    <div class="hero-shell">
-                        <h1>
-                            Descubra o que está travando a <span class="gold">performance e a soberania</span> do marketing da sua empresa.
-                        </h1>
-                        <p class="hero-lead">
-                            Uma leitura estratégica para empresários que precisam entender se o gargalo está em posicionamento, governança, aquisição ou estrutura interna.
-                        </p>
+                    <div class="hero-grid">
+                        <div class="hero-copy">
+                            <div class="eyebrow">Diagnóstico Estratégico · 2 min · Sem custo</div>
+                            <h1>
+                                Você sabe exatamente qual é o problema. <span class="gold">Só não sabe qual é o próximo passo certo.</span>
+                            </h1>
+                            <p class="hero-lead">
+                                Troca de agência, contrata gestor, compra curso, investe mais em mídia. Nada destrava.
+                                Porque o problema não é tático — é estrutural. E a solução certa depende de onde você está agora.
+                            </p>
+                            <p class="hero-support">
+                                7 perguntas. 2 minutos. Leitura específica do seu cenário — mesmo que a resposta seja "ainda não".
+                            </p>
 
-                        <div class="hero-actions">
-                            <button type="button" class="cta" data-open-diagnostic onclick="window.__diagOpen && window.__diagOpen()">Iniciar diagnóstico</button>
+                            <div class="hero-actions">
+                                <button type="button" class="cta" data-open-diagnostic onclick="window.__diagOpen && window.__diagOpen()">Descobrir o próximo passo →</button>
+                            </div>
                         </div>
+
+                        <aside class="hero-panel">
+                            <div class="panel-label">Antes de você começar</div>
+                            <div class="signal-list">
+                                <div class="signal">
+                                    <h3>Isso não é formulário para cair no SDR</h3>
+                                    <p>Se fizer sentido conversar, a conversa é direto comigo. Se não fizer, o diagnóstico continua útil do mesmo jeito.</p>
+                                </div>
+                                <div class="signal">
+                                    <h3>Isso não é teste para te empurrar para uma call</h3>
+                                    <p>O objetivo aqui é te dar um raio-X honesto do cenário e qual dos 4 caminhos faz sentido agora.</p>
+                                </div>
+                                <div class="signal">
+                                    <h3>Isso não é fluxo vazio</h3>
+                                    <p>Eu leio cada resposta que chega. E quando a resposta for “ainda não”, ela vai sair assim mesmo.</p>
+                                </div>
+                            </div>
+                            <div class="authority-metrics">
+                                <div class="metric">
+                                    <strong>R$ 200M+</strong>
+                                    <span>em mídia sob responsabilidade direta</span>
+                                </div>
+                                <div class="metric">
+                                    <strong>400+</strong>
+                                    <span>empresas, de R$ 500 mil a R$ 50 milhões por ano</span>
+                                </div>
+                                <div class="metric">
+                                    <strong>8 anos</strong>
+                                    <span>operando dentro da mesa — não na plateia</span>
+                                </div>
+                            </div>
+                        </aside>
                     </div>
                 </div>
             </section>
@@ -1022,6 +1068,13 @@
                     </div>
 
                     <div class="question-panel">
+                            <div class="modal-intro">
+                                <div class="modal-kicker">Antes de começar</div>
+                                <div class="modal-title">7 perguntas. 2 minutos. Leitura direta.</div>
+                                <div class="modal-copy">
+                                    Responde pensando no seu cenário real — não no ideal. No final, eu te devolvo uma análise específica do seu momento, com ou sem continuidade comigo.
+                                </div>
+                            </div>
                             <div id="diagFlow">
                                 <div class="progress-row">
                                     <div class="progress-label">Diagnóstico Estratégico</div>
@@ -1033,27 +1086,27 @@
 
                                 <div class="step active" data-step="1">
                                     <div class="step-kicker">Engajamento</div>
-                                    <h3>Qual dessas frases mais descreve o momento da sua empresa hoje?</h3>
+                                    <h3>Qual dessas frases você já falou (ou pensou) no último mês?</h3>
                                     <div class="options">
-                                        <div class="option" data-field="momento_atual" data-value="Crescemos, mas o marketing virou uma caixa-preta">
+                                        <div class="option" data-field="momento_atual" data-value="Eu invisto em tráfego mas não consigo rastrear o que virou venda">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Crescemos, mas o marketing virou uma caixa-preta.</span>
-                                            <span class="option-text">Existe investimento e volume, mas pouca clareza real sobre o que está funcionando.</span>
+                                            <span class="option-title">Eu invisto em tráfego mas não consigo rastrear o que virou venda</span>
+                                            <span class="option-text">Dinheiro sai toda semana. O ROI real é uma incógnita.</span>
                                         </div>
-                                        <div class="option" data-field="momento_atual" data-value="Dependemos demais de agência ou terceiros">
+                                        <div class="option" data-field="momento_atual" data-value="Minha agência ou gestor trabalha e eu torço pra dar certo">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Dependemos demais de agência ou terceiros.</span>
-                                            <span class="option-text">A operação continua rodando, mas a inteligência crítica não está dentro da empresa.</span>
+                                            <span class="option-title">Minha agência (ou gestor) trabalha e eu torço pra dar certo</span>
+                                            <span class="option-text">Quando o contrato acaba, o conhecimento vai junto.</span>
                                         </div>
-                                        <div class="option" data-field="momento_atual" data-value="A verba existe, mas a escala estagnou">
+                                        <div class="option" data-field="momento_atual" data-value="Cresci, aumentei a verba, e o resultado não acompanhou">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">A verba existe, mas a escala estagnou.</span>
-                                            <span class="option-text">O problema não parece mais ser “colocar campanha no ar”, e sim sustentar performance.</span>
+                                            <span class="option-title">Cresci, aumentei a verba, e o resultado não acompanhou</span>
+                                            <span class="option-text">Tem verba. Tem operação. Mas o teto não se mexe.</span>
                                         </div>
-                                        <div class="option" data-field="momento_atual" data-value="O digital deveria contribuir mais, mas ainda não tem estrutura">
+                                        <div class="option" data-field="momento_atual" data-value="Meu digital fatura, mas se parasse amanhã ninguém notaria">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">O digital deveria contribuir mais, mas ainda não tem estrutura.</span>
-                                            <span class="option-text">A empresa fatura, vende e opera, mas o marketing ainda não virou máquina previsível.</span>
+                                            <span class="option-title">Meu digital fatura, mas se parasse amanhã ninguém notaria</span>
+                                            <span class="option-text">Vende por indicação, esforço comercial e rede. O digital ainda é decoração.</span>
                                         </div>
                                     </div>
                                     <div class="nav-row">
@@ -1064,27 +1117,27 @@
 
                                 <div class="step" data-step="2">
                                     <div class="step-kicker">Estrutura atual</div>
-                                    <h3>Hoje, quem realmente controla a operação de marketing e performance?</h3>
+                                    <h3>Quem decide o marketing da sua empresa hoje?</h3>
                                     <div class="options">
                                         <div class="option" data-field="operacao_atual" data-value="Agência externa">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">Agência externa</span>
-                                            <span class="option-text">A execução e a leitura ficam concentradas em um parceiro de fora.</span>
+                                            <span class="option-text">A execução e os relatórios vêm de fora.</span>
                                         </div>
-                                        <div class="option" data-field="operacao_atual" data-value="Freelancer ou consultor pontual">
+                                        <div class="option" data-field="operacao_atual" data-value="Freelancer ou gestor contratado sozinho">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Freelancer ou consultor pontual</span>
-                                            <span class="option-text">Existe capacidade operacional, mas sem estrutura robusta, processo ou continuidade.</span>
+                                            <span class="option-title">Freelancer ou gestor contratado sozinho</span>
+                                            <span class="option-text">Tem alguém, mas sem processo e sem método definido.</span>
                                         </div>
-                                        <div class="option" data-field="operacao_atual" data-value="Time interno sem liderança forte">
+                                        <div class="option" data-field="operacao_atual" data-value="Time interno sem direção técnica clara">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Time interno sem liderança forte</span>
-                                            <span class="option-text">A empresa já internalizou parte do marketing, mas ainda sem clareza técnica e governança.</span>
+                                            <span class="option-title">Time interno (2+ pessoas) sem direção técnica clara</span>
+                                            <span class="option-text">Já internalizou parte, mas opera sem referência de alto nível.</span>
                                         </div>
-                                        <div class="option" data-field="operacao_atual" data-value="Founder-led ou sócio centraliza">
+                                        <div class="option" data-field="operacao_atual" data-value="Sou eu quem puxa tudo">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Founder-led ou sócio centraliza</span>
-                                            <span class="option-text">O dono ainda é o teto da operação e o digital depende demais da sua presença.</span>
+                                            <span class="option-title">Sou eu quem puxa tudo</span>
+                                            <span class="option-text">O marketing ainda depende da minha presença pra avançar.</span>
                                         </div>
                                     </div>
                                     <div class="nav-row">
@@ -1097,30 +1150,30 @@
                                     <div class="step-kicker">Dor principal</div>
                                     <h3>Quais sintomas hoje mais drenam resultado, margem ou clareza?</h3>
                                     <div class="options">
-                                        <div class="option multi" data-field="dores" data-value="Falta de clareza sobre CAC, ROI ou previsibilidade">
+                                        <div class="option multi" data-field="dores" data-value="Não consigo rastrear o que virou venda">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Falta de clareza sobre CAC, ROI ou previsibilidade</span>
-                                            <span class="option-text">O marketing roda, mas a empresa não consegue tomar decisão com confiança.</span>
+                                            <span class="option-title">Não consigo rastrear o que virou venda</span>
+                                            <span class="option-text">O marketing roda, mas ninguém consegue me mostrar com clareza o que realmente voltou.</span>
                                         </div>
-                                        <div class="option multi" data-field="dores" data-value="Dependência excessiva de agência, freelancer ou operador externo">
+                                        <div class="option multi" data-field="dores" data-value="Dependo de agência, freelancer ou operador externo">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Dependência excessiva de agência, freelancer ou operador externo</span>
-                                            <span class="option-text">O crescimento depende de terceiros e a inteligência não fica dentro da empresa.</span>
+                                            <span class="option-title">Dependo de agência, freelancer ou operador externo</span>
+                                            <span class="option-text">O crescimento depende de terceiros e o aprendizado não fica dentro da empresa.</span>
                                         </div>
-                                        <div class="option multi" data-field="dores" data-value="Escala travada mesmo com verba e operação comercial">
+                                        <div class="option multi" data-field="dores" data-value="Verba aumenta mas o resultado não cresce junto">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Escala travada mesmo com verba e operação comercial</span>
-                                            <span class="option-text">O problema parece ser estrutural, e não só de tráfego.</span>
+                                            <span class="option-title">Verba aumenta mas o resultado não cresce junto</span>
+                                            <span class="option-text">Mais R$ 10 mil, R$ 30 mil, R$ 50 mil na campanha — e o retorno fica na mesma proporção.</span>
                                         </div>
-                                        <div class="option multi" data-field="dores" data-value="Mensagem, posicionamento ou oferta não convertem como deveriam">
+                                        <div class="option multi" data-field="dores" data-value="Entra lead. Não entra venda">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Mensagem, posicionamento ou oferta não convertem como deveriam</span>
-                                            <span class="option-text">Existe tráfego ou esforço comercial, mas a narrativa não transforma atenção em convicção.</span>
+                                            <span class="option-title">Entra lead. Não entra venda.</span>
+                                            <span class="option-text">O tráfego traz gente. O funil não converte. E ninguém consegue me dizer exatamente por quê.</span>
                                         </div>
-                                        <div class="option multi" data-field="dores" data-value="Time interno ou gestor atual não sustenta o nível que a empresa precisa">
+                                        <div class="option multi" data-field="dores" data-value="Meu time atual não sustenta o nível que a empresa precisa">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Time interno ou gestor atual não sustenta o nível que a empresa precisa</span>
-                                            <span class="option-text">Já existe estrutura parcial, mas sem referência, processo ou liderança suficiente.</span>
+                                            <span class="option-title">Meu time atual não sustenta o nível que a empresa precisa</span>
+                                            <span class="option-text">Já existe estrutura parcial, mas sem liderança, processo e referência suficientes.</span>
                                         </div>
                                     </div>
                                     <div class="nav-row">
@@ -1133,24 +1186,24 @@
                                     <div class="step-kicker">Ambição</div>
                                     <h3>Qual é a meta que mais importa para os próximos 12 meses?</h3>
                                     <div class="options">
-                                        <div class="option" data-field="meta_12_meses" data-value="Ganhar clareza estratégica para escalar com segurança">
+                                        <div class="option" data-field="meta_12_meses" data-value="Ganhar clareza para decidir com dados">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Ganhar clareza estratégica para escalar com segurança</span>
-                                            <span class="option-text">O foco é sair da caixa-preta e decidir melhor antes de acelerar.</span>
+                                            <span class="option-title">Ganhar clareza para decidir com dados</span>
+                                            <span class="option-text">O foco é parar de decidir no escuro antes de acelerar mais.</span>
                                         </div>
-                                        <div class="option" data-field="meta_12_meses" data-value="Reduzir dependência e internalizar a inteligência de marketing">
+                                        <div class="option" data-field="meta_12_meses" data-value="Reduzir dependência de agência e trazer o controle pra dentro">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Reduzir dependência e internalizar a inteligência de marketing</span>
-                                            <span class="option-text">A prioridade é construir soberania e preservar patrimônio de aquisição.</span>
+                                            <span class="option-title">Reduzir dependência de agência e trazer o controle pra dentro</span>
+                                            <span class="option-text">Construir operação que continua funcionando quando o fornecedor sai — e mantém o conhecimento na empresa.</span>
                                         </div>
-                                        <div class="option" data-field="meta_12_meses" data-value="Escalar investimento com ROI e governança">
+                                        <div class="option" data-field="meta_12_meses" data-value="Escalar investimento com ROI sem perder margem">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Escalar investimento com ROI e governança</span>
-                                            <span class="option-text">A empresa já investe e quer sustentar crescimento sem perder margem.</span>
+                                            <span class="option-title">Escalar investimento com ROI sem perder margem</span>
+                                            <span class="option-text">A empresa já investe e quer crescer sem transformar margem em vazamento.</span>
                                         </div>
-                                        <div class="option" data-field="meta_12_meses" data-value="Montar ou reestruturar um time interno de alta performance">
+                                        <div class="option" data-field="meta_12_meses" data-value="Montar ou reestruturar um time interno forte">
                                             <span class="indicator">✓</span>
-                                            <span class="option-title">Montar ou reestruturar um time interno de alta performance</span>
+                                            <span class="option-title">Montar ou reestruturar um time interno forte</span>
                                             <span class="option-text">O objetivo é sair da dependência operacional e profissionalizar a máquina de aquisição.</span>
                                         </div>
                                     </div>
@@ -1167,27 +1220,27 @@
                                         <div class="option" data-field="faturamento_faixa" data-value="Até R$ 500 mil/ano">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">Até R$ 500 mil/ano</span>
-                                            <span class="option-text">Base ainda em consolidação.</span>
+                                            <span class="option-text">Ainda construindo o básico.</span>
                                         </div>
                                         <div class="option" data-field="faturamento_faixa" data-value="De R$ 500 mil a R$ 3 milhões/ano">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">De R$ 500 mil a R$ 3 milhões/ano</span>
-                                            <span class="option-text">Faixa típica de empresas prontas para elevar clareza e governança.</span>
+                                            <span class="option-text">Operação rodando, procurando o próximo salto.</span>
                                         </div>
                                         <div class="option" data-field="faturamento_faixa" data-value="De R$ 3 milhões a R$ 10 milhões/ano">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">De R$ 3 milhões a R$ 10 milhões/ano</span>
-                                            <span class="option-text">Estrutura já validada, com espaço claro para internalização e performance.</span>
+                                            <span class="option-text">Estrutura consolidada, tema marketing virou prioridade.</span>
                                         </div>
                                         <div class="option" data-field="faturamento_faixa" data-value="De R$ 10 milhões a R$ 50 milhões/ano">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">De R$ 10 milhões a R$ 50 milhões/ano</span>
-                                            <span class="option-text">Operação madura, normalmente com custo alto de dependência e ineficiência.</span>
+                                            <span class="option-text">Volume alto de verba, dependência de terceiros está cara.</span>
                                         </div>
                                         <div class="option" data-field="faturamento_faixa" data-value="Acima de R$ 50 milhões/ano">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">Acima de R$ 50 milhões/ano</span>
-                                            <span class="option-text">Cenário em que aquisição, governança e escala precisam conversar em nível executivo.</span>
+                                            <span class="option-text">Aquisição e margem viraram tema de diretoria e board.</span>
                                         </div>
                                     </div>
                                     <div class="nav-row">
@@ -1208,7 +1261,7 @@
                                         <div class="option" data-field="investimento_mensal_faixa" data-value="Até R$ 10 mil/mês">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">Até R$ 10 mil/mês</span>
-                                            <span class="option-text">Existe teste e alguma tração, mas ainda sem profundidade estrutural.</span>
+                                            <span class="option-text">Existe teste e alguma tração, mas a estrutura ainda está no começo.</span>
                                         </div>
                                         <div class="option" data-field="investimento_mensal_faixa" data-value="De R$ 10 mil a R$ 30 mil/mês">
                                             <span class="indicator">✓</span>
@@ -1218,12 +1271,12 @@
                                         <div class="option" data-field="investimento_mensal_faixa" data-value="De R$ 30 mil a R$ 100 mil/mês">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">De R$ 30 mil a R$ 100 mil/mês</span>
-                                            <span class="option-text">Patamar onde dependência de terceiros tende a ficar cara demais.</span>
+                                            <span class="option-text">Faixa em que cada ponto de ROI perdido pode custar R$ 3 mil a R$ 10 mil por mês de margem.</span>
                                         </div>
                                         <div class="option" data-field="investimento_mensal_faixa" data-value="Acima de R$ 100 mil/mês">
                                             <span class="indicator">✓</span>
                                             <span class="option-title">Acima de R$ 100 mil/mês</span>
-                                            <span class="option-text">Aqui, qualquer desalinhamento de posicionamento, governança ou time vira vazamento relevante de margem.</span>
+                                            <span class="option-text">Aqui, qualquer desalinhamento já vira dezenas de milhares por mês em margem perdida.</span>
                                         </div>
                                     </div>
                                     <div class="nav-row">
@@ -1234,8 +1287,8 @@
 
                                 <div class="step" data-step="7">
                                     <div class="step-kicker">Contato executivo</div>
-                                    <h3>Perfeito. Agora, para te entregar a leitura certa:</h3>
-                                    <p class="step-sub">Os dados abaixo só entram no final. A partir daqui, o sistema monta seu parecer e decide se faz sentido liberar agenda estratégica.</p>
+                                    <h3>Última etapa: pra onde mando seu diagnóstico?</h3>
+                                    <p class="step-sub">Eu analiso pessoalmente cada resposta que chega aqui. Se fizer sentido conversar, você recebe convite pra agenda. Se não for o momento, você recebe uma leitura honesta e alguns caminhos gratuitos. Seus dados ficam com a minha operação — sem SDR, sem automação de vendas.</p>
                                     <div class="input-grid">
                                         <div class="field">
                                             <label for="diagNome">Nome</label>
@@ -1283,55 +1336,57 @@
                                 <p class="result-summary" id="resultSummary"></p>
                                 <div class="diagnostic-grid">
                                     <div class="diagnostic-block">
-                                        <span>Diagnóstico principal</span>
+                                        <span>Onde você está agora</span>
                                         <p id="resultBlock1"></p>
                                     </div>
                                     <div class="diagnostic-block">
-                                        <span>Impacto no negócio</span>
+                                        <span>O que falta antes</span>
                                         <p id="resultBlock2"></p>
                                     </div>
                                     <div class="diagnostic-block">
-                                        <span>Auditoria estratégica</span>
+                                        <span>Próximo passo honesto</span>
                                         <p id="resultBlock3"></p>
                                     </div>
                                 </div>
+                                <p class="result-note" id="resultNote"></p>
                                 <div class="nav-row">
                                     <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
-                                    <a href="https://www.instagram.com/mateusrucci/" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://www.instagram.com/mateusrucci/'); return false;">Ir para o Instagram</a>
+                                    <a href="https://www.instagram.com/mateusrucci/" id="resultCta" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://www.instagram.com/mateusrucci/'); return false;">Seguir @mateusrucci no Instagram →</a>
                                 </div>
                             </div>
 
                             <div class="result-card" id="diagResultQualified">
-                                <h3 id="qualifiedTitle">Existe uma rota clara para destravar sua próxima fase de crescimento.</h3>
+                                <h3 id="qualifiedTitle">Seu diagnóstico está pronto.</h3>
                                 <p class="result-summary" id="qualifiedSummary"></p>
                                 <div class="diagnostic-grid">
                                     <div class="diagnostic-block">
-                                        <span>Diagnóstico principal</span>
+                                        <span>O que está travando</span>
                                         <p id="qualifiedBlock1"></p>
                                     </div>
                                     <div class="diagnostic-block">
-                                        <span>Impacto no negócio</span>
+                                        <span>Custo de não resolver</span>
                                         <p id="qualifiedBlock2"></p>
                                     </div>
                                     <div class="diagnostic-block">
-                                        <span>Auditoria estratégica</span>
+                                        <span>Próximo passo</span>
                                         <p id="qualifiedBlock3"></p>
                                     </div>
                                 </div>
+                                <p class="result-note" id="qualifiedNote"></p>
                                 <div class="nav-row">
                                     <a href="../index.html" class="btn-secondary">Voltar ao site principal</a>
-                                    <a href="https://call.ruccia.com.br/mateusrucci/diagnostico" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://call.ruccia.com.br/mateusrucci/diagnostico'); return false;">Agendar auditoria</a>
+                                    <a href="https://call.ruccia.com.br/mateusrucci/diagnostico" id="qualifiedCta" target="_self" rel="noreferrer" class="btn-primary" onclick="window.__diagGo && window.__diagGo('https://call.ruccia.com.br/mateusrucci/diagnostico'); return false;">Conversar 30 min comigo →</a>
                                 </div>
                             </div>
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
 
         <footer class="footer">
             <div class="container footer-inner">
-                <div>Diagnóstico Personalizado · Mateus Rucci</div>
-                <div>Estratégia, performance e soberania de marketing para empresas que já faturam e precisam de clareza real.</div>
+                <div>Diagnóstico Estratégico · Mateus Rucci</div>
+                <div>Em 8 anos operando marketing dentro de 400 empresas, aprendi uma coisa: quase nenhuma tinha problema de tráfego. Todas tinham problema de estrutura. É sobre isso que eu trabalho.</div>
             </div>
         </footer>
     </div>
@@ -1358,6 +1413,6 @@
         };
     </script>
     <script src="./tracking.js?v=20260420-7"></script>
-    <script src="./form.js?v=20260420-5"></script>
+    <script src="./form.js?v=20260421-1"></script>
 </body>
 </html>

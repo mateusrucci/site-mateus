@@ -138,8 +138,8 @@
       state.answers.meta_12_meses,
       state.answers.dores.join(' | ')
     ].join(' ').toLowerCase();
-    if (/trav|depend|escala|reestruturar|internalizar|governan/.test(source)) return 'alta';
-    if (/clareza|seguran/.test(source)) return 'media';
+    if (/depend|trav|controle pra dentro|time interno|escala investimento|resultado não acompanhou|resultado não cresce/.test(source)) return 'alta';
+    if (/clareza|dados|rastrear|lead/.test(source)) return 'media';
     return 'baixa';
   }
 
@@ -148,8 +148,8 @@
       state.answers.momento_atual,
       state.answers.dores.join(' | ')
     ].join(' ').toLowerCase();
-    if (/caixa-preta|cac|roi|previsibilidade/.test(source)) return 'baixa';
-    if (/escala|depend/.test(source)) return 'media';
+    if (/rastrear|venda|roi|dados|lead/.test(source)) return 'baixa';
+    if (/escala|depend|sou eu quem puxa tudo/.test(source)) return 'media';
     return 'alta';
   }
 
@@ -184,109 +184,126 @@
     else if (/de r\$ 10 mil a r\$ 30 mil/.test(investimento)) investmentScore = 2;
     else if (/até r\$ 10 mil/.test(investimento)) investmentScore = 1;
 
-    if (/depend|agência externa|freelancer|founder-led|sócio centraliza/.test(contexto)) dependencyScore = 3;
-    if (/caixa-preta|cac|roi|previsibilidade|governan/.test(contexto)) governanceScore = 3;
-    if (/mensagem|posicionamento|oferta/.test(contexto)) positioningScore = 2;
-    if (/time interno|reestruturar um time interno|liderança forte/.test(contexto)) teamScore = 3;
+    if (/depend|agência externa|freelancer|gestor contratado sozinho|torço pra dar certo|sou eu quem puxa tudo|controle pra dentro/.test(contexto)) dependencyScore = 3;
+    if (/rastrear o que virou venda|roi|dados|lead\. não entra venda|resultado não cresce|resultado não acompanhou/.test(contexto)) governanceScore = 3;
+    if (/entra lead\. não entra venda|funil/.test(contexto)) positioningScore = 2;
+    if (/time interno|reestruturar um time interno|meu time atual/.test(contexto)) teamScore = 3;
 
     if (revenueScore >= 3 && investmentScore >= 4 && (dependencyScore >= 3 || teamScore >= 3)) {
-      return { resultado: 'soberania_operacional_e_escala', oferta: 'implementacao_time_inhouse', qualificado: true };
+      return { resultado: 'controle_interno_e_escala', oferta: 'implementacao_time_inhouse', qualificado: true };
     }
 
     if (revenueScore >= 2 && investmentScore >= 2 && (dependencyScore >= 3 || governanceScore >= 3 || positioningScore >= 2)) {
-      return { resultado: 'governanca_e_clareza_de_escala', oferta: 'consultoria_estrategica', qualificado: true };
+      return { resultado: 'clareza_para_destravar_escala', oferta: 'consultoria_estrategica', qualificado: true };
     }
 
     if (revenueScore >= 2) {
-      return { resultado: 'clareza_e_lideranca_de_marketing', oferta: 'mentoria_individual', qualificado: false };
+      return { resultado: 'clareza_e_lideranca_de_marketing', oferta: 'mentoria_individual', qualificado: true };
     }
 
-    return { resultado: 'fundacao_antes_da_escala', oferta: 'direcionamento_estrategico', qualificado: false };
+    return { resultado: 'base_antes_da_escala', oferta: 'direcionamento_estrategico', qualificado: false };
   }
 
   function getPrimaryPain() {
     var dores = state.answers.dores;
     if (!dores.length) return 'falta de clareza estrutural';
-    if (dores.some(function(item) { return /cac|roi|previsibilidade/i.test(item); })) return 'falta de previsibilidade sobre CAC, ROI e decisão';
-    if (dores.some(function(item) { return /dependência excessiva/i.test(item); })) return 'dependência operacional de terceiros';
-    if (dores.some(function(item) { return /Escala travada/i.test(item); })) return 'escala travada apesar de haver verba e operação';
-    if (dores.some(function(item) { return /Mensagem, posicionamento ou oferta/i.test(item); })) return 'posicionamento e oferta desalinhados com o ticket desejado';
-    if (dores.some(function(item) { return /Time interno/i.test(item); })) return 'time atual sem nível ou liderança para sustentar a próxima fase';
+    if (dores.some(function(item) { return /rastrear o que virou venda/i.test(item); })) return 'ninguém consegue rastrear com clareza o que virou venda';
+    if (dores.some(function(item) { return /dependo de agência/i.test(item); })) return 'o crescimento ainda depende de terceiros';
+    if (dores.some(function(item) { return /verba aumenta mas o resultado não cresce junto/i.test(item); })) return 'a verba sobe, mas o retorno não acompanha';
+    if (dores.some(function(item) { return /entra lead\. não entra venda/i.test(item); })) return 'entra lead, mas a venda não acontece na mesma proporção';
+    if (dores.some(function(item) { return /meu time atual/i.test(item); })) return 'o time atual não sustenta o nível que a empresa precisa';
     return dores[0].toLowerCase();
   }
 
   function getCurrentExposure() {
     var operacao = (state.answers.operacao_atual || '').toLowerCase();
-    if (/agência externa/.test(operacao)) return 'A inteligência crítica da operação ainda está concentrada fora da empresa.';
-    if (/freelancer/.test(operacao)) return 'A empresa tem execução pontual, mas ainda sem estrutura estável de decisão.';
-    if (/time interno/.test(operacao)) return 'Já existe base interna, mas a liderança e a governança ainda não sustentam o próximo patamar.';
-    if (/founder-led|sócio centraliza/.test(operacao)) return 'O crescimento ainda depende demais do founder, o que limita escala e previsibilidade.';
+    if (/agência externa/.test(operacao)) return 'Hoje a execução está fora da empresa e o aprendizado vai embora junto com o fornecedor.';
+    if (/freelancer/.test(operacao)) return 'Existe execução pontual, mas ainda sem processo estável, critério e continuidade.';
+    if (/time interno/.test(operacao)) return 'Já existe base interna, mas falta direção técnica para o time operar no próximo nível.';
+    if (/sou eu quem puxa tudo/.test(operacao)) return 'O marketing ainda depende demais da sua presença para avançar.';
     return 'Há sinais de desalinhamento entre crescimento, decisão e estrutura operacional.';
+  }
+
+  function getCostOfDelay() {
+    var investimento = state.answers.investimento_mensal_faixa || '';
+    if (/Acima de R\$ 100 mil\/mês/.test(investimento)) return 'No seu nível atual, qualquer desalinhamento pode virar dezenas de milhares por mês em margem perdida.';
+    if (/De R\$ 30 mil a R\$ 100 mil\/mês/.test(investimento)) return 'Na sua faixa atual, cada ponto de ROI perdido pode custar algo entre R$ 3 mil e R$ 10 mil por mês de margem.';
+    if (/De R\$ 10 mil a R\$ 30 mil\/mês/.test(investimento)) return 'Nessa faixa, insistir no modelo atual costuma custar meses de verba aprendendo o que já deveria estar claro.';
+    if (/Até R\$ 10 mil\/mês/.test(investimento)) return 'O custo aqui aparece menos em volume de verba e mais em tempo perdido, decisões ruins e aprendizado lento.';
+    return 'O custo de manter o modelo atual aparece em tempo perdido, decisões no escuro e crescimento irregular.';
   }
 
   function buildNarrative() {
     var result = inferResult();
     var primaryPain = getPrimaryPain();
     var exposure = getCurrentExposure();
-    var ambition = state.answers.meta_12_meses || '';
     var revenue = state.answers.faturamento_faixa || 'uma faixa relevante de faturamento';
-    var investment = state.answers.investimento_mensal_faixa || 'um nível relevante de investimento';
+    var operation = state.answers.operacao_atual || 'uma estrutura ainda indefinida';
     var canSchedule = shouldScheduleCall();
+    var delayCost = getCostOfDelay();
     var response = {
       qualified: canSchedule,
       title: '',
       summary: '',
-      blocks: []
+      blocks: [],
+      note: '',
+      ctaText: '',
+      ctaUrl: ''
     };
 
-    if (result.oferta === 'implementacao_time_inhouse') {
-      response.title = 'Sua empresa já chegou num ponto em que marketing precisa operar com mais controle, governança e capacidade interna.';
-      response.summary = 'A leitura cruza estrutura atual, nível de investimento, maturidade da operação e o tipo de gargalo que hoje trava sua escala.';
+    if (result.oferta === 'implementacao_time_inhouse' && canSchedule) {
+      response.title = 'O caminho mais coerente pro seu momento: Implementação de Time Interno (90 dias).';
+      response.summary = 'Porte ' + revenue + ' + estrutura atual ' + operation.toLowerCase() + ' + intenção de trazer o controle para dentro colocam você no perfil da Implementação. Você não vai aprender a fazer. Vai instalar o processo completo dentro da empresa.';
       response.blocks = [
-        'Seu diagnóstico principal aponta ' + primaryPain + ', somado a um cenário em que a operação já exige mais estrutura e menos improviso.',
-        'No negócio, isso tende a manter verba relevante rodando sem pleno controle executivo, pressionando margem, previsibilidade e retenção de inteligência.',
-        canSchedule
-          ? 'Pelo seu momento atual, faz sentido aprofundar isso comigo em uma auditoria estratégica para mapear estrutura, gargalos e próximos movimentos.'
-          : 'Existe material suficiente para uma leitura estratégica, mas antes da auditoria o ideal é consolidar alguns fundamentos da operação.'
+        'Hoje o principal vazamento está em ' + primaryPain + '. ' + exposure,
+        delayCost,
+        'A Implementação instala gestor, processo, atribuição e acompanhamento por 90 dias. Trabalho com até 4 empresas por trimestre.'
       ];
+      response.note = '30 minutos. Análise ao vivo da sua operação. Sem deck, sem SDR. Eu te digo se encaixa no próximo ciclo ou não.';
+      response.ctaText = 'Conversar com o Mateus →';
+      response.ctaUrl = 'https://call.ruccia.com.br/mateusrucci/diagnostico';
       return response;
     }
 
-    if (result.oferta === 'consultoria_estrategica') {
-      response.title = 'Seu cenário pede clareza estratégica antes de mais pressão operacional.';
-      response.summary = 'A combinação entre o que você respondeu sobre estrutura, dor, ambição e nível de investimento mostra uma operação com potencial de escala, mas sem uma leitura suficientemente precisa do que corrigir primeiro.';
+    if (result.oferta === 'consultoria_estrategica' && canSchedule) {
+      response.title = 'O caminho mais coerente pro seu momento: Consultoria Estratégica.';
+      response.summary = 'Você já tem operação, verba ou responsabilidade suficiente para crescer, mas hoje falta uma leitura precisa do que corrigir primeiro. Aqui o ganho não é aumentar esforço. É parar de decidir no escuro.';
       response.blocks = [
-        'O diagnóstico principal indica ' + primaryPain + ', dentro de uma estrutura em que a decisão executiva ainda não está organizando a operação como deveria.',
-        'No negócio, isso costuma gerar crescimento irregular, desperdício de verba e baixa previsibilidade sobre o que realmente está funcionando.',
-        canSchedule
-          ? 'Faz sentido transformar isso em uma auditoria estratégica comigo, para revisar posicionamento, aquisição, governança e o desenho da operação.'
-          : 'Antes de uma auditoria completa, o mais coerente é amadurecer alguns pontos da base e seguir acompanhando minha linha de raciocínio.'
+        'O que mais trava hoje é ' + primaryPain + '. ' + exposure,
+        delayCost,
+        'Na Consultoria eu entro para revisar aquisição, funil, oferta, processo e decisões críticas sem te empurrar para um programa maior.'
       ];
+      response.note = 'Agenda abaixo. Sem SDR. Sem proposta empurrada.';
+      response.ctaText = 'Conversar 30 min comigo →';
+      response.ctaUrl = 'https://call.ruccia.com.br/mateusrucci/diagnostico';
       return response;
     }
 
-    if (result.oferta === 'mentoria_individual') {
-      response.title = 'Hoje, o maior ganho parece estar em clareza, critério e liderança sobre o marketing.';
-      response.summary = 'A leitura do seu diagnóstico sugere uma empresa com espaço para evoluir rápido, desde que a base de decisão e a leitura estratégica fiquem mais sólidas.';
+    if (result.oferta === 'mentoria_individual' && canSchedule) {
+      response.title = 'O caminho mais coerente pro seu momento: Mentoria Individual.';
+      response.summary = 'Pelas suas respostas — faturamento ' + revenue + ', operação ' + operation.toLowerCase() + ' e dor principal em ' + primaryPain + ' — você está no perfil da Mentoria: empresário que já tem operação rodando e quer assumir o controle do próprio marketing sem virar especialista.';
       response.blocks = [
-        'O diagnóstico principal mostra ' + primaryPain + ', em uma fase na qual clareza e direção pesam mais do que ampliar a complexidade da operação.',
-        'No negócio, isso costuma manter a empresa presa entre tentativa, dependência e baixa consistência na tomada de decisão.',
-        canSchedule
-          ? 'Se quiser aprofundar esse cenário, você já pode transformar essa leitura em uma auditoria estratégica comigo.'
-          : 'Meu ponto aqui seria primeiro consolidar base, linguagem e leitura de mercado; depois disso, uma auditoria tende a render muito mais.'
+        'Hoje o que mais trava é ' + primaryPain + '. ' + exposure,
+        'Se isso continuar, você segue terceirizando decisões que deveriam ficar dentro da empresa e perde dinheiro toda vez que troca de operador.',
+        'Na Mentoria são 60 minutos semanais comigo, método ETF aplicado ao seu cenário e acompanhamento direto até a operação ganhar autonomia. Trabalho com até 6 vagas por mês.'
       ];
+      response.note = 'Agenda abaixo. Sem SDR. Sem proposta empurrada.';
+      response.ctaText = 'Conversar 30 min comigo →';
+      response.ctaUrl = 'https://call.ruccia.com.br/mateusrucci/diagnostico';
       return response;
     }
 
-    response.title = 'Antes de sofisticar a escala, a sua empresa precisa organizar melhor a base de crescimento.';
-    response.summary = 'O objetivo do diagnóstico aqui não é inflar complexidade cedo demais, e sim mostrar com honestidade o que hoje mais trava a evolução da sua operação.';
+    response.qualified = false;
+    response.title = 'Esse ainda não é o momento pra Mentoria ou Implementação.';
+    response.summary = 'Ser honesto aqui é mais útil do que te vender algo antes da hora. Pelo que você respondeu, o próximo passo certo é construir base operacional antes de entrar em um programa comigo.';
     response.blocks = [
-      'O diagnóstico principal mostra ' + primaryPain + ', em uma estrutura que ainda precisa ganhar consistência antes de buscar mais alavancagem.',
-      'No negócio, isso tende a converter esforço e verba em oscilação, sem construir um sistema mais previsível de aquisição e crescimento.',
-      canSchedule
-        ? 'Quando fizer sentido aprofundar essa leitura, você pode transformar isso em uma auditoria estratégica comigo.'
-        : 'Quando essa base estiver mais madura, uma auditoria estratégica comigo tende a ser muito mais útil. Por enquanto, no botão abaixo eu te levo para meu Instagram.'
+      'Onde você está agora: ' + primaryPain + '. ' + exposure,
+      'Antes de qualquer programa, falta consolidar base mínima de operação, leitura de números e consistência para o marketing não depender só de esforço.',
+      'Caminho honesto: acompanha meu conteúdo no Instagram, organiza essa base e volta aqui quando o cenário mudar.'
     ];
+    response.note = 'Quando a base amadurecer, esse diagnóstico passa a apontar com mais precisão se Mentoria, Implementação ou Consultoria fazem sentido.';
+    response.ctaText = 'Seguir @mateusrucci no Instagram →';
+    response.ctaUrl = 'https://www.instagram.com/mateusrucci/';
     return response;
   }
 
@@ -451,6 +468,9 @@
     var title = narrative.title;
     var summary = narrative.summary;
     var blocks = narrative.blocks;
+    var note = narrative.note;
+    var ctaText = narrative.ctaText;
+    var ctaUrl = narrative.ctaUrl;
 
     var target = qualified ? resultQualified : resultBase;
     var other = qualified ? resultBase : resultQualified;
@@ -464,12 +484,20 @@
       document.getElementById('qualifiedBlock1').textContent = blocks[0];
       document.getElementById('qualifiedBlock2').textContent = blocks[1];
       document.getElementById('qualifiedBlock3').textContent = blocks[2];
+      document.getElementById('qualifiedNote').textContent = note;
+      document.getElementById('qualifiedCta').textContent = ctaText;
+      document.getElementById('qualifiedCta').setAttribute('href', ctaUrl);
+      document.getElementById('qualifiedCta').setAttribute('onclick', "window.__diagGo && window.__diagGo('" + ctaUrl + "'); return false;");
     } else {
       document.getElementById('resultTitle').textContent = title;
       document.getElementById('resultSummary').textContent = summary;
       document.getElementById('resultBlock1').textContent = blocks[0];
       document.getElementById('resultBlock2').textContent = blocks[1];
       document.getElementById('resultBlock3').textContent = blocks[2];
+      document.getElementById('resultNote').textContent = note;
+      document.getElementById('resultCta').textContent = ctaText;
+      document.getElementById('resultCta').setAttribute('href', ctaUrl);
+      document.getElementById('resultCta').setAttribute('onclick', "window.__diagGo && window.__diagGo('" + ctaUrl + "'); return false;");
     }
   }
 
