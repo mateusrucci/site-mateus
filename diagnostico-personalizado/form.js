@@ -233,13 +233,13 @@
     var billsEnough = /De R\$ 100 mil a R\$ 500 mil\/ano|De R\$ 500 mil a R\$ 3 milhões\/ano|De R\$ 3 milhões a R\$ 10 milhões\/ano|De R\$ 10 milhões a R\$ 50 milhões\/ano|Acima de R\$ 50 milhões\/ano/.test(faturamento);
 
     if (investsEnough && billsEnough) {
-      return 'Você bateu os critérios de entrada para essa conversa: investimento acima de R$ 10 mil/mês e faturamento acima de R$ 100 mil/ano.';
+      return 'Você atingiu alguns critérios que colocam a sua operação no perfil dessa conversa.';
     }
     if (investsEnough) {
-      return 'Você bateu pelo menos um dos critérios de entrada para essa conversa: investimento acima de R$ 10 mil/mês.';
+      return 'Você atingiu alguns critérios que colocam a sua operação no perfil dessa conversa.';
     }
     if (billsEnough) {
-      return 'Você bateu pelo menos um dos critérios de entrada para essa conversa: faturamento acima de R$ 100 mil/ano.';
+      return 'Você atingiu alguns critérios que colocam a sua operação no perfil dessa conversa.';
     }
     return 'Quando sua operação avançar mais um pouco, esse convite passa a fazer mais sentido.';
   }
@@ -265,7 +265,7 @@
       response.summary = 'O seu cenário aponta para Implementação de Time Interno: hoje a operação já pede mais controle, processo e capacidade dentro da empresa.';
       response.blocks = [
         primaryPain + '. ' + exposure,
-        'A Implementação instala gestor, processo, atribuição e acompanhamento por 90 dias para tirar a operação da dependência e colocar controle dentro da empresa.',
+        'Você precisa de uma equipe interna com liderança técnica, processo claro, rotina de acompanhamento e atribuição bem definida para a operação parar de depender de terceiros.',
         qualificationInvite + ' Se quiser, eu analiso sua operação ao vivo e te digo se entra no próximo ciclo.'
       ];
       response.note = '30 minutos. Análise ao vivo da sua operação. Sem deck, sem SDR.';
@@ -279,7 +279,7 @@
       response.summary = 'O seu cenário aponta para Consultoria Estratégica: existe potencial de crescimento, mas hoje falta direção mais precisa sobre o que corrigir primeiro.';
       response.blocks = [
         primaryPain + '. ' + exposure,
-        'Na Consultoria eu entro para revisar aquisição, funil, oferta, processo e decisões críticas para destravar crescimento com direção clara.',
+        'Você precisa revisar a operação por partes: aquisição, funil, oferta, processo comercial e prioridades de crescimento, para saber exatamente o que corrigir primeiro.',
         qualificationInvite + ' Se fizer sentido, eu entro na sua operação por 30 minutos e te digo o que faz sentido atacar primeiro.'
       ];
       response.note = '30 minutos. Conversa direta sobre o que precisa ser atacado primeiro.';
@@ -293,7 +293,7 @@
       response.summary = 'O seu cenário aponta para Mentoria Individual: agora o principal ganho está em organizar a leitura da operação e assumir o controle das decisões de marketing.';
       response.blocks = [
         primaryPain + '. ' + exposure,
-        'O que precisa ser feito agora é organizar a leitura da operação e assumir o controle das decisões de marketing sem depender de terceiros para pensar por você.',
+        'Você precisa organizar a leitura dos números, definir critérios de decisão e assumir o controle das prioridades do marketing para a operação deixar de andar no improviso.',
         qualificationInvite + ' Na Mentoria eu entro com você por 60 minutos semanais para organizar, priorizar e fazer a operação rodar com clareza.'
       ];
       response.note = '60 minutos comigo por semana, aplicados ao seu cenário atual.';
@@ -307,7 +307,7 @@
     response.summary = 'O diagnóstico mostra uma fase de estruturação antes de avançar. Agora o foco é organizar a base da operação.';
     response.blocks = [
       primaryPain + '. ' + exposure,
-      'Antes de qualquer programa, falta consolidar base mínima de operação, leitura de números e consistência para o marketing não depender só de esforço.',
+      'Você precisa consolidar a base da operação: rotina mínima, leitura dos números, processo comercial e consistência suficiente para o marketing não depender só de esforço.',
       'Quando sua operação avançar mais um pouco, esse convite passa a fazer mais sentido.'
     ];
     response.note = '';
