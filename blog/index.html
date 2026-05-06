@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog — Mateus Rucci | Tráfego Pago, Vendas e Crescimento</title>
+    <meta name="description" content="Análises diretas sobre tráfego pago, estratégia de vendas e escala de negócios. Sem hype — só o que funciona na prática.">
+    <link rel="canonical" href="https://mateusrucci.com.br/blog/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Blog — Mateus Rucci">
+    <meta property="og:description" content="Análises diretas sobre tráfego pago, estratégia de vendas e escala de negócios.">
+    <meta property="og:url" content="https://mateusrucci.com.br/blog/">
+    <meta property="og:locale" content="pt_BR">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Blog","name":"Blog — Mateus Rucci","description":"Análises diretas sobre tráfego pago, estratégia de vendas e escala de negócios.","url":"https://mateusrucci.com.br/blog/","inLanguage":"pt-BR","author":{"@type":"Person","name":"Mateus Rucci","url":"https://mateusrucci.com.br"}}
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JWSZ92JRS0"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JWSZ92JRS0');</script>
+    <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","cjkeycjc0k");</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"></noscript>
+
+    <style>
+        /* ── TOKENS (idênticos ao site principal) ── */
+        :root {
+            --azul:       #1A1F3D;
+            --azul-mid:   #252b52;
+            --azul-light: #2e3566;
+            --branco:     #FAFAFA;
+            --preto:      #0A0A0A;
+            --ouro:       #C9A96E;
+            --ouro-hover: #D4B87A;
+            --grafite:    #4A4A4A;
+            --cinza-claro:#E8E8E8;
+            --cinza-medio:#9A9A9A;
+            --cinza-bg:   #F4F4F2;
+            --r-sm: 8px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+            --shadow-sm:  0 4px 16px -4px rgba(10,10,10,.08);
+            --shadow-md:  0 12px 40px -8px rgba(10,10,10,.10);
+            --shadow-azul:0 20px 60px -10px rgba(26,31,61,.30);
+            --shadow-ouro:0 8px 24px rgba(201,169,110,.20);
+            --ease:       cubic-bezier(0.16,1,0.3,1);
+            --ease-bounce:cubic-bezier(0.34,1.56,0.64,1);
+        }
+
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        html{scroll-behavior:smooth;font-size:16px;}
+        body{font-family:'Inter',sans-serif;background:var(--branco);color:var(--grafite);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+        img{display:block;max-width:100%;}
+        a{text-decoration:none;color:inherit;}
+
+        /* ── LAYOUT ── */
+        .container{max-width:1200px;margin:0 auto;padding:0 32px;}
+        .section{padding:100px 0;}
+        .section-sm{padding:72px 0;}
+
+        /* ── EYEBROW ── */
+        .eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--azul);display:flex;align-items:center;gap:10px;}
+        .eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--ouro);border-radius:2px;flex-shrink:0;}
+
+        /* ── BUTTONS ── */
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 32px;border-radius:var(--r-sm);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;cursor:pointer;border:none;outline:none;transition:all .5s var(--ease-bounce);position:relative;overflow:hidden;white-space:nowrap;text-decoration:none;font-family:'Inter',sans-serif;}
+        .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform .6s var(--ease);}
+        .btn:hover::after{transform:translateX(100%);}
+        .btn-primary{background:var(--azul);color:var(--branco);box-shadow:0 4px 16px rgba(26,31,61,.20);}
+        .btn-primary:hover{background:var(--azul-mid);transform:translateY(-3px);box-shadow:0 12px 32px rgba(26,31,61,.28);}
+        .btn-gold{background:var(--ouro);color:var(--preto);box-shadow:0 4px 20px rgba(201,169,110,.25);}
+        .btn-gold:hover{background:var(--ouro-hover);transform:translateY(-3px);box-shadow:0 12px 32px rgba(201,169,110,.35);}
+        .btn-sm{padding:11px 22px;font-size:12px;}
+        .btn-outline{background:transparent;color:var(--azul);border:1.5px solid var(--azul);}
+        .btn-outline:hover{background:var(--azul);color:var(--branco) !important;transform:translateY(-3px);}
+
+        /* ── NAV (igual ao site principal) ── */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,250,250,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(232,232,232,.7);transition:all .4s var(--ease);}
+        .nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+        .nav-brand{font-size:15px;font-weight:700;color:var(--azul);letter-spacing:-.01em;}
+        .nav-links{display:flex;align-items:center;gap:28px;}
+        .nav-links a{font-size:13px;font-weight:600;color:var(--grafite);transition:color .3s var(--ease);}
+        .nav-links a:hover,.nav-links a.active{color:var(--azul);}
+        .nav-cta{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--azul);border:1.5px solid var(--azul);padding:9px 20px;border-radius:var(--r-sm);transition:all .35s var(--ease);}
+        .nav-cta:hover{background:var(--azul);color:var(--branco) !important;}
+
+        /* ── HERO DO BLOG ── */
+        .blog-hero{
+            padding-top:68px;
+            background:var(--branco);
+            border-bottom:1px solid var(--cinza-claro);
+            position:relative;
+            overflow:hidden;
+        }
+        /* Mesmo padrão de fundo do hero principal */
+        .blog-hero::before{
+            content:'';position:absolute;inset:0;
+            background:
+                radial-gradient(ellipse 50% 60% at 85% 30%, rgba(199,161,91,.10) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 50% at 10% 80%, rgba(26,31,61,.05) 0%, transparent 60%);
+            pointer-events:none;z-index:0;
+        }
+        .blog-hero::after{
+            content:'';position:absolute;inset:0;
+            background-image:radial-gradient(circle,rgba(26,31,61,.05) 1px,transparent 1px);
+            background-size:28px 28px;
+            mask-image:radial-gradient(ellipse 70% 80% at 50% 50%,#000 0%,transparent 75%);
+            -webkit-mask-image:radial-gradient(ellipse 70% 80% at 50% 50%,#000 0%,transparent 75%);
+            pointer-events:none;opacity:.6;z-index:0;
+        }
+        .blog-hero-inner{
+            max-width:1200px;margin:0 auto;padding:80px 32px 72px;
+            display:flex;align-items:flex-end;justify-content:space-between;gap:48px;
+            position:relative;z-index:1;
+        }
+        .blog-hero-left{}
+        .blog-hero-title{
+            font-size:clamp(36px,4.5vw,58px);
+            font-weight:700;line-height:1.08;letter-spacing:-.03em;
+            color:var(--preto);
+            margin-top:16px;margin-bottom:20px;
+        }
+        .blog-hero-sub{
+            font-size:17px;color:var(--grafite);line-height:1.65;
+            max-width:480px;
+        }
+        .blog-hero-right{
+            flex-shrink:0;text-align:right;
+            padding-bottom:4px;
+        }
+        .blog-hero-stat{
+            font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+            color:var(--cinza-medio);margin-bottom:6px;
+        }
+        .blog-hero-count{
+            font-size:48px;font-weight:700;letter-spacing:-.03em;
+            color:var(--azul);line-height:1;
+        }
+
+        /* ── FEATURED POST ── */
+        .featured-wrap{padding:64px 0 0;}
+        .featured-label{
+            font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+            color:var(--cinza-medio);margin-bottom:24px;
+            display:flex;align-items:center;gap:16px;
+        }
+        .featured-label::after{content:'';flex:1;height:1px;background:var(--cinza-claro);}
+
+        .featured-card{
+            display:grid;grid-template-columns:1fr 1fr;
+            border-radius:var(--r-xl);overflow:hidden;
+            border:1px solid var(--cinza-claro);
+            background:var(--branco);
+            text-decoration:none;color:inherit;
+            transition:all .4s var(--ease);
+            box-shadow:var(--shadow-sm);
+        }
+        .featured-card:hover{
+            transform:translateY(-4px);
+            box-shadow:var(--shadow-azul);
+            border-color:transparent;
+        }
+
+        /* Lado visual do card destaque */
+        .featured-visual{
+            background:linear-gradient(140deg,var(--azul) 0%,#0d1024 100%);
+            position:relative;overflow:hidden;
+            min-height:340px;
+            display:flex;align-items:center;justify-content:center;
+        }
+        .featured-visual::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:2px;
+            background:linear-gradient(90deg,var(--ouro),transparent 70%);
+        }
+        .featured-visual-grid{
+            position:absolute;inset:0;
+            background-image:radial-gradient(circle,rgba(201,169,110,.1) 1px,transparent 1px);
+            background-size:28px 28px;
+        }
+        .featured-visual-number{
+            font-size:140px;font-weight:700;letter-spacing:-.04em;
+            color:rgba(255,255,255,.035);line-height:1;user-select:none;
+            position:relative;z-index:1;
+        }
+        .featured-visual-tag{
+            position:absolute;bottom:24px;left:24px;
+            font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;
+            color:rgba(201,169,110,.6);
+        }
+
+        /* Corpo do card destaque */
+        .featured-body{
+            padding:44px 44px;
+            display:flex;flex-direction:column;justify-content:space-between;
+        }
+        .featured-meta{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+        .featured-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ouro);}
+        .featured-dot{color:var(--cinza-claro);}
+        .featured-date{font-size:12px;color:var(--cinza-medio);}
+        .featured-title{
+            font-size:clamp(20px,2vw,26px);font-weight:700;line-height:1.25;
+            letter-spacing:-.015em;color:var(--preto);margin-bottom:14px;
+        }
+        .featured-card:hover .featured-title{color:var(--azul);}
+        .featured-excerpt{font-size:15px;color:var(--cinza-medio);line-height:1.65;}
+        .featured-footer{
+            display:flex;align-items:center;justify-content:space-between;
+            margin-top:32px;padding-top:20px;border-top:1px solid var(--cinza-claro);
+        }
+        .featured-time{font-size:12px;color:var(--cinza-medio);}
+        .featured-cta{
+            font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+            color:var(--azul);display:flex;align-items:center;gap:6px;
+            transition:gap .3s var(--ease);
+        }
+        .featured-card:hover .featured-cta{gap:10px;}
+
+        /* ── POST LIST ── */
+        .posts-wrap{padding:56px 0 80px;}
+        .posts-label{
+            font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;
+            color:var(--cinza-medio);margin-bottom:0;
+            display:flex;align-items:center;gap:16px;
+        }
+        .posts-label::after{content:'';flex:1;height:1px;background:var(--cinza-claro);}
+
+        .posts-list{display:flex;flex-direction:column;margin-top:0;}
+
+        .post-item{
+            display:grid;grid-template-columns:140px 1fr auto;
+            align-items:baseline;gap:32px;
+            padding:28px 0;
+            border-bottom:1px solid var(--cinza-claro);
+            text-decoration:none;color:inherit;
+            position:relative;
+            transition:all .35s var(--ease);
+        }
+        .post-item:first-child{border-top:1px solid var(--cinza-claro);}
+
+        /* Gold left bar on hover */
+        .post-item::before{
+            content:'';position:absolute;
+            left:-32px;top:0;bottom:0;width:2px;
+            background:var(--ouro);
+            transform:scaleY(0);transform-origin:bottom;
+            transition:transform .35s var(--ease);
+        }
+        .post-item:hover{padding-left:12px;}
+        .post-item:hover::before{transform:scaleY(1);}
+
+        .post-meta{}
+        .post-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ouro);display:block;margin-bottom:3px;}
+        .post-date{font-size:12px;color:var(--cinza-medio);display:block;}
+
+        .post-content{}
+        .post-title{
+            font-size:17px;font-weight:600;letter-spacing:-.01em;
+            color:var(--preto);line-height:1.35;margin-bottom:5px;
+            transition:color .3s var(--ease);
+        }
+        .post-item:hover .post-title{color:var(--azul);}
+        .post-excerpt{font-size:13px;color:var(--cinza-medio);line-height:1.55;}
+
+        .post-right{text-align:right;white-space:nowrap;}
+        .post-time{font-size:12px;color:var(--cinza-medio);display:block;}
+        .post-arrow{
+            display:block;font-size:16px;color:var(--ouro);
+            margin-top:4px;opacity:0;transform:translateX(-4px);
+            transition:all .3s var(--ease);
+        }
+        .post-item:hover .post-arrow{opacity:1;transform:translateX(0);}
+
+        /* Upcoming */
+        .post-item--soon{opacity:.4;pointer-events:none;}
+        .post-badge{
+            display:inline-block;font-size:9px;font-weight:700;
+            text-transform:uppercase;letter-spacing:.1em;
+            color:var(--cinza-medio);border:1px solid var(--cinza-claro);
+            border-radius:4px;padding:2px 7px;margin-bottom:5px;
+        }
+
+        /* ── DARK CTA SECTION (mesmo padrão das quebras escuras do site) ── */
+        .cta-section{
+            background:var(--azul);
+            border-radius:var(--r-xl);
+            padding:72px 64px;
+            position:relative;overflow:hidden;
+            display:flex;align-items:center;justify-content:space-between;gap:48px;
+            margin-bottom:80px;
+        }
+        .cta-section::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:1px;
+            background:linear-gradient(90deg,var(--ouro),transparent 60%);
+        }
+        .cta-section::after{
+            content:'';position:absolute;inset:0;
+            background-image:radial-gradient(circle,rgba(201,169,110,.07) 1px,transparent 1px);
+            background-size:32px 32px;pointer-events:none;
+        }
+        .cta-copy{position:relative;z-index:1;}
+        .cta-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ouro);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+        .cta-eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--ouro);border-radius:2px;}
+        .cta-title{font-size:clamp(22px,2.5vw,30px);font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.2;margin-bottom:10px;}
+        .cta-sub{font-size:15px;color:rgba(255,255,255,.5);line-height:1.6;max-width:380px;}
+        .cta-action{position:relative;z-index:1;flex-shrink:0;}
+
+        /* ── FOOTER ── */
+        .footer{border-top:1px solid var(--cinza-claro);padding:40px 0;}
+        .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+        .footer-copy{font-size:13px;color:var(--cinza-medio);}
+        .footer-links{display:flex;gap:24px;list-style:none;}
+        .footer-links a{font-size:13px;color:var(--cinza-medio);transition:color .3s var(--ease);}
+        .footer-links a:hover{color:var(--azul);}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:900px){
+            .container{padding:0 20px;}
+            .blog-hero-inner{flex-direction:column;align-items:flex-start;padding:64px 20px 56px;gap:24px;}
+            .blog-hero-right{text-align:left;}
+            .featured-card{grid-template-columns:1fr;}
+            .featured-visual{min-height:180px;}
+            .featured-body{padding:28px;}
+            .post-item{grid-template-columns:1fr;gap:6px;padding:20px 0;}
+            .post-right{display:none;}
+            .post-item:hover{padding-left:0;}
+            .cta-section{flex-direction:column;padding:44px 28px;}
+            .footer-inner{flex-direction:column;text-align:center;}
+        }
+        @media(max-width:600px){
+            .nav-inner{padding:0 20px;}
+            .nav-links .nav-link-hide{display:none;}
+            .blog-hero-title{font-size:32px;}
+            .featured-title{font-size:18px;}
+            .post-title{font-size:15px;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <header class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">Mateus Rucci</a>
+            <nav class="nav-links">
+                <a href="/#cases" class="nav-link-hide">Resultados</a>
+                <a href="/blog/" class="nav-link-hide" aria-current="page">Blog</a>
+                <a href="/#diagnostico" class="nav-link-hide">Diagnóstico</a>
+                <a href="/diagnostico-personalizado/" class="nav-cta">Agendar Auditoria →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="blog-hero">
+            <div class="blog-hero-inner">
+                <div class="blog-hero-left">
+                    <div class="eyebrow">Bastidores da Escala</div>
+                    <h1 class="blog-hero-title">O que funciona de verdade<br>em tráfego pago e vendas</h1>
+                    <p class="blog-hero-sub">Análises diretas, sem hype. Tudo vem da prática com clientes reais — sem teoria que não funciona no mundo real.</p>
+                </div>
+                <div class="blog-hero-right">
+                    <p class="blog-hero-stat">Artigos publicados</p>
+                    <p class="blog-hero-count">02</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+
+            <!-- POST DESTAQUE -->
+            <section class="featured-wrap" aria-label="Post em destaque">
+                <p class="featured-label">Post em destaque</p>
+
+                <a href="/blog/meta-ads-ai-connectors-mcp-trafego-pago/" class="featured-card">
+                    <div class="featured-visual">
+                        <div class="featured-visual-grid" aria-hidden="true"></div>
+                        <span class="featured-visual-number" aria-hidden="true">02</span>
+                        <span class="featured-visual-tag" aria-hidden="true">Mais recente</span>
+                    </div>
+                    <div class="featured-body">
+                        <div>
+                            <div class="featured-meta">
+                                <span class="featured-cat">Tráfego Pago com IA</span>
+                                <span class="featured-dot" aria-hidden="true">·</span>
+                                <time class="featured-date" datetime="2026-05-06">6 de maio de 2026</time>
+                            </div>
+                            <h2 class="featured-title">Meta Ads AI Connectors: o MCP oficial muda o tráfego pago?</h2>
+                            <p class="featured-excerpt">A Meta abriu uma ponte oficial entre contas de anúncio e agentes de IA. Isso muda a operação, mas automação sem estrutura só acelera erro.</p>
+                        </div>
+                        <div class="featured-footer">
+                            <span class="featured-time">9 min de leitura</span>
+                            <span class="featured-cta">Ler artigo <span aria-hidden="true">→</span></span>
+                        </div>
+                    </div>
+                </a>
+            </section>
+
+            <!-- LISTA DE POSTS -->
+            <section class="posts-wrap" aria-label="Todos os artigos">
+                <p class="posts-label">Todos os artigos</p>
+
+                <div class="posts-list">
+
+                    <a href="/blog/meta-ads-ai-connectors-mcp-trafego-pago/" class="post-item">
+                        <div class="post-meta">
+                            <span class="post-cat">Tráfego Pago com IA</span>
+                            <time class="post-date" datetime="2026-05-06">Mai 06, 2026</time>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-title">Meta Ads AI Connectors: o MCP oficial muda o tráfego pago?</p>
+                            <p class="post-excerpt">O que muda quando agentes de IA passam a operar contas de anúncio da Meta.</p>
+                        </div>
+                        <div class="post-right">
+                            <span class="post-time">9 min</span>
+                            <span class="post-arrow" aria-hidden="true">→</span>
+                        </div>
+                    </a>
+
+                    <a href="/blog/como-ia-esta-mudando-o-seo-em-2025/" class="post-item">
+                        <div class="post-meta">
+                            <span class="post-cat">IA e Automação</span>
+                            <time class="post-date" datetime="2025-05-05">Mai 05, 2025</time>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-title">Como a IA está mudando o SEO em 2025 — e o que você precisa fazer agora</p>
+                            <p class="post-excerpt">Análise das documentações oficiais de Google, OpenAI e Anthropic.</p>
+                        </div>
+                        <div class="post-right">
+                            <span class="post-time">8 min</span>
+                            <span class="post-arrow" aria-hidden="true">→</span>
+                        </div>
+                    </a>
+
+                    <div class="post-item post-item--soon">
+                        <div class="post-meta">
+                            <span class="post-badge">Em breve</span>
+                            <span class="post-cat">Tráfego Pago</span>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-title">CAC abaixo de R$30 no Meta Ads: a estrutura que replicamos em 4 nichos</p>
+                            <p class="post-excerpt">Não existe campanha mágica. Existe estrutura.</p>
+                        </div>
+                        <div class="post-right"><span class="post-time">6 min</span></div>
+                    </div>
+
+                    <div class="post-item post-item--soon">
+                        <div class="post-meta">
+                            <span class="post-badge">Em breve</span>
+                            <span class="post-cat">Funis</span>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-title">Diagnóstico de funil: onde você está perdendo dinheiro sem saber</p>
+                            <p class="post-excerpt">Antes de rodar mais tráfego, diagnostique onde o funil está falhando.</p>
+                        </div>
+                        <div class="post-right"><span class="post-time">5 min</span></div>
+                    </div>
+
+                    <div class="post-item post-item--soon">
+                        <div class="post-meta">
+                            <span class="post-badge">Em breve</span>
+                            <span class="post-cat">Estratégia de Vendas</span>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-title">A métrica que ninguém monitora — e que explica 80% dos resultados ruins</p>
+                            <p class="post-excerpt">O número que separa campanhas que escalam das que sangram orçamento.</p>
+                        </div>
+                        <div class="post-right"><span class="post-time">7 min</span></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- CTA ESCURA -->
+            <aside class="cta-section" aria-label="Diagnóstico gratuito">
+                <div class="cta-copy">
+                    <div class="cta-eyebrow">Próximo passo</div>
+                    <h2 class="cta-title">Quer aplicar isso<br>no seu negócio?</h2>
+                    <p class="cta-sub">Diagnóstico gratuito de tráfego e funil — você sai com ações claras e priorizadas para o seu momento.</p>
+                </div>
+                <div class="cta-action">
+                    <a href="https://mateusrucci.com.br/diagnostico-personalizado/" class="btn btn-gold btn-lg">Fazer diagnóstico gratuito</a>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-copy">© <span id="yr"></span> Mateus Rucci. Todos os direitos reservados.</p>
+                <ul class="footer-links">
+                    <li><a href="https://mateusrucci.com.br">Home</a></li>
+                    <li><a href="https://mateusrucci.com.br/mentoria/">Mentoria</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                    <li><a href="https://mateusrucci.com.br/#contato">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+
+</body>
+</html>

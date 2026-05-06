@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Como a IA está mudando o SEO em 2025 — e o que fazer agora | Mateus Rucci</title>
+    <meta name="description" content="ChatGPT, Claude e Gemini estão virando fontes de tráfego. Analisei as documentações oficiais dos três e extraí o que realmente muda para quem vende online.">
+    <link rel="canonical" href="https://mateusrucci.com.br/blog/como-ia-esta-mudando-o-seo-em-2025/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Como a IA está mudando o SEO em 2025 — e o que fazer agora">
+    <meta property="og:description" content="ChatGPT, Claude e Gemini estão virando fontes de tráfego. Analisei as documentações oficiais e extraí o que realmente importa.">
+    <meta property="og:url" content="https://mateusrucci.com.br/blog/como-ia-esta-mudando-o-seo-em-2025/">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="article:published_time" content="2025-05-05">
+    <meta property="article:author" content="Mateus Rucci">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Article","headline":"Como a IA está mudando o SEO em 2025 — e o que você precisa fazer agora","description":"ChatGPT, Claude e Gemini estão virando fontes de tráfego. Analisei as documentações oficiais dos três e extraí o que realmente muda para quem vende online.","url":"https://mateusrucci.com.br/blog/como-ia-esta-mudando-o-seo-em-2025/","datePublished":"2025-05-05","dateModified":"2025-05-05","inLanguage":"pt-BR","author":{"@type":"Person","name":"Mateus Rucci","url":"https://mateusrucci.com.br"},"publisher":{"@type":"Organization","name":"Mateus Rucci","url":"https://mateusrucci.com.br"},"articleSection":"IA e Automação","keywords":["SEO para IA","ChatGPT tráfego","AI Overviews Google","otimização para IA","tráfego orgânico 2025"]}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mateusrucci.com.br/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://mateusrucci.com.br/blog/"},{"@type":"ListItem","position":3,"name":"Como a IA está mudando o SEO em 2025","item":"https://mateusrucci.com.br/blog/como-ia-esta-mudando-o-seo-em-2025/"}]}
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JWSZ92JRS0"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JWSZ92JRS0');</script>
+    <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","cjkeycjc0k");</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"></noscript>
+
+    <style>
+        /* ── TOKENS ── */
+        :root {
+            --azul:       #1A1F3D;
+            --azul-mid:   #252b52;
+            --branco:     #FAFAFA;
+            --preto:      #0A0A0A;
+            --ouro:       #C9A96E;
+            --ouro-hover: #D4B87A;
+            --grafite:    #4A4A4A;
+            --cinza-claro:#E8E8E8;
+            --cinza-medio:#9A9A9A;
+            --cinza-bg:   #F4F4F2;
+            --r-sm:8px;--r-md:14px;--r-lg:20px;--r-xl:28px;
+            --shadow-sm:0 4px 16px -4px rgba(10,10,10,.08);
+            --shadow-md:0 12px 40px -8px rgba(10,10,10,.10);
+            --shadow-azul:0 20px 60px -10px rgba(26,31,61,.30);
+            --ease:cubic-bezier(0.16,1,0.3,1);
+            --ease-bounce:cubic-bezier(0.34,1.56,0.64,1);
+        }
+
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        html{scroll-behavior:smooth;font-size:16px;}
+        body{font-family:'Inter',sans-serif;background:var(--branco);color:var(--grafite);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+        img{display:block;max-width:100%;}
+        a{text-decoration:none;color:inherit;}
+
+        /* ── LAYOUT ── */
+        .container{max-width:1200px;margin:0 auto;padding:0 32px;}
+        .post-container{max-width:720px;margin:0 auto;padding:0 32px;}
+
+        /* ── EYEBROW ── */
+        .eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--azul);display:flex;align-items:center;gap:10px;}
+        .eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--ouro);border-radius:2px;flex-shrink:0;}
+
+        /* ── BUTTONS ── */
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 32px;border-radius:var(--r-sm);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;cursor:pointer;border:none;outline:none;transition:all .5s var(--ease-bounce);position:relative;overflow:hidden;white-space:nowrap;text-decoration:none;font-family:'Inter',sans-serif;}
+        .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform .6s var(--ease);}
+        .btn:hover::after{transform:translateX(100%);}
+        .btn-gold{background:var(--ouro);color:var(--preto);box-shadow:0 4px 20px rgba(201,169,110,.25);}
+        .btn-gold:hover{background:var(--ouro-hover);transform:translateY(-3px);box-shadow:0 12px 32px rgba(201,169,110,.35);}
+        .btn-outline{background:transparent;color:var(--azul);border:1.5px solid var(--azul);}
+        .btn-outline:hover{background:var(--azul);color:var(--branco) !important;transform:translateY(-3px);}
+        .btn-sm{padding:11px 22px;font-size:12px;}
+
+        /* ── NAV ── */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(250,250,250,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(232,232,232,.7);}
+        .nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+        .nav-brand{font-size:15px;font-weight:700;color:var(--azul);letter-spacing:-.01em;}
+        .nav-links{display:flex;align-items:center;gap:28px;}
+        .nav-links a{font-size:13px;font-weight:600;color:var(--grafite);transition:color .3s var(--ease);}
+        .nav-links a:hover{color:var(--azul);}
+        .nav-cta{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--azul);border:1.5px solid var(--azul);padding:9px 20px;border-radius:var(--r-sm);transition:all .35s var(--ease);}
+        .nav-cta:hover{background:var(--azul);color:var(--branco) !important;}
+
+        /* ── READING PROGRESS ── */
+        .progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--ouro),var(--ouro-hover));z-index:1001;transition:width .1s linear;}
+
+        /* ── BREADCRUMB ── */
+        .breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--cinza-medio);margin-bottom:40px;flex-wrap:wrap;padding-top:96px;}
+        .breadcrumb a{color:var(--cinza-medio);transition:color .3s var(--ease);}
+        .breadcrumb a:hover{color:var(--azul);}
+        .breadcrumb span{color:var(--cinza-claro);}
+        .breadcrumb strong{color:var(--grafite);font-weight:500;}
+
+        /* ── POST HEADER ── */
+        .post-header{margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--cinza-claro);}
+        .post-cat-row{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+        .post-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ouro);}
+        .post-cat-dot{color:var(--cinza-claro);}
+        .post-cat-date{font-size:12px;color:var(--cinza-medio);}
+        .post-h1{font-size:clamp(28px,4vw,42px);font-weight:700;line-height:1.12;letter-spacing:-.025em;color:var(--preto);margin-bottom:18px;}
+        .post-subtitle{font-size:19px;line-height:1.6;color:var(--grafite);margin-bottom:28px;font-weight:400;}
+        .post-meta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+        .post-author{display:flex;align-items:center;gap:10px;}
+        .post-author-avatar{width:34px;height:34px;border-radius:50%;border:2px solid var(--cinza-claro);background:var(--azul);flex-shrink:0;overflow:hidden;}
+        .post-author-avatar img{width:100%;height:100%;object-fit:cover;}
+        .post-author-name{font-size:13px;font-weight:600;color:var(--preto);}
+        .post-meta-sep{color:var(--cinza-claro);font-size:16px;}
+        .post-meta-item{font-size:13px;color:var(--cinza-medio);}
+
+        /* ── COVER ── */
+        .post-cover{
+            background:linear-gradient(140deg,var(--azul) 0%,#0d1024 100%);
+            border-radius:var(--r-xl);margin-bottom:48px;
+            aspect-ratio:16/9;position:relative;overflow:hidden;
+            display:flex;align-items:center;justify-content:center;
+        }
+        .post-cover::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ouro),transparent 70%);}
+        .post-cover-grid{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,169,110,.09) 1px,transparent 1px);background-size:28px 28px;}
+        .post-cover-number{font-size:clamp(80px,12vw,160px);font-weight:700;letter-spacing:-.04em;color:rgba(255,255,255,.03);line-height:1;user-select:none;position:relative;z-index:1;}
+        .post-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+
+        /* ── TOC ── */
+        .toc{background:var(--cinza-bg);border:1px solid var(--cinza-claro);border-left:3px solid var(--ouro);border-radius:var(--r-md);padding:24px 28px;margin-bottom:48px;}
+        .toc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cinza-medio);margin-bottom:16px;}
+        .toc-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+        .toc-list a{font-size:14px;color:var(--grafite);display:flex;align-items:center;gap:10px;transition:color .3s var(--ease);}
+        .toc-list a::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--ouro);flex-shrink:0;}
+        .toc-list a:hover{color:var(--azul);}
+
+        /* ── BODY ── */
+        .post-body{font-size:18px;line-height:1.8;color:var(--grafite);}
+
+        .post-body h2{font-size:26px;font-weight:700;line-height:1.25;letter-spacing:-.015em;color:var(--preto);margin-top:56px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--cinza-claro);}
+        .post-body h3{font-size:20px;font-weight:700;color:var(--preto);margin-top:40px;margin-bottom:14px;letter-spacing:-.01em;}
+        .post-body p{margin-bottom:24px;}
+        .post-body p:last-child{margin-bottom:0;}
+        .post-body strong{color:var(--preto);font-weight:600;}
+
+        .post-body a{color:var(--azul);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(201,169,110,.5);transition:text-decoration-color .3s var(--ease);}
+        .post-body a:hover{text-decoration-color:var(--ouro);}
+
+        .post-body ul,.post-body ol{margin-bottom:24px;padding-left:0;display:flex;flex-direction:column;gap:10px;list-style:none;}
+        .post-body li{padding-left:20px;position:relative;line-height:1.7;}
+        .post-body ul li::before{content:'';position:absolute;left:0;top:11px;width:5px;height:5px;border-radius:50%;background:var(--ouro);}
+        .post-body ol{counter-reset:li;}
+        .post-body ol li::before{content:counter(li)".";counter-increment:li;position:absolute;left:0;font-size:13px;font-weight:700;color:var(--ouro);}
+
+        .post-body code{font-family:'SF Mono','Fira Code',monospace;font-size:13px;background:var(--cinza-bg);border:1px solid var(--cinza-claro);border-radius:4px;padding:2px 6px;color:var(--azul);}
+
+        .post-body blockquote{border-left:3px solid var(--ouro);padding:20px 24px;margin:32px 0;background:var(--cinza-bg);border-radius:0 var(--r-md) var(--r-md) 0;font-size:18px;font-style:italic;color:var(--preto);line-height:1.65;}
+        .post-body blockquote cite{display:block;font-size:12px;font-style:normal;color:var(--cinza-medio);margin-top:10px;font-weight:500;}
+
+        /* Callout */
+        .callout{border:1px solid rgba(201,169,110,.25);border-left:3px solid var(--ouro);border-radius:var(--r-md);padding:22px 26px;margin:32px 0;background:rgba(201,169,110,.04);}
+        .callout-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ouro);margin-bottom:8px;}
+        .callout p{font-size:15px;margin-bottom:0 !important;color:var(--grafite);line-height:1.65;}
+
+        /* Key stat */
+        .key-stat{background:var(--azul);border-radius:var(--r-xl);padding:48px;margin:40px 0;text-align:center;position:relative;overflow:hidden;}
+        .key-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--ouro),transparent 60%);}
+        .key-stat-grid{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,169,110,.07) 1px,transparent 1px);background-size:28px 28px;}
+        .key-stat-value{font-size:clamp(40px,6vw,64px);font-weight:700;letter-spacing:-.03em;color:var(--ouro);line-height:1;margin-bottom:10px;position:relative;z-index:1;}
+        .key-stat-label{font-size:15px;color:rgba(255,255,255,.55);position:relative;z-index:1;line-height:1.5;}
+
+        /* ── AUTHOR BIO ── */
+        .author-bio{margin-top:64px;padding:36px;border:1px solid var(--cinza-claro);border-radius:var(--r-xl);display:flex;gap:24px;align-items:flex-start;background:var(--cinza-bg);}
+        .author-bio-avatar{width:68px;height:68px;border-radius:50%;border:3px solid var(--ouro);background:var(--azul);flex-shrink:0;overflow:hidden;}
+        .author-bio-avatar img{width:100%;height:100%;object-fit:cover;}
+        .author-bio-name{font-size:15px;font-weight:700;color:var(--preto);margin-bottom:4px;}
+        .author-bio-role{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ouro);margin-bottom:10px;}
+        .author-bio-text{font-size:14px;color:var(--grafite);line-height:1.65;}
+
+        /* ── DARK CTA ── */
+        .post-cta{background:var(--azul);border-radius:var(--r-xl);padding:56px 48px;text-align:center;margin-top:64px;position:relative;overflow:hidden;}
+        .post-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 10%,var(--ouro),transparent 90%);}
+        .post-cta-grid{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,169,110,.07) 1px,transparent 1px);background-size:32px 32px;}
+        .post-cta-eyebrow{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ouro);margin-bottom:14px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:10px;}
+        .post-cta-eyebrow::before{content:'';display:inline-block;width:20px;height:2px;background:var(--ouro);border-radius:2px;}
+        .post-cta-title{font-size:clamp(22px,2.5vw,28px);font-weight:700;color:#fff;margin-bottom:10px;position:relative;z-index:1;letter-spacing:-.02em;line-height:1.2;}
+        .post-cta-text{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:32px;line-height:1.65;position:relative;z-index:1;}
+
+        /* ── RELATED ── */
+        .related{margin-top:64px;padding-top:48px;border-top:1px solid var(--cinza-claro);}
+        .related-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--cinza-medio);margin-bottom:32px;display:flex;align-items:center;gap:16px;}
+        .related-label::after{content:'';flex:1;height:1px;background:var(--cinza-claro);}
+        .related-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+        .related-card{border:1px solid var(--cinza-claro);border-radius:var(--r-lg);padding:24px;text-decoration:none;color:inherit;transition:all .35s var(--ease);position:relative;}
+        .related-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ouro),transparent);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease);border-radius:var(--r-lg) var(--r-lg) 0 0;}
+        .related-card:hover{border-color:rgba(201,169,110,.3);transform:translateY(-3px);box-shadow:var(--shadow-md);}
+        .related-card:hover::before{transform:scaleX(1);}
+        .related-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ouro);margin-bottom:8px;display:block;}
+        .related-title{font-size:15px;font-weight:600;color:var(--preto);line-height:1.35;letter-spacing:-.01em;}
+
+        /* ── FOOTER ── */
+        .footer{border-top:1px solid var(--cinza-claro);padding:40px 0;margin-top:80px;}
+        .footer-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+        .footer-copy{font-size:13px;color:var(--cinza-medio);}
+        .footer-links{display:flex;gap:24px;list-style:none;}
+        .footer-links a{font-size:13px;color:var(--cinza-medio);transition:color .3s var(--ease);}
+        .footer-links a:hover{color:var(--azul);}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:768px){
+            .post-container{padding:0 20px;}
+            .container{padding:0 20px;}
+            .post-h1{font-size:26px;}
+            .post-subtitle{font-size:17px;}
+            .post-body{font-size:16px;}
+            .post-body h2{font-size:21px;}
+            .author-bio{flex-direction:column;padding:24px;}
+            .related-grid{grid-template-columns:1fr;}
+            .post-cta{padding:40px 24px;}
+            .key-stat{padding:36px 24px;}
+            .footer-inner{flex-direction:column;text-align:center;}
+        }
+        @media(max-width:600px){
+            .nav-inner{padding:0 20px;}
+            .nav-links .nav-link-hide{display:none;}
+            .post-meta-row{gap:10px;}
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress" id="progress" role="progressbar" aria-hidden="true"></div>
+
+    <!-- NAV -->
+    <header class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-brand">Mateus Rucci</a>
+            <nav class="nav-links">
+                <a href="/#cases" class="nav-link-hide">Resultados</a>
+                <a href="/blog/" class="nav-link-hide">Blog</a>
+                <a href="/#diagnostico" class="nav-link-hide">Diagnóstico</a>
+                <a href="/diagnostico-personalizado/" class="nav-cta">Agendar Auditoria →</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="post-container">
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="https://mateusrucci.com.br/">Home</a>
+                <span aria-hidden="true">›</span>
+                <a href="/blog/">Blog</a>
+                <span aria-hidden="true">›</span>
+                <strong aria-current="page">IA e SEO em 2025</strong>
+            </nav>
+
+            <article itemscope itemtype="https://schema.org/Article">
+
+                <!-- Header -->
+                <header class="post-header">
+                    <div class="post-cat-row">
+                        <span class="post-cat">IA e Automação</span>
+                        <span class="post-cat-dot" aria-hidden="true">·</span>
+                        <time class="post-cat-date" datetime="2025-05-05">5 de maio de 2025</time>
+                    </div>
+                    <h1 class="post-h1" itemprop="headline">
+                        Como a IA está mudando o SEO em 2025 — e o que você precisa fazer agora
+                    </h1>
+                    <p class="post-subtitle">ChatGPT, Claude e Gemini estão virando fontes de tráfego. O que muda na prática para quem vende online?</p>
+                    <div class="post-meta-row">
+                        <div class="post-author">
+                            <div class="post-author-avatar" aria-hidden="true"></div>
+                            <span class="post-author-name" itemprop="author">Mateus Rucci</span>
+                        </div>
+                        <span class="post-meta-sep" aria-hidden="true">·</span>
+                        <time class="post-meta-item" datetime="2025-05-05" itemprop="datePublished">5 de maio de 2025</time>
+                        <span class="post-meta-sep" aria-hidden="true">·</span>
+                        <span class="post-meta-item">8 min de leitura</span>
+                    </div>
+                </header>
+
+                <!-- Cover -->
+                <div class="post-cover" role="img" aria-label="Capa do artigo: IA e SEO em 2025">
+                    <div class="post-cover-grid" aria-hidden="true"></div>
+                    <span class="post-cover-number" aria-hidden="true">IA</span>
+                </div>
+
+                <!-- TOC -->
+                <nav class="toc" aria-label="Índice">
+                    <p class="toc-title">Neste artigo</p>
+                    <ol class="toc-list">
+                        <li><a href="#o-que-mudou">O que de fato mudou (e o que não mudou)</a></li>
+                        <li><a href="#google">Google: o mesmo SEO, com um novo palco</a></li>
+                        <li><a href="#chatgpt">ChatGPT: tráfego real já existe</a></li>
+                        <li><a href="#claude">Claude: conteúdo em texto, sem JS no caminho</a></li>
+                        <li><a href="#checklist">O checklist que uso com clientes</a></li>
+                    </ol>
+                </nav>
+
+                <!-- Body -->
+                <div class="post-body" itemprop="articleBody">
+
+                    <p>Nos últimos meses, comecei a ver nos dashboards dos meus clientes uma linha de tráfego nova: <strong>chatgpt.com</strong>. Pequena, mas real. E crescendo.</p>
+
+                    <p>Isso me fez investigar a fundo o que o Google, a OpenAI e a Anthropic dizem oficialmente sobre como seus sistemas encontram, leem e citam conteúdo. O que descobri foi diferente do que a maioria dos "guias de SEO para IA" afirma.</p>
+
+                    <h2 id="o-que-mudou">O que de fato mudou (e o que não mudou)</h2>
+
+                    <p>A primeira coisa que você precisa entender: <strong>não existe um SEO separado para IA</strong>. Nenhuma das três plataformas documenta técnicas exclusivas ou arquivos especiais para aparecer nas respostas das IAs.</p>
+
+                    <div class="callout">
+                        <p class="callout-label">Ponto-chave</p>
+                        <p>O Google afirma explicitamente que AI Overviews e AI Mode não exigem otimizações extras além do SEO já recomendado. A página precisa estar indexada e ser elegível a snippet — ponto.</p>
+                    </div>
+
+                    <p>O que mudou é o seguinte: os assistentes de IA agora são leitores do seu conteúdo — e eles têm preferências técnicas muito claras. Saber quais são essas preferências é o que separa quem aparece de quem não aparece.</p>
+
+                    <h2 id="google">Google: o mesmo SEO, com um novo palco</h2>
+
+                    <p>O Google tem sido o mais direto sobre isso. A documentação oficial diz que as boas práticas de SEO continuam as mesmas para AI Overviews. Nenhum requisito técnico adicional. Nenhum schema especial para IA.</p>
+
+                    <p>O que impacta sua elegibilidade:</p>
+
+                    <ul>
+                        <li>Permitir rastreamento pelo Googlebot no <code>robots.txt</code></li>
+                        <li>Conteúdo importante visível em texto — não apenas em JavaScript</li>
+                        <li>Página retornando HTTP 200 com snippet habilitado</li>
+                        <li>JSON-LD coerente com o que está visível na página</li>
+                        <li>Links internos que conectam suas páginas profundas</li>
+                    </ul>
+
+                    <p>O framework que orienta tudo isso é o <strong>E-E-A-T</strong>: Experiência, Especialidade, Autoridade e Confiança. Para negócios como os que atendo — infoprodutores, prestadores de serviço, e-commerces — isso se traduz em bio de autor real, dados proprietários nos artigos e transparência sobre quem escreveu e por quê.</p>
+
+                    <div class="key-stat">
+                        <div class="key-stat-grid" aria-hidden="true"></div>
+                        <p class="key-stat-value">E-E-A-T</p>
+                        <p class="key-stat-label">Experiência · Especialidade · Autoridade · Confiança<br>O framework central do Google para avaliar qualidade de conteúdo</p>
+                    </div>
+
+                    <h2 id="chatgpt">ChatGPT: tráfego real já existe</h2>
+
+                    <p>O ChatGPT já referencia fontes externas nas respostas de busca — e o tráfego vem marcado com <strong>utm_source=chatgpt.com</strong>. Você pode medir isso agora no Google Analytics.</p>
+
+                    <p>Para aparecer nos resumos do ChatGPT Search, a regra da OpenAI é clara: não bloqueie o <code>OAI-SearchBot</code> no seu <code>robots.txt</code>.</p>
+
+                    <blockquote>
+                        Mesmo com o OAI-SearchBot bloqueado, o ChatGPT pode ainda exibir o link e o título se obtiver a URL por terceiros. Para exclusão total, use <code>noindex</code> — e para isso funcionar, o crawler precisa poder ler a página.
+                        <cite>— Documentação oficial da OpenAI, Publishers and Developers FAQ</cite>
+                    </blockquote>
+
+                    <p>A lógica prática para o <code>robots.txt</code>:</p>
+
+                    <ul>
+                        <li><code>OAI-SearchBot</code>: libere — determina inclusão no ChatGPT Search</li>
+                        <li><code>GPTBot</code>: você decide — usado para treinamento, não para Search</li>
+                        <li><code>Googlebot</code>: sempre libere</li>
+                    </ul>
+
+                    <h2 id="claude">Claude: conteúdo em texto, sem JS no caminho</h2>
+
+                    <p>O Claude tem a documentação menos prescritiva para donos de site, mas a implicação técnica é direta: o Web Fetch <strong>não renderiza JavaScript client-side</strong>.</p>
+
+                    <p>Se o conteúdo mais importante do seu site depende de um framework JS para aparecer na tela, o Claude não vai ler. Na prática:</p>
+
+                    <ul>
+                        <li>Conteúdo de produtos, preços e descrições em HTML estático</li>
+                        <li>Artigos de blog sem carregamento dinâmico do corpo</li>
+                        <li>PDFs funcionam — ele extrai texto automaticamente</li>
+                    </ul>
+
+                    <h2 id="checklist">O checklist que uso com clientes</h2>
+
+                    <p>Depois de aplicar isso em projetos reais, reduzi a uma lista de alta prioridade:</p>
+
+                    <ul>
+                        <li><strong>Crawl liberado:</strong> Googlebot e OAI-SearchBot com Allow: / no robots.txt</li>
+                        <li><strong>Conteúdo em texto:</strong> nada importante escondido atrás de JS, login ou personalização</li>
+                        <li><strong>H1 único e claro:</strong> diz exatamente o que a página entrega</li>
+                        <li><strong>Meta description com a resposta:</strong> não uma isca — a resposta direta</li>
+                        <li><strong>JSON-LD coerente:</strong> Article, Product ou SoftwareApplication quando aplicável</li>
+                        <li><strong>Autor com E-E-A-T:</strong> bio real, link para redes, credenciais visíveis</li>
+                        <li><strong>HTTPS sem erros 4xx/5xx:</strong> básico, mas mata muita página boa</li>
+                    </ul>
+
+                    <div class="callout">
+                        <p class="callout-label">O princípio que guia tudo</p>
+                        <p>Conteúdo excelente e curto supera conteúdo longo e mediano. Se você responde a pergunta em 400 palavras melhor do que os concorrentes respondem em 2.000, publique as 400 palavras.</p>
+                    </div>
+
+                </div>
+
+                <!-- Author Bio -->
+                <aside class="author-bio" aria-label="Sobre o autor">
+                    <div class="author-bio-avatar" aria-hidden="true"></div>
+                    <div>
+                        <p class="author-bio-name">Mateus Rucci</p>
+                        <p class="author-bio-role">Especialista em Tráfego Pago e Estratégia de Vendas</p>
+                        <p class="author-bio-text">Atuo com tráfego pago e estratégia de vendas desde 2017. Já gerenciei mais de R$10M em investimentos em mídia e estruturei times internos em empresas de diferentes nichos. Aqui escrevo o que aprendo na prática — sem teoria que não funciona no mundo real.</p>
+                    </div>
+                </aside>
+
+                <!-- CTA -->
+                <div class="post-cta">
+                    <div class="post-cta-grid" aria-hidden="true"></div>
+                    <p class="post-cta-eyebrow">Próximo passo</p>
+                    <h2 class="post-cta-title">Quer aplicar isso no seu negócio?</h2>
+                    <p class="post-cta-text">Diagnóstico gratuito de tráfego e funil — você sai com ações claras e priorizadas para o seu momento.</p>
+                    <a href="https://mateusrucci.com.br/diagnostico-personalizado/" class="btn btn-gold">Fazer diagnóstico gratuito</a>
+                </div>
+
+                <!-- Related -->
+                <aside class="related" aria-label="Leia também">
+                    <p class="related-label">Leia também</p>
+                    <div class="related-grid">
+                        <div class="related-card">
+                            <span class="related-cat">Tráfego Pago</span>
+                            <p class="related-title">CAC abaixo de R$30 no Meta Ads: a estrutura que replicamos em 4 nichos diferentes</p>
+                        </div>
+                        <div class="related-card">
+                            <span class="related-cat">Funis</span>
+                            <p class="related-title">Diagnóstico de funil: onde você está perdendo dinheiro sem saber</p>
+                        </div>
+                    </div>
+                </aside>
+
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <p class="footer-copy">© <span id="yr"></span> Mateus Rucci. Todos os direitos reservados.</p>
+            <ul class="footer-links">
+                <li><a href="https://mateusrucci.com.br">Home</a></li>
+                <li><a href="https://mateusrucci.com.br/mentoria/">Mentoria</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li><a href="https://mateusrucci.com.br/#contato">Contato</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('yr').textContent = new Date().getFullYear();
+        const bar = document.getElementById('progress');
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+        }, { passive: true });
+    </script>
+
+</body>
+</html>

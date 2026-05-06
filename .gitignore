@@ -2,6 +2,8 @@
 Thumbs.db
 *.log
 node_modules/
+.venv/
+.claude/
 
 # Pastas de fotos originais (não precisam ir pro servidor)
 Fotos Retratista/
