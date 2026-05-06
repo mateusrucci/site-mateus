@@ -108,10 +108,7 @@
     }
     </script>
     
-    <!-- Brand Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/02_lcp_960.webp" fetchpriority="high" type="image/webp">
     
     <!-- Design System Assets (Standalone CDNs) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -140,8 +137,8 @@
             --beam-color: var(--color-accent);
         }
 
-        body, .font-inter, p, span, a, button { font-family: 'DM Sans', sans-serif !important; }
-        h1, h2, h3, h4, h5, h6, .font-jakarta { font-family: 'DM Serif Display', serif !important; }
+        body, .font-inter, p, span, a, button { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important; }
+        h1, h2, h3, h4, h5, h6, .font-jakarta { font-family: Georgia, "Times New Roman", serif !important; }
         
         .bg-white { background-color: var(--color-white) !important; }
         .bg-slate-50, .bg-sky-50 { background-color: var(--color-neutral-light) !important; color: var(--color-primary); }
@@ -173,6 +170,7 @@
         .beam-v { position: absolute; width: 1px; height: 200px; background: linear-gradient(180deg, transparent, var(--beam-color), transparent); z-index: 10; opacity: 0; }
         
         .glass-dark { background: rgba(42,42,40,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(200,169,138,0.2); }
+        .hero-media { display: block; width: 100%; height: 100%; }
     </style>
 </head>
 <body class="bg-white text-slate-900 min-h-screen w-full relative overflow-x-hidden antialiased">
@@ -204,7 +202,10 @@
 <section id="hero" class="flex flex-col lg:block lg:h-[calc(100vh-100px)] z-10 w-full relative overflow-hidden" style="background-color: var(--color-primary);">
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
-        <img src="assets/02_opt.jpg" alt="Dr Mozar Paloschi - OTA Odontologia" class="w-full h-full object-cover opacity-30 mix-blend-luminosity" />
+        <picture class="hero-media">
+            <source srcset="assets/02_lcp_960.webp" type="image/webp">
+            <img src="assets/02_opt.jpg" width="960" height="1280" alt="Dr Mozar Paloschi - OTA Odontologia" class="w-full h-full object-cover opacity-30 mix-blend-luminosity" fetchpriority="high" decoding="async" />
+        </picture>
         <div class="absolute inset-0 bg-gradient-to-t from-[#2A2A28] via-[#2A2A28]/80 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-[#2A2A28] via-[#2A2A28]/70 to-transparent"></div>
     </div>

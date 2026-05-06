@@ -24,19 +24,17 @@
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Implante dentario doi?","acceptedAnswer":{"@type":"Answer","text":"O procedimento e feito com anestesia local e planejamento previo. O paciente pode sentir desconforto no pos-operatorio, mas dor intensa nao e o esperado quando ha boa indicacao e acompanhamento."}},{"@type":"Question","name":"Quem perdeu varios dentes pode fazer implante?","acceptedAnswer":{"@type":"Answer","text":"Sim. Em muitos casos, a perda de varios dentes pode ser tratada com implantes unitarios, pontes sobre implantes ou protocolo, dependendo da quantidade de osso, mordida e objetivo estetico."}},{"@type":"Question","name":"Quanto tempo dura um implante dentario?","acceptedAnswer":{"@type":"Answer","text":"A durabilidade depende do planejamento, higiene, saude gengival, carga mastigatoria e acompanhamento periodico. Um implante bem indicado pode durar muitos anos."}},{"@type":"Question","name":"Precisa fazer enxerto osseo antes do implante?","acceptedAnswer":{"@type":"Answer","text":"Nem sempre. O enxerto e indicado quando nao ha volume osseo suficiente para posicionar o implante com seguranca e estabilidade."}},{"@type":"Question","name":"Como agendar avaliacao para implante em Medianeira?","acceptedAnswer":{"@type":"Answer","text":"A avaliacao pode ser agendada pelo WhatsApp da OTA Odontologia. Na consulta, o caso e analisado com exames, historico bucal e planejamento da protese."}}]}
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="../../assets/08_lcp_720.webp" fetchpriority="high" type="image/webp">
     <style>
         :root{--primary:#2A2A28;--secondary:#4A5E52;--accent:#C8A98A;--paper:#FDFAF7;--muted:#F3EDE6;--line:#E2D8CE;--text:#1C1C1A}
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
-        body{font-family:"DM Sans",sans-serif;background:var(--paper);color:var(--secondary);line-height:1.72;-webkit-font-smoothing:antialiased}
+        body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--secondary);line-height:1.72;-webkit-font-smoothing:antialiased;text-rendering:optimizeSpeed}
         a{text-decoration:none;color:inherit}
         .progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:50}
         .nav{position:sticky;top:0;z-index:30;background:rgba(253,250,247,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
         .nav-inner{max-width:1120px;margin:0 auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:24px}
-        .brand{font-family:"DM Serif Display",serif;font-size:24px;color:var(--primary)}
+        .brand{font-family:Georgia,"Times New Roman",serif;font-size:24px;color:var(--primary)}
         .brand span{color:var(--accent)}
         .nav-links{display:flex;gap:22px;align-items:center;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--secondary)}
         .nav-cta{padding:10px 16px;border:1px solid var(--primary);border-radius:4px;color:var(--primary)}
@@ -45,11 +43,12 @@
         .breadcrumb a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
         .article-grid{display:grid;grid-template-columns:minmax(0,720px) 260px;gap:72px;align-items:start}
         .cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:18px}
-        h1,h2,h3{font-family:"DM Serif Display",serif;color:var(--text);font-weight:500}
+        h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--text);font-weight:500}
         h1{font-size:clamp(38px,5vw,62px);line-height:1.03;margin-bottom:22px}
         .subtitle{font-size:20px;line-height:1.55;color:var(--secondary);margin-bottom:28px}
         .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:#8d8379;margin-bottom:42px}
         .hero-img{height:360px;border-radius:8px;overflow:hidden;margin-bottom:44px;background:var(--primary)}
+        .hero-img picture{display:block;width:100%;height:100%}
         .hero-img img{width:100%;height:100%;object-fit:cover;opacity:.78}
         .toc{position:sticky;top:90px;border-left:3px solid var(--accent);background:#fff;padding:22px;border-radius:0 8px 8px 0;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
         .toc-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#8d8379;margin-bottom:14px}
@@ -117,7 +116,10 @@
                 </header>
 
                 <div class="hero-img" role="img" aria-label="Dr. Mozar Paloschi em atendimento odontologico na OTA">
-                    <img src="../../assets/08_opt.jpg" alt="Dr. Mozar Paloschi, especialista em protese dentaria e implantodontia na OTA Odontologia">
+                    <picture>
+                        <source srcset="../../assets/08_lcp_720.webp" type="image/webp">
+                        <img src="../../assets/08_opt.jpg" width="720" height="1081" alt="Dr. Mozar Paloschi, especialista em protese dentaria e implantodontia na OTA Odontologia" fetchpriority="high" decoding="async">
+                    </picture>
                 </div>
 
                 <div class="post-body">
