@@ -16,3 +16,4 @@ deployment:
     - /bin/cp -rf implementacao-de-trafego-interno/         $DEPLOYPATH
     - /bin/cp -rf mozar/                              $DEPLOYPATH
     - /bin/cp -rf easydots/                           $DEPLOYPATH
+    - /bin/cp -rf anjos/                              $DEPLOYPATH
