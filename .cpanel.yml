@@ -17,3 +17,4 @@ deployment:
     - /bin/cp -rf mozar/                              $DEPLOYPATH
     - /bin/cp -rf easydots/                           $DEPLOYPATH
     - /bin/cp -rf anjos/                              $DEPLOYPATH
+    - /bin/cp -rf boutique-do-sono/                   $DEPLOYPATH
