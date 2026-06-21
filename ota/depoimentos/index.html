@@ -326,6 +326,49 @@
     }
     setVagas();
 
+    // ===== HUB DE CONVERSÕES (envia lead + rastreamento pra planilha) =====
+    var HUB_ENDPOINT = '/lead-hub.php';
+    var leadEnviado = false, abandonoEnviado = false;
+    function hubParam(n){ var m=location.search.match(new RegExp('[?&]'+n+'=([^&#]*)')); return m?decodeURIComponent(m[1]):''; }
+    function hubCookie(n){ var m=document.cookie.match(new RegExp('(^| )'+n+'=([^;]+)')); return m?m[2]:''; }
+    function hubPersist(){
+      var a={}; try{ a=JSON.parse(localStorage.getItem('ota_attr')||'{}'); }catch(e){}
+      ['fbclid','gclid','gbraid','wbraid','utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k){ var v=hubParam(k); if(v) a[k]=v; });
+      if(!a.landing) a.landing=location.href.split('#')[0];
+      if(!('referrer' in a)) a.referrer=document.referrer||'';
+      try{ localStorage.setItem('ota_attr', JSON.stringify(a)); }catch(e){}
+      return a;
+    }
+    function hubParams(){
+      var a=hubPersist();
+      var fbc=hubCookie('_fbc'); if(!fbc && a.fbclid) fbc='fb.1.'+Date.now()+'.'+a.fbclid;
+      return { fbclid:a.fbclid||'', fbp:hubCookie('_fbp')||'', fbc:fbc||'',
+        gclid:a.gclid||'', gbraid:a.gbraid||'', wbraid:a.wbraid||'',
+        utm_source:a.utm_source||'', utm_medium:a.utm_medium||'', utm_campaign:a.utm_campaign||'',
+        utm_term:a.utm_term||'', utm_content:a.utm_content||'',
+        landing:a.landing||location.href, referrer:a.referrer||'',
+        external_id:(window.Tracker&&Tracker.getExternalId)?Tracker.getExternalId():'' };
+    }
+    function hubEnviar(origem, dados, beacon){
+      var payload=Object.assign({origem:origem}, dados, hubParams());
+      var body=JSON.stringify(payload);
+      try{
+        if(beacon && navigator.sendBeacon){ navigator.sendBeacon(HUB_ENDPOINT, new Blob([body],{type:'application/json'})); }
+        else{ fetch(HUB_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:body}); }
+      }catch(e){}
+    }
+    function hubAbandono(){
+      if(leadEnviado||abandonoEnviado) return;
+      var n=document.getElementById('leadName'), p=document.getElementById('leadPhone'), t=document.getElementById('leadTreatment');
+      var nome=n?n.value.trim():'', tel=p?p.value.trim():'';
+      if(!nome && !tel) return;
+      abandonoEnviado=true;
+      hubEnviar('Abandono de carrinho', { nome:nome, telefone:tel, tratamento:(t?t.value:'') }, true);
+    }
+    document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='hidden') hubAbandono(); });
+    window.addEventListener('pagehide', hubAbandono);
+    hubPersist();
+
     function openLead(treatment) {
         const ov = document.getElementById('leadOverlay');
         ov.classList.add('open'); document.body.classList.add('no-scroll');
@@ -343,6 +386,8 @@
         if (!name || !phoneRaw || !treatment) return false;
         let digits = phoneRaw.replace(/\D/g, '');
         if (digits.length <= 11) { digits = '55' + digits; }
+        leadEnviado = true;
+        hubEnviar('Lead enviado', { nome: name, telefone: digits, tratamento: treatment });
         const parts = name.split(/\s+/);
         const firstName = parts[0] || ''; const lastName = parts.slice(1).join(' ') || '';
         if (window.Tracker) {
