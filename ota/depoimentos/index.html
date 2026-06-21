@@ -25,7 +25,7 @@
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=906409825814867&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
 
-    <link rel="preload" as="image" href="../assets/depoimentos/dep-07.jpg">
+    <link rel="preload" as="image" href="../assets/depoimentos/dep-08.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <style>
@@ -104,10 +104,6 @@
 <section class="w-full relative z-10 bg-white" style="padding: 64px 0 96px;">
     <div class="max-w-[1600px] mx-auto px-6 lg:px-[6%]">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow scroll-reveal" data-id="dep-07" data-src="../assets/depoimentos/dep-07.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
-                <img src="../assets/depoimentos/dep-07.jpg" loading="eager" fetchpriority="high" decoding="async" alt="Depoimento de paciente da OTA Odontologia em Medianeira" class="vc-poster">
-                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
-            </button>
             <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow scroll-reveal" data-id="dep-08" data-src="../assets/depoimentos/dep-08.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
                 <img src="../assets/depoimentos/dep-08.jpg" loading="eager" fetchpriority="high" decoding="async" alt="Depoimento de paciente da OTA Odontologia em Medianeira" class="vc-poster">
                 <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
@@ -117,7 +113,7 @@
                 <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
             </button>
             <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow scroll-reveal" data-id="dep-10" data-src="../assets/depoimentos/dep-10.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
-                <img src="../assets/depoimentos/dep-10.jpg" loading="eager" decoding="async" alt="Depoimento de paciente da OTA Odontologia em Medianeira" class="vc-poster">
+                <img src="../assets/depoimentos/dep-10.jpg" loading="eager" fetchpriority="high" decoding="async" alt="Depoimento de paciente da OTA Odontologia em Medianeira" class="vc-poster">
                 <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
             </button>
             <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow scroll-reveal" data-id="dep-11" data-src="../assets/depoimentos/dep-11.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
@@ -129,7 +125,7 @@
                 <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
             </button>
             <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow scroll-reveal" data-id="dep-13" data-src="../assets/depoimentos/dep-13.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
-                <img src="../assets/depoimentos/dep-13.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia em Medianeira" class="vc-poster">
+                <img src="../assets/depoimentos/dep-13.jpg" loading="eager" decoding="async" alt="Depoimento de paciente da OTA Odontologia em Medianeira" class="vc-poster">
                 <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
             </button>
             <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow scroll-reveal" data-id="dep-14" data-src="../assets/depoimentos/dep-14.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
@@ -352,6 +348,7 @@
     }
 
     function playVideo(card) {
+        if (card.querySelector('video')) return;
         document.querySelectorAll('.video-card video').forEach((v) => v.pause());
         const src = card.getAttribute('data-src');
         const id = card.getAttribute('data-id') || src;

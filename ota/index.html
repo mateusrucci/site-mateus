@@ -430,10 +430,6 @@
         </p>
 
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 mt-12 scroll-reveal">
-            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-id="dep-01" data-src="assets/depoimentos/dep-01.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
-                <img src="assets/depoimentos/dep-01.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
-                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
-            </button>
             <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-id="dep-02" data-src="assets/depoimentos/dep-02.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
                 <img src="assets/depoimentos/dep-02.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
                 <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
@@ -452,6 +448,10 @@
             </button>
             <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-id="dep-06" data-src="assets/depoimentos/dep-06.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
                 <img src="assets/depoimentos/dep-06.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
+                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
+            </button>
+            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-id="dep-07" data-src="assets/depoimentos/dep-07.mp4" aria-label="Assistir depoimento" onclick="playVideo(this)">
+                <img src="assets/depoimentos/dep-07.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
                 <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
             </button>
         </div>
@@ -654,6 +654,8 @@
 
     // ===== Vídeo depoimentos (clique dispara ViewContent) =====
     function playVideo(card) {
+        // já está tocando? deixa os controles nativos cuidarem do play/pause (evita áudio duplicado)
+        if (card.querySelector('video')) return;
         document.querySelectorAll('.video-card video').forEach((v) => v.pause());
         const src = card.getAttribute('data-src');
         const id = card.getAttribute('data-id') || src;
