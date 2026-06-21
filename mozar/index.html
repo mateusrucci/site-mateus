@@ -171,6 +171,16 @@
         
         .glass-dark { background: rgba(42,42,40,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(200,169,138,0.2); }
         .hero-media { display: block; width: 100%; height: 100%; }
+
+        /* Video testimonial cards */
+        .video-card { position: relative; cursor: pointer; background: #000; padding: 0; border: 0; }
+        .video-card .vc-poster { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .video-card .vc-grad { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0) 45%); pointer-events: none; }
+        .video-card .vc-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .video-card .vc-play i { width: 60px; height: 60px; border-radius: 9999px; background: rgba(253,250,247,0.94); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 34px rgba(0,0,0,0.4); transition: transform .3s cubic-bezier(0.16,1,0.3,1); }
+        .video-card:hover .vc-play i { transform: scale(1.1); }
+        .video-card .vc-play svg { width: 22px; height: 22px; margin-left: 3px; fill: var(--color-primary); }
+        .video-card video { width: 100%; height: 100%; object-fit: cover; background: #000; display: block; }
     </style>
 </head>
 <body class="bg-white text-slate-900 min-h-screen w-full relative overflow-x-hidden antialiased">
@@ -189,6 +199,7 @@
         <a class="hover:text-teal-600 transition-colors" href="#procedimentos">Tratamentos</a>
         <a class="hover:text-teal-600 transition-colors" href="#sobre">Dr. Mozar</a>
         <a class="hover:text-teal-600 transition-colors" href="#resultados">Resultados</a>
+        <a class="hover:text-teal-600 transition-colors" href="/mozar/depoimentos/">Depoimentos</a>
         <a class="hover:text-teal-600 transition-colors" href="/mozar/blog/">Blog</a>
     </div>
     <div class="flex items-center gap-4">
@@ -486,7 +497,40 @@
         <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.05] mb-6 text-slate-900" style="font-family: 'DM Serif Display', serif;">
             Histórias de quem já transformou o sorriso.
         </h2>
-        
+        <p class="text-sm font-medium text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            Quem viveu a transformação conta com as próprias palavras. Toque para ouvir.
+        </p>
+
+        <!-- VÍDEO DEPOIMENTOS (5) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mt-12 scroll-reveal">
+            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-src="assets/depoimentos/dep-01.mp4" aria-label="Assistir depoimento em vídeo" onclick="playVideo(this)">
+                <img src="assets/depoimentos/dep-01.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
+                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
+            </button>
+            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-src="assets/depoimentos/dep-02.mp4" aria-label="Assistir depoimento em vídeo" onclick="playVideo(this)">
+                <img src="assets/depoimentos/dep-02.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
+                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
+            </button>
+            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-src="assets/depoimentos/dep-03.mp4" aria-label="Assistir depoimento em vídeo" onclick="playVideo(this)">
+                <img src="assets/depoimentos/dep-03.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
+                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
+            </button>
+            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-src="assets/depoimentos/dep-04.mp4" aria-label="Assistir depoimento em vídeo" onclick="playVideo(this)">
+                <img src="assets/depoimentos/dep-04.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
+                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
+            </button>
+            <button type="button" class="video-card aspect-[9/16] w-full rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow" data-src="assets/depoimentos/dep-05.mp4" aria-label="Assistir depoimento em vídeo" onclick="playVideo(this)">
+                <img src="assets/depoimentos/dep-05.jpg" loading="lazy" decoding="async" alt="Depoimento de paciente da OTA Odontologia" class="vc-poster">
+                <span class="vc-grad"></span><span class="vc-play"><i><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></i></span>
+            </button>
+        </div>
+        <div class="mt-10">
+            <a href="/mozar/depoimentos/" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-sm hover:shadow-md" style="background: var(--color-accent); color: var(--color-primary);">
+                Ver todos os depoimentos
+                <span class="iconify w-4 h-4" data-icon="solar:arrow-right-linear"></span>
+            </a>
+        </div>
+
         <!-- Depoimentos Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left mt-16 mb-24">
             <div class="bg-white p-8 rounded-xl shadow-sm border border-slate-100 scroll-reveal delay-100">
@@ -625,6 +669,7 @@
                 <ul class="space-y-4 text-xs font-light text-white/60">
                     <li><a href="#sobre" class="hover:text-white transition-colors">Dr. Mozar Paloschi</a></li>
                     <li><a href="#resultados" class="hover:text-white transition-colors">Casos e Resultados</a></li>
+                    <li><a href="/mozar/depoimentos/" class="hover:text-white transition-colors">Depoimentos em Vídeo</a></li>
                     <li><a href="#faq" class="hover:text-white transition-colors">Dúvidas Frequentes</a></li>
                     <li><a href="/mozar/blog/" class="hover:text-white transition-colors">Blog</a></li>
                     <li><a href="#agendamento" class="hover:text-white transition-colors">Agendar Consulta</a></li>
@@ -657,6 +702,14 @@
         });
     }, { threshold: 0.1 });
     document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+
+    function playVideo(card) {
+        document.querySelectorAll('.video-card video').forEach((v) => v.pause());
+        const src = card.getAttribute('data-src');
+        card.innerHTML = '<video src="' + src + '" controls autoplay playsinline preload="auto"></video>';
+        const v = card.querySelector('video');
+        if (v) { v.play().catch(() => {}); }
+    }
 </script>
 
 </body>
