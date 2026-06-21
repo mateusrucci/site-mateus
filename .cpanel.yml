@@ -18,3 +18,10 @@ deployment:
     - /bin/cp -rf easydots/                           $DEPLOYPATH
     - /bin/cp -rf anjos/                              $DEPLOYPATH
     - /bin/cp -rf boutique-do-sono/                   $DEPLOYPATH
+    - echo "=== HOME DIR ===" > $DEPLOYPATH/__ota_probe.txt 2>&1 || true
+    - ls -la /home2/mate3251/ >> $DEPLOYPATH/__ota_probe.txt 2>&1 || true
+    - echo "=== public_html ===" >> $DEPLOYPATH/__ota_probe.txt 2>&1 || true
+    - ls -la /home2/mate3251/public_html/ >> $DEPLOYPATH/__ota_probe.txt 2>&1 || true
+    - echo "=== userdata docroot ===" >> $DEPLOYPATH/__ota_probe.txt 2>&1 || true
+    - grep -i documentroot /var/cpanel/userdata/mate3251/otaodontologia.com.br >> $DEPLOYPATH/__ota_probe.txt 2>&1 || true
+    - grep -ri otaodontologia /var/cpanel/userdata/mate3251/main >> $DEPLOYPATH/__ota_probe.txt 2>&1 || true
