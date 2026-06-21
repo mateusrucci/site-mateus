@@ -49,3 +49,44 @@ PHP que joga tudo na planilha — e testamos um lead de ponta a ponta.
 ## Segurança
 O token do Meta fica **só aqui**, nas Propriedades do script (privado da sua conta) — nunca
 no site nem no repositório. O Web App é protegido pelo `SHARED_SECRET`.
+
+---
+
+# Fase 2 — Google Ads (conversões offline pelo gclid)
+
+O mesmo lead que veio do Google (tem `gclid` na planilha) também volta pro **Google Ads**.
+O Apps Script monta uma aba **"Google Ads"** no formato de importação, e o Google Ads
+**puxa essa aba sozinho, todo dia**. (Já roda junto com o disparo das 00:00.)
+
+### 1) Atualizar o código
+- Cole novamente o `Codigo.gs` (agora tem a função `montarGoogleAds`) e salve.
+  *Não precisa republicar o Web App — o `doPost` não mudou.*
+- Recarregue a planilha → menu **⚡ Hub Conversões → Atualizar aba Google Ads** → ela cria
+  a aba **"Google Ads"** com as conversões de quem tem gclid + Status.
+
+### 2) Criar as conversões no Google Ads (uma vez)
+Em **Ferramentas → Conversões → + Nova ação → Importar → Cliques (offline)**, crie 3 ações
+com o **nome EXATAMENTE igual** (o nome precisa bater com a aba):
+| Nome da ação | Categoria sugerida | Valor |
+|---|---|---|
+| `OTA - Contatado` | Contato | sem valor |
+| `OTA - Agendado` | Agendamento / Lead | sem valor |
+| `OTA - Cliente` | Compra | **usar o valor do upload (BRL)** |
+
+> Dica: deixe **`OTA - Cliente`** como a conversão principal e use **lance por valor (tROAS)** —
+> aí o Google otimiza por quem traz mais faturamento, não por quem só preenche.
+
+### 3) Agendar a importação da planilha
+Em **Ferramentas → Conversões → Uploads → (clique nos 3 pontos / Programações) → Criar
+programação**:
+- **Origem:** Planilhas Google → selecione esta planilha → aba **"Google Ads"**
+- **Frequência:** Diária
+- Salve.
+
+Pronto: todo dia o Google Ads lê a aba e importa as conversões, ligando cada uma ao clique
+do anúncio (gclid). Re-enviar é seguro — o Google deduplica por gclid + ação + horário.
+
+> Obs.: o formato da aba (colunas `Google Click ID`, `Conversion Name`, `Conversion Time`,
+> `Conversion Value`, `Conversion Currency` + a linha `Parameters:TimeZone`) é o padrão do
+> Google. Se na hora de agendar o Google pedir um formato um pouco diferente, me avisa que eu
+> ajusto a função em 1 minuto.

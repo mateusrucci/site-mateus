@@ -144,9 +144,56 @@ function enviarConversoesDiarias() {
         Utilities.sleep(300); // respiro entre chamadas
       }
     }
+    try { montarGoogleAds(); } catch (e) {} // atualiza a aba de upload do Google Ads
   } finally {
     lock.releaseLock();
   }
+}
+
+/**
+ * Monta a aba "Google Ads" no formato de importação de conversões offline.
+ * O Google Ads puxa essa aba de forma agendada (Ferramentas > Conversões > Uploads).
+ * Só inclui leads que vieram do Google (têm gclid) e já têm Status.
+ * Re-montar todo dia é seguro: o Google deduplica por gclid + conversão + horário.
+ */
+function montarGoogleAds() {
+  var sh = sheet_();
+  var ss = sh.getParent();
+  var tab = ss.getSheetByName('Google Ads') || ss.insertSheet('Google Ads');
+  tab.clearContents();
+
+  var nomes = { Contatado: 'OTA - Contatado', Agendado: 'OTA - Agendado', Cliente: 'OTA - Cliente' };
+  var out = [
+    ['Parameters:TimeZone=America/Sao_Paulo', '', '', '', ''],
+    ['Google Click ID', 'Conversion Name', 'Conversion Time', 'Conversion Value', 'Conversion Currency']
+  ];
+
+  var vals = sh.getDataRange().getValues();
+  for (var r = 1; r < vals.length; r++) {
+    var row = vals[r];
+    var gclid = String(row[col_('gclid')] || '').trim();
+    if (!gclid) continue; // só Google
+    var status = String(row[col_('Status')] || '').trim().toLowerCase();
+    var journey =
+      status === 'contatado' ? ['Contatado'] :
+      status === 'agendado'  ? ['Contatado', 'Agendado'] :
+      status === 'cliente'   ? ['Contatado', 'Agendado', 'Cliente'] : [];
+    if (!journey.length) continue;
+
+    var dt = row[col_('Data/Hora')];
+    var time = Utilities.formatDate(dt instanceof Date ? dt : new Date(dt), 'America/Sao_Paulo', 'yyyy-MM-dd HH:mm:ss');
+    for (var j = 0; j < journey.length; j++) {
+      var nm = journey[j], val = '', cur = '';
+      if (nm === 'Cliente') {
+        var v = parseFloat(String(row[col_('Valor (R$)')]).replace(/[^0-9,.-]/g, '').replace(',', '.')) || 0;
+        if (v <= 0) continue; // sem Valor ainda, não exporta o Cliente
+        val = v; cur = 'BRL';
+      }
+      out.push([gclid, nomes[nm], time, val, cur]);
+    }
+  }
+  tab.getRange(1, 1, out.length, 5).setValues(out);
+  SpreadsheetApp.getActiveSpreadsheet().toast('Aba "Google Ads" atualizada (' + (out.length - 2) + ' conversões).', 'Hub OTA', 5);
 }
 
 function montarUserData_(row) {
@@ -249,6 +296,7 @@ function onOpen() {
     .addItem('Criar gatilho diário (00:00)', 'criarGatilhoDiario')
     .addSeparator()
     .addItem('Enviar conversões agora', 'enviarConversoesDiarias')
+    .addItem('Atualizar aba Google Ads', 'montarGoogleAds')
     .addItem('Testar conexão com o Meta', 'testarMeta')
     .addToUi();
 }
