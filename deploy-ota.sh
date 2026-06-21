@@ -8,17 +8,24 @@
 OTAPATH=/home2/mate3251/otaodontologia.com.br
 DEPLOYPATH=/home2/mate3251/mateusrucci.com.br
 
-# 1) Copia o conteúdo de mozar/ para o docroot da OTA (adiciona vídeos + página /depoimentos)
+# 1) BASE: copia o conteúdo de mozar/ (vídeos, blog, landing pages, imagens) para a OTA
 /bin/cp -rf mozar/. "$OTAPATH/"
 
-# 2) Corrige caminhos para servir na raiz: /mozar/ -> / e domínio canônico
+# 2) Corrige caminhos da base para servir na RAIZ: /mozar/ -> / e domínio canônico
 /usr/bin/find "$OTAPATH" -maxdepth 4 -name '*.html' -exec sed -i \
   -e 's#https://mateusrucci.com.br/mozar/#https://otaodontologia.com.br/#g' \
   -e 's#"/mozar/#"/#g' {} +
 /usr/bin/find "$OTAPATH" -maxdepth 4 -name '*.xml' -exec sed -i \
   -e 's#https://mateusrucci.com.br/mozar/#https://otaodontologia.com.br/#g' {} +
 
-# 3) Remove o arquivo temporário de diagnóstico, se existir
+# 3) OVERLAY EXCLUSIVO DA OTA: sobrepõe os arquivos específicos do otaodontologia
+#    (index.html com popup/pixel/reorder, /depoimentos, api-tracking.php e tracking.js
+#    com o Pixel/CAPI da OTA). Vem DEPOIS do sed — já são root-relative, não precisam de rewrite.
+if [ -d ota ]; then
+  /bin/cp -rf ota/. "$OTAPATH/"
+fi
+
+# 4) Remove o arquivo temporário de diagnóstico, se existir
 /bin/rm -f "$DEPLOYPATH/__ota_probe.txt"
 
 echo "deploy-ota.sh concluído"
