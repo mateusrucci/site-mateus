@@ -19,13 +19,27 @@ DEPLOYPATH=/home2/mate3251/mateusrucci.com.br
   -e 's#https://mateusrucci.com.br/mozar/#https://otaodontologia.com.br/#g' {} +
 
 # 3) OVERLAY EXCLUSIVO DA OTA: sobrepõe os arquivos específicos do otaodontologia
-#    (index.html com popup/pixel/reorder, /depoimentos, api-tracking.php e tracking.js
-#    com o Pixel/CAPI da OTA). Vem DEPOIS do sed — já são root-relative, não precisam de rewrite.
+SCRIPTDIR="$(cd "$(dirname "$0")" && pwd)"
+DIAG="$DEPLOYPATH/__ota_diag.txt"
+{
+  echo "=== diag $(date) ==="
+  echo "pwd=$(pwd)"
+  echo "scriptdir=$SCRIPTDIR"
+  echo "git_head=$(git -C "$SCRIPTDIR" rev-parse HEAD 2>&1)"
+  echo "ls_ota_pwd=$(ls -la ota 2>&1 | head -8)"
+  echo "ls_ota_scriptdir=$(ls -la "$SCRIPTDIR/ota" 2>&1 | head -8)"
+} > "$DIAG" 2>&1
+
+# Tenta pela pasta relativa e, como reforço, pelo diretório do script (caminho absoluto)
 if [ -d ota ]; then
-  /bin/cp -rf ota/. "$OTAPATH/"
+  /bin/cp -rf ota/. "$OTAPATH/" 2>>"$DIAG"
+elif [ -d "$SCRIPTDIR/ota" ]; then
+  /bin/cp -rf "$SCRIPTDIR/ota/." "$OTAPATH/" 2>>"$DIAG"
 fi
 
-# 4) Remove o arquivo temporário de diagnóstico, se existir
+echo "overlay_index_has_openLead=$(grep -c openLead "$OTAPATH/index.html" 2>&1)" >> "$DIAG"
+
+# 4) Remove o arquivo temporário de diagnóstico antigo
 /bin/rm -f "$DEPLOYPATH/__ota_probe.txt"
 
 echo "deploy-ota.sh concluído"
