@@ -215,10 +215,10 @@
                 O próximo depoimento pode ser <em style="color: var(--color-accent);">o seu.</em>
             </h2>
             <p class="text-sm font-medium text-slate-500 mb-6 leading-relaxed px-4">
-                Na primeira consulta, o Dr. Mozar faz o diagnóstico completo com scanner 3D e já apresenta as possibilidades para o seu caso. Sem compromisso, sem pressão — só clareza.
+                Na primeira consulta, o Dr. Mozar faz a avaliação completa com scanner 3D (leitura digital da boca) e já mostra as possibilidades para o seu caso. Sem compromisso, sem pressão — só clareza.
             </p>
             <div class="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-widest mb-8" style="color: var(--color-accent);">
-                <span class="iconify w-4 h-4" data-icon="solar:fire-bold"></span> Apenas 7 vagas de avaliação por semana
+                <span class="iconify w-4 h-4" data-icon="solar:fire-bold"></span> Restam apenas <span class="js-vagas">7</span> vagas de avaliação esta semana
             </div>
             <div class="flex justify-center">
                 <button type="button" onclick="openLead()" class="w-full sm:w-auto text-xs font-bold uppercase tracking-widest px-10 py-4 rounded transition-all shadow-md hover:shadow-lg text-center" style="background: var(--color-accent); color: var(--color-primary);">
@@ -242,7 +242,7 @@
                 <ul class="space-y-4 text-xs font-light text-white/60">
                     <li><a href="/#procedimentos" class="hover:text-white transition-colors">Lentes em Cerâmica</a></li>
                     <li><a href="/#procedimentos" class="hover:text-white transition-colors">Implantes Dentários</a></li>
-                    <li><a href="/#procedimentos" class="hover:text-white transition-colors">Reabilitação Oral</a></li>
+                    <li><a href="/#procedimentos" class="hover:text-white transition-colors">Recuperação do Sorriso</a></li>
                     <li><a href="/blog/implante-dentario-medianeira/" class="hover:text-white transition-colors">Guia de Implantes</a></li>
                 </ul>
             </div>
@@ -278,7 +278,7 @@
         <p class="lead-sub">Preencha e fale agora no WhatsApp com a nossa equipe.</p>
         <div class="lead-urgency">
             <span class="iconify" style="width:20px;height:20px;flex:none" data-icon="solar:fire-bold"></span>
-            <span>Atenção: <strong>apenas 7 vagas</strong> de avaliação por semana</span>
+            <span>Atenção: <strong>restam apenas <span class="js-vagas">7</span> vagas</strong> de avaliação esta semana</span>
         </div>
         <form id="leadForm" onsubmit="return submitLead(event)">
             <div class="lead-field">
@@ -295,7 +295,7 @@
                     <option value="" disabled selected>Selecione uma opção</option>
                     <option value="Lentes em Cerâmica">Lentes em Cerâmica</option>
                     <option value="Implantes Dentários">Implantes Dentários</option>
-                    <option value="Reabilitação Oral">Reabilitação Oral</option>
+                    <option value="Recuperação do Sorriso">Recuperação do Sorriso</option>
                     <option value="Retratamento">Retratamento (refazer lentes)</option>
                     <option value="Lentes em Resina">Lentes em Resina</option>
                     <option value="Clareamento">Clareamento</option>
@@ -306,7 +306,7 @@
                 <span class="iconify" style="width:22px;height:22px" data-icon="ic:baseline-whatsapp"></span>
                 Falar no WhatsApp
             </button>
-            <p class="lead-note">Atendimento humano · Sem compromisso</p>
+            <p class="lead-note">Você fala com uma pessoa de verdade · Sem compromisso</p>
         </form>
     </div>
 </div>
@@ -317,6 +317,14 @@
         entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); } });
     }, { threshold: 0.05 });
     document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+
+    // Escassez por dia da semana (Sáb/Dom/Seg=10, Ter=8, Qua=6, Qui=4, Sex=2)
+    function setVagas() {
+        var map = {0:10, 1:10, 2:8, 3:6, 4:4, 5:2, 6:10};
+        var n = map[new Date().getDay()];
+        document.querySelectorAll('.js-vagas').forEach(function(el){ el.textContent = n; });
+    }
+    setVagas();
 
     function openLead(treatment) {
         const ov = document.getElementById('leadOverlay');
