@@ -1,4 +1,10 @@
 # ============================================================
+#  OTA Odontologia mora em otaodontologia.com.br
+#  /mozar/* redireciona (301) para o OTA — nao servir conteudo OTA aqui
+# ============================================================
+RedirectMatch 301 ^/mozar(/.*)?$ https://otaodontologia.com.br$1
+
+# ============================================================
 #  Cache Control — mateusrucci.com.br
 # ============================================================
 

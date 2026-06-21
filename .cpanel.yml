@@ -14,7 +14,6 @@ deployment:
     - /bin/cp -rf mentoria/         $DEPLOYPATH
     - /bin/cp -rf implementaca-de-funis/                    $DEPLOYPATH
     - /bin/cp -rf implementacao-de-trafego-interno/         $DEPLOYPATH
-    - /bin/cp -rf mozar/                              $DEPLOYPATH
     - /bin/cp -rf easydots/                           $DEPLOYPATH
     - /bin/cp -rf anjos/                              $DEPLOYPATH
     - /bin/cp -rf boutique-do-sono/                   $DEPLOYPATH
