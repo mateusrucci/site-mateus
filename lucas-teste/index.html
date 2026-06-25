@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Liberdade Operacional — Imersão Presencial · Ribeirão Preto · 03/04</title>
+  <title>Liberdade Operacional — Evento Presencial · Ribeirão Preto · 03/04</title>
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -355,7 +355,7 @@
     .value-total-label { font-size: 14px; color: rgba(255,255,255,0.45); }
     .value-total-price { font-size: 22px; font-weight: 800; color: var(--gold-light); }
 
-    /* ── PRICING ────────────────────────────────── */
+    /* ── PRICING / INGRESSOS ────────────────────── */
     .pricing-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 24px; margin-top: 48px; align-items: start;
@@ -379,30 +379,27 @@
       border-radius: 100px; white-space: nowrap;
     }
     .pricing-tier {
-      font-size: 13px; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
-      margin-bottom: 12px;
+      font-size: 18px; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
     }
-    .pricing-card-vip .pricing-tier { color: var(--gold-medium); }
-    .pricing-price-main { font-size: 42px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
-    .pricing-card-vip .pricing-price-main { color: var(--gold-light); }
-    .pricing-price-sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 28px; }
+    .pricing-card-vip .pricing-tier { color: var(--gold-light); }
     .pricing-divider { border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 24px; }
     .pricing-card-vip .pricing-divider { border-color: rgba(238,216,162,0.1); }
     .pricing-items { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
     .pricing-items li {
       display: flex; align-items: flex-start; gap: 12px;
-      font-size: 14px; line-height: 1.45; color: rgba(255,255,255,0.7);
+      font-size: 15px; line-height: 1.45; color: rgba(255,255,255,0.75);
     }
     .pi-check { color: #3DD14A; font-weight: 700; flex-shrink: 0; }
     .pi-star  { color: var(--gold-medium); font-weight: 700; flex-shrink: 0; }
     .pricing-bonus-label {
       font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: rgba(255,255,255,0.25); margin: 20px 0 14px;
+      color: rgba(255,255,255,0.3); margin: 20px 0 14px;
     }
-    .pricing-card-vip .pricing-bonus-label { color: rgba(238,216,162,0.35); }
+    .pricing-card-vip .pricing-bonus-label { color: rgba(238,216,162,0.45); }
     .pricing-companion {
-      text-align: center; font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 14px;
+      text-align: center; font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 14px;
     }
     .pricing-companion strong { color: var(--gold-medium); }
 
@@ -444,32 +441,6 @@
     }
     .testimonial-name { font-size: 14px; font-weight: 700; }
     .testimonial-role { font-size: 12px; color: rgba(255,255,255,0.4); }
-
-    /* ── FAQ ────────────────────────────────────── */
-    .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
-    .faq-item { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .faq-q {
-      width: 100%; display: flex; align-items: center;
-      justify-content: space-between; gap: 16px;
-      padding: 20px 24px; background: none; border: 0;
-      font-family: "Sora", sans-serif; font-size: 16px; font-weight: 700;
-      color: var(--black-deep); text-align: left; cursor: pointer;
-    }
-    .faq-icon {
-      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
-      background: var(--gray-light);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; color: var(--gold-dark); transition: transform 0.3s;
-      line-height: 1;
-    }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-    .faq-item.open .faq-a { max-height: 300px; }
-    .faq-a p {
-      padding: 16px 24px 20px;
-      font-size: 15px; line-height: 1.65; color: #555;
-      border-top: 1px solid #f0f0f0;
-    }
 
     /* ── FINAL CTA ──────────────────────────────── */
     .final-cta {
@@ -549,7 +520,7 @@
 
   <!-- ════════════════════ URGENCY STRIP ════════════════════ -->
   <div class="urgency-strip">
-    <p>⚠️ 1º LOTE — Vagas limitadas. <strong>Garanta o menor preço antes que acabem.</strong></p>
+    <p>⚠️ VAGAS LIMITADAS — <strong>quando acabar, acabou.</strong></p>
   </div>
 
   <!-- ════════════════════ HERO / VSL ════════════════════ -->
@@ -560,18 +531,17 @@
 
       <div class="event-badge">
         <span class="event-badge-dot"></span>
-        03 de Abril &nbsp;·&nbsp; Hotel Araucária Plaza &nbsp;·&nbsp; Ribeirão Preto
+        3 de Abril &nbsp;·&nbsp; Hotel Araucária Plaza &nbsp;·&nbsp; Ribeirão Preto
         <span class="event-badge-dot"></span>
       </div>
 
       <h1 class="hero-title">
-        O empresário que não consegue tirar férias<br>
-        não tem uma empresa —<br>
-        <em>tem um emprego mais caro.</em>
+        Você não tem uma empresa.<br>
+        Você tem um <em>emprego que não pode largar.</em>
       </h1>
 
       <p class="hero-sub">
-        Assista ao vídeo. Em poucos minutos, você vai entender por que isso acontece — e o que fazer para mudar em 03/04.
+        Se tudo para quando você para, a empresa depende demais de você. Dá pra mudar isso — e começa no dia 3 de Abril. Aperte o play e assista.
       </p>
 
       <!-- VIDEO EMBED -->
@@ -583,15 +553,15 @@
             <div class="video-play">
               <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </div>
-            <p class="video-label">Assista antes de garantir sua vaga</p>
+            <p class="video-label">Aperte o play e assista</p>
           </div>
         </div>
       </div>
 
       <a href="#cadastro" class="btn-green">
-        QUERO GARANTIR MINHA VAGA AGORA →
+        QUERO MINHA VAGA →
       </a>
-      <p class="hero-cta-note">Vagas limitadas · Garantia total ou R$1.000 extra</p>
+      <p class="hero-cta-note">Vagas limitadas · Não gostou? Dinheiro de volta + R$1.000</p>
 
     </div>
   </section>
@@ -599,31 +569,31 @@
   <!-- ════════════════════ PROBLEMA ════════════════════ -->
   <section class="section section-dark">
     <div class="container">
-      <span class="section-eyebrow">Você reconhece isso?</span>
+      <span class="section-eyebrow">Parece com você?</span>
       <h2 class="section-title">Quanto mais você trabalha,<br>mais <span>preso você fica</span></h2>
-      <p class="section-sub">Não é falta de dedicação. É que seu negócio foi construído em cima de você — não de um sistema.</p>
+      <p class="section-sub">A culpa não é de você trabalhar pouco. É que a empresa foi montada em cima de você — e não de um sistema.</p>
 
       <div class="problem-grid">
         <ul class="problem-list">
           <li>
             <span class="icon-x">✕</span>
-            <span>Você é o primeiro a chegar e o último a sair — e ainda leva problema pra casa</span>
+            <span>Você é o primeiro a chegar e o último a sair. E ainda leva problema pra casa.</span>
           </li>
           <li>
             <span class="icon-x">✕</span>
-            <span>Toda decisão importante passa pela sua mesa, mesmo as simples</span>
+            <span>Tudo passa por você. Até as coisas pequenas.</span>
           </li>
           <li>
             <span class="icon-x">✕</span>
-            <span>Você já tentou contratar mais gente — mas isso só criou mais trabalho para você</span>
+            <span>Você contratou mais gente e só ganhou mais dor de cabeça.</span>
           </li>
           <li>
             <span class="icon-x">✕</span>
-            <span>Quando você descansa ou viaja, o negócio desacelera — e você sente culpa</span>
+            <span>Quando você viaja, a empresa cai de ritmo na hora.</span>
           </li>
           <li>
             <span class="icon-x">✕</span>
-            <span>No fundo, você sabe: tem uma empresa no papel, mas na prática tem um emprego sem patrão para culpar</span>
+            <span>No papel é uma empresa. Na vida real, é um emprego sem folga.</span>
           </li>
         </ul>
 
@@ -633,7 +603,7 @@
       </div>
 
       <div class="callout">
-        "O problema não é você. É que ninguém te ensinou a construir um negócio que funciona sem depender de você."
+        "A culpa não é sua. Ninguém nunca te ensinou a montar um negócio que anda sem você."
       </div>
     </div>
   </section>
@@ -641,39 +611,39 @@
   <!-- ════════════════════ 5 PASSOS ════════════════════ -->
   <section class="section section-gray">
     <div class="container">
-      <span class="section-eyebrow" style="color: var(--gold-dark);">O método</span>
-      <h2 class="section-title">Em 7 horas, você vai sair com<br><span>um plano completo de Liberdade Operacional</span></h2>
-      <p class="section-sub">5 etapas práticas e estruturadas para transformar sua empresa em um negócio que cresce — com ou sem você presente.</p>
+      <span class="section-eyebrow" style="color: var(--gold-dark);">O que você leva</span>
+      <h2 class="section-title">7 horas. 5 passos.<br><span>Um plano pronto pra usar.</span></h2>
+      <p class="section-sub">Você sai do evento sabendo exatamente o que fazer pra sua empresa andar sem depender de você o tempo todo.</p>
 
       <div class="steps-grid">
         <article class="step-card">
-          <span class="step-number">01</span>
-          <h3>Cultura — A Fundação Que Sustenta Tudo</h3>
-          <p>Você vai aprender a criar valores e comportamentos que guiam sua equipe mesmo quando você não está presente. Sem cultura, qualquer crescimento vira caos.</p>
+          <span class="step-number">1</span>
+          <h3>Cultura</h3>
+          <p>Sua equipe sabe o que fazer mesmo quando você não está junto.</p>
         </article>
 
         <article class="step-card">
-          <span class="step-number">02</span>
-          <h3>Liderança — Equipe Que Decide Sem Te Ligar</h3>
-          <p>Chega de ser o "oráculo" da empresa. Você vai aprender a formar líderes que tomam decisões com autonomia — e que levam o negócio pra frente com você.</p>
+          <span class="step-number">2</span>
+          <h3>Liderança</h3>
+          <p>Um time que resolve sozinho, sem te ligar a cada cinco minutos.</p>
         </article>
 
         <article class="step-card">
-          <span class="step-number">03</span>
-          <h3>Gestão — Números Que Você Controla em Minutos</h3>
-          <p>Esqueça planilhas complexas. Você vai enxergar o que realmente importa nos números e tomar decisões estratégicas com clareza — sem precisar ser contador.</p>
+          <span class="step-number">3</span>
+          <h3>Gestão</h3>
+          <p>Seus números na mão e fáceis de entender. Sem planilha complicada.</p>
         </article>
 
         <article class="step-card">
-          <span class="step-number">04</span>
-          <h3>Vendas — Receita Que Não Para Quando Você Para</h3>
-          <p>Seu comercial precisa funcionar independente da sua presença. Você vai aprender a montar um sistema que gera receita previsível todos os meses — sem você na venda.</p>
+          <span class="step-number">4</span>
+          <h3>Vendas</h3>
+          <p>Dinheiro entrando todo mês, mesmo sem você dentro da venda.</p>
         </article>
 
         <article class="step-card">
-          <span class="step-number">05</span>
-          <h3>Escalabilidade — Crescer Sem Virar Escravo do Próprio Sucesso</h3>
-          <p>Crescer rápido sem estrutura cria mais problema do que solução. Você vai aprender a escalar de forma controlada com as práticas das maiores empresas do Brasil.</p>
+          <span class="step-number">5</span>
+          <h3>Crescimento</h3>
+          <p>Crescer sem virar escravo da própria empresa.</p>
         </article>
       </div>
     </div>
@@ -689,17 +659,17 @@
         </div>
 
         <div>
-          <span class="section-eyebrow">Quem vai te guiar</span>
+          <span class="section-eyebrow">Quem vai te ensinar</span>
           <h2 class="authority-name">Lucas Miguel</h2>
           <p class="authority-role">Criador do Método Liberdade Operacional</p>
           <p class="authority-text">
-            Comecei como <strong>office-boy aos 13 anos</strong>. Trabalhei por dentro de uma empresa de <strong>R$50 milhões</strong> por 9 anos e aprendi como grandes negócios realmente funcionam.
+            Comecei como <strong>office-boy aos 13 anos</strong>. Passei 9 anos trabalhando dentro de uma empresa grande, de <strong>R$50 milhões</strong>.
           </p>
           <p class="authority-text">
-            Depois fundei 4 empresas — e errei muito antes de descobrir por que ficava preso no operacional. O que aprendi foi simples: <strong>o problema não era esforço. Era estrutura.</strong> Quando montei a estrutura certa, a empresa começou a funcionar sem mim.
+            Depois abri 4 empresas minhas. E vivi preso no trabalho até cair a ficha: <strong>o problema não era trabalhar mais. Era não ter um sistema.</strong> Montei o sistema certo e a empresa passou a andar sem mim.
           </p>
           <p class="authority-text">
-            Desde então, tenho ensinado esse método para milhares de empresários em todo o Brasil. <strong>Em 03/04, é a sua vez.</strong>
+            Hoje eu ensino isso pra milhares de donos de empresa pelo Brasil. <strong>No dia 3 de Abril, é a sua vez.</strong>
           </p>
           <div class="authority-stats">
             <div>
@@ -708,7 +678,7 @@
             </div>
             <div>
               <p class="stat-number">4</p>
-              <p class="stat-label">Empresas fundadas</p>
+              <p class="stat-label">Empresas abertas</p>
             </div>
             <div>
               <p class="stat-number">10+</p>
@@ -721,133 +691,57 @@
     </div>
   </section>
 
-  <!-- ════════════════════ PARA QUEM É ════════════════════ -->
-  <section class="section section-dark">
+  <!-- ════════════════════ INGRESSOS ════════════════════ -->
+  <section id="cadastro" class="section section-darker">
     <div class="container">
-      <span class="section-eyebrow">Isso é para você se...</span>
-      <h2 class="section-title">Você tem uma empresa — mas ela ainda<br><span>para quando você para</span></h2>
+      <span class="section-eyebrow">Escolha sua entrada</span>
+      <h2 class="section-title">Dois jeitos de participar<br>do dia <span>3 de Abril</span></h2>
+      <p class="section-sub">As duas dão acesso ao método completo. A VIP te coloca mais perto do Lucas.</p>
 
-      <ul class="check-list">
-        <li>
-          <span class="icon-check">✓</span>
-          <span>Você tem equipe, mas é o único que realmente garante que o trabalho sai direito</span>
-        </li>
-        <li>
-          <span class="icon-check">✓</span>
-          <span>Você quer crescer, mas tem medo de o negócio desmoronar se você tirar o pé</span>
-        </li>
-        <li>
-          <span class="icon-check">✓</span>
-          <span>Você já tentou delegar antes — e os problemas voltaram todos para o seu colo</span>
-        </li>
-        <li>
-          <span class="icon-check">✓</span>
-          <span>Você trabalha mais do que gostaria e ainda ganha menos do que deveria pelo que entrega</span>
-        </li>
-        <li>
-          <span class="icon-check">✓</span>
-          <span>Você sabe que precisa de um sistema — mas não sabe por onde começar</span>
-        </li>
-      </ul>
-    </div>
-  </section>
+      <div class="pricing-grid">
 
-  <!-- ════════════════════ O QUE VOCÊ RECEBE ════════════════════ -->
-  <section class="section section-darker">
-    <div class="container">
-      <span class="section-eyebrow">Sua experiência completa</span>
-      <h2 class="section-title">Tudo o que você recebe<br>no dia <span>03/04</span></h2>
-
-      <div class="value-stack">
-
-        <p class="value-stack-title">Incluso na sua vaga</p>
-
-        <div class="value-item">
-          <span class="value-check">✓</span>
-          <div class="value-name">
-            Imersão Liberdade Operacional — 7h de conteúdo prático ao vivo
-            <small>O método completo das 5 etapas com Lucas Miguel, do zero ao plano de ação</small>
-          </div>
-          <span class="value-price">R$ 2.000</span>
+        <!-- NORMAL -->
+        <div class="pricing-card">
+          <p class="pricing-tier">Normal</p>
+          <hr class="pricing-divider">
+          <ul class="pricing-items">
+            <li><span class="pi-check">✓</span> 7 horas de evento ao vivo com Lucas Miguel</li>
+            <li><span class="pi-check">✓</span> O método completo dos 5 passos</li>
+            <li><span class="pi-check">✓</span> Você leva um acompanhante de graça</li>
+            <li><span class="pi-check">✓</span> Material e ferramentas prontas pra usar</li>
+            <li><span class="pi-check">✓</span> Café e lanche durante o evento</li>
+          </ul>
+          <p class="pricing-bonus-label">+ 3 presentes</p>
+          <ul class="pricing-items">
+            <li><span class="pi-check">✓</span> Como ter lucro certo todo mês</li>
+            <li><span class="pi-check">✓</span> Como fazer sua equipe trabalhar sozinha</li>
+            <li><span class="pi-check">✓</span> Como encantar o cliente pra ele voltar e indicar</li>
+          </ul>
+          <a href="#" class="btn-green btn-green-sm btn-green-full">QUERO MINHA VAGA</a>
+          <p class="pricing-companion">Leva <strong>1 acompanhante</strong> junto</p>
         </div>
 
-        <div class="value-item">
-          <span class="value-check">✓</span>
-          <div class="value-name">
-            Bônus 1 — Sistema de Lucro Previsível
-            <small>Ferramentas e aulas para ter clareza sobre seus números e aumentar o lucro sem aumentar o esforço</small>
-          </div>
-          <span class="value-price">R$ 497</span>
-        </div>
-
-        <div class="value-item">
-          <span class="value-check">✓</span>
-          <div class="value-name">
-            Bônus 2 — Protocolo de Autonomia da Equipe
-            <small>Técnicas usadas nas empresas mais eficientes do Brasil para formar times que se gerenciam</small>
-          </div>
-          <span class="value-price">R$ 397</span>
-        </div>
-
-        <div class="value-item">
-          <span class="value-check">✓</span>
-          <div class="value-name">
-            Bônus 3 — Método Encantamento do Cliente
-            <small>Workshop com as técnicas que fazem clientes voltarem e indicarem — sem você precisar pedir</small>
-          </div>
-          <span class="value-price">R$ 597</span>
-        </div>
-
-        <div class="value-item">
-          <span class="value-check">✓</span>
-          <div class="value-name">
-            Ingresso Duplo — Traga um sócio ou funcionário
-            <small>Todo ingresso dá direito a um acompanhante sem custo adicional</small>
-          </div>
-          <span class="value-tag">GRÁTIS</span>
-        </div>
-
-        <p class="value-stack-title" style="margin-top: 28px;">Exclusivo para Experiência VIP</p>
-
-        <div class="value-item">
-          <span class="value-check" style="color: var(--gold-medium);">★</span>
-          <div class="value-name">
-            Assento Prioritário + Ambiente Premium
-            <small>Melhor posição para absorver cada detalhe — sem distração, com total conforto</small>
-          </div>
-          <span class="value-tag">VIP</span>
-        </div>
-
-        <div class="value-item">
-          <span class="value-check" style="color: var(--gold-medium);">★</span>
-          <div class="value-name">
-            Sessão de Q&A Exclusiva com Lucas Miguel
-            <small>Leve o desafio específico do seu negócio e saia com uma resposta aplicável ainda essa semana</small>
-          </div>
-          <span class="value-tag">VIP</span>
-        </div>
-
-        <div class="value-total">
-          <span class="value-total-label">Valor total da experiência:</span>
-          <span class="value-total-price">R$ 3.491 em conteúdo e ferramentas</span>
+        <!-- VIP -->
+        <div class="pricing-card pricing-card-vip">
+          <span class="pricing-badge">⭐ MAIS COMPLETA</span>
+          <p class="pricing-tier">VIP</p>
+          <hr class="pricing-divider">
+          <ul class="pricing-items">
+            <li><span class="pi-check">✓</span> Tudo o que tem na entrada Normal</li>
+            <li><span class="pi-star">★</span> <strong>Lugar na frente, no melhor espaço</strong></li>
+            <li><span class="pi-star">★</span> <strong>Sessão de Mentoria Exclusiva com Lucas Miguel</strong></li>
+          </ul>
+          <p class="pricing-bonus-label">Os 3 presentes também estão inclusos</p>
+          <ul class="pricing-items">
+            <li><span class="pi-check">✓</span> Como ter lucro certo todo mês</li>
+            <li><span class="pi-check">✓</span> Como fazer sua equipe trabalhar sozinha</li>
+            <li><span class="pi-check">✓</span> Como encantar o cliente pra ele voltar e indicar</li>
+          </ul>
+          <a href="#" class="btn-green btn-green-full">QUERO MINHA VAGA VIP →</a>
+          <p class="pricing-companion">Leva <strong>1 acompanhante</strong> junto</p>
         </div>
 
       </div>
-    </div>
-  </section>
-
-  <!-- ════════════════════ CADASTRO ════════════════════ -->
-  <section id="cadastro" class="section section-dark">
-    <div class="container" style="text-align: center;">
-      <span class="section-eyebrow">Garanta sua vaga</span>
-      <h2 class="section-title" style="max-width: 600px; margin: 0 auto 16px;">Vagas limitadas —<br><span>reserve a sua agora</span></h2>
-      <p class="section-sub" style="margin: 0 auto 36px;">03 de Abril · Hotel Araucária Plaza · Ribeirão Preto · 14h às 21h</p>
-      <a href="#" class="btn-green" style="font-size: 19px; height: 72px; padding: 0 52px;">
-        QUERO GARANTIR MINHA VAGA →
-      </a>
-      <p style="margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.3);">
-        Vagas limitadas · Garantia total ou R$1.000 extra
-      </p>
     </div>
   </section>
 
@@ -855,7 +749,7 @@
   <section class="section section-light">
     <div class="container">
       <span class="section-eyebrow" style="color: var(--gold-dark);">Risco zero</span>
-      <h2 class="section-title">Se não gostar,<br><span>dinheiro de volta — mais R$1.000 por cima</span></h2>
+      <h2 class="section-title">Não gostou?<br><span>Devolvo seu dinheiro e ainda te dou R$1.000.</span></h2>
 
       <div class="guarantee-box">
         <div class="guarantee-seal">
@@ -863,12 +757,12 @@
           <span>Garantia de Resultado</span>
         </div>
         <div>
-          <h3 class="guarantee-title">A <span>promessa mais ousada</span> do mercado</h3>
+          <h3 class="guarantee-title">A <span>promessa mais forte</span> do mercado</h3>
           <p class="guarantee-text">
-            Lucas tem tanta confiança no que vai entregar que faz uma promessa incomum: se ao final do evento você sentir que não valeu cada centavo do investimento, ele <strong>devolve 100% do valor</strong> — e ainda te envia um <strong>Pix extra de R$1.000</strong> do bolso dele.
+            Se no fim do evento você achar que não valeu, o Lucas <strong>devolve todo o seu dinheiro</strong> — e ainda manda <strong>R$1.000 no seu Pix</strong>, do bolso dele.
           </p>
           <p class="guarantee-text">
-            Sem burocracia. Sem perguntas. <strong>Você literalmente não tem como perder.</strong> Ou você sai com um método transformador para o seu negócio — ou sai lucrando R$1.000.
+            Sem enrolação. Sem pergunta. <strong>Você não tem como perder:</strong> ou sai com uma empresa melhor, ou sai com R$1.000 a mais no bolso.
           </p>
         </div>
       </div>
@@ -878,15 +772,15 @@
   <!-- ════════════════════ DEPOIMENTOS ════════════════════ -->
   <section class="section section-dark">
     <div class="container">
-      <span class="section-eyebrow">Resultados reais</span>
-      <h2 class="section-title">O que dizem os empresários<br>que já <span>passaram pela imersão</span></h2>
+      <span class="section-eyebrow">Resultados de verdade</span>
+      <h2 class="section-title">Quem já foi,<br><span>aprova</span></h2>
 
       <div class="testimonials-grid">
         <div class="testimonial-card">
           <div class="testimonial-stars">
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
-          <p class="testimonial-text">"Saí da imersão com um plano claro de como estruturar minha equipe. Em 60 dias, reduzi minha jornada de 12 para 8 horas sem perder receita."</p>
+          <p class="testimonial-text">"Saí com um plano na mão. Em 2 meses, passei de 12 pra 8 horas de trabalho por dia — e sem perder venda."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar"></div>
             <div>
@@ -900,7 +794,7 @@
           <div class="testimonial-stars">
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
-          <p class="testimonial-text">"Achei que seria mais um evento de motivação. Estava errado. Saí com ferramentas práticas que apliquei na semana seguinte e já vi resultado."</p>
+          <p class="testimonial-text">"Achei que era só conversa pra animar. Mas saí com ferramenta de verdade. Usei já na semana seguinte."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar"></div>
             <div>
@@ -914,7 +808,7 @@
           <div class="testimonial-stars">
             <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
           </div>
-          <p class="testimonial-text">"O método de gestão me fez ver onde estava sangrando dinheiro. Implementei e recuperei o investimento no primeiro mês."</p>
+          <p class="testimonial-text">"Descobri onde eu estava perdendo dinheiro. No primeiro mês já paguei o que investi."</p>
           <div class="testimonial-author">
             <div class="testimonial-avatar"></div>
             <div>
@@ -923,68 +817,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════════════════ FAQ ════════════════════ -->
-  <section class="section section-gray">
-    <div class="container">
-      <span class="section-eyebrow" style="color: var(--gold-dark);">Dúvidas frequentes</span>
-      <h2 class="section-title">Perguntas que<br><span>todo empresário faz</span></h2>
-
-      <div class="faq-list">
-
-        <div class="faq-item open">
-          <button class="faq-q">
-            Posso levar um sócio ou funcionário?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Sim. Ao comprar qualquer ingresso — Gold ou VIP — você ganha um segundo ingresso gratuito. Traga seu sócio, um funcionário-chave ou quem você quiser.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q">
-            O evento é somente para donos de empresa?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Sim. O método foi desenhado especificamente para quem já tem uma empresa com equipe e quer crescer sem ficar preso no operacional.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q">
-            E se eu não puder comparecer depois de comprar?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Você pode transferir o ingresso para outro empresário ou solicitar reembolso integral até 7 dias antes do evento.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q">
-            Quando recebo os bônus?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Os bônus digitais são enviados por email logo após a confirmação da sua inscrição. Os materiais físicos são entregues no dia do evento.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q">
-            Como funciona exatamente a garantia de R$1.000?
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-a">
-            <p>Se ao final do evento você sentir que não valeu o investimento, basta informar a equipe. Você recebe 100% do valor pago de volta + um Pix de R$1.000. Sem questionamentos, sem burocracia.</p>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -994,25 +826,24 @@
     <div class="container">
       <div class="scarcity-note">
         <span class="scarcity-dot"></span>
-        Vagas do 1º lote se encerrando
+        Vagas acabando
       </div>
 
       <h2 class="final-cta-title">
-        Em 03/04, você sai de Ribeirão Preto<br>
-        com um negócio diferente —<br>
-        <span>ou com R$1.000 a mais no bolso.</span>
+        No dia 3 de Abril, você sai com uma empresa diferente.<br>
+        <span>Ou com R$1.000 a mais no bolso.</span>
       </h2>
 
       <p class="final-cta-sub">
-        Sem risco. Só você, Lucas Miguel e 7 horas para transformar o que você construiu em algo que funciona sem você.
+        Sem risco. Só você, o Lucas e 7 horas pra mudar o seu negócio de vez.
       </p>
 
       <a href="#cadastro" class="btn-green" style="margin-bottom: 14px;">
-        QUERO GARANTIR MINHA VAGA AGORA →
+        QUERO MINHA VAGA →
       </a>
 
       <p style="font-size: 13px; color: rgba(255,255,255,0.3);">
-        Quando o 1º lote encerrar, o preço sobe. As vagas não esperam.
+        Quando as vagas acabarem, acabou.
       </p>
     </div>
   </section>
@@ -1027,17 +858,6 @@
       <a href="#">Termos de Uso</a>
     </div>
   </footer>
-
-  <script>
-    document.querySelectorAll('.faq-q').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.closest('.faq-item');
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
-      });
-    });
-  </script>
 
 </body>
 </html>
