@@ -17,5 +17,6 @@ deployment:
     - /bin/cp -rf easydots/                           $DEPLOYPATH
     - /bin/cp -rf anjos/                              $DEPLOYPATH
     - /bin/cp -rf boutique-do-sono/                   $DEPLOYPATH
+    - /bin/cp -rf lucas-teste/                        $DEPLOYPATH
     # Publica o site da OTA (mozar/) na raiz do otaodontologia.com.br, com correção de caminhos
     - /bin/bash deploy-ota.sh
