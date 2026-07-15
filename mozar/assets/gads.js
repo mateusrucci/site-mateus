@@ -49,9 +49,30 @@
     return false;
   };
 
-  document.addEventListener('submit', function () {
+  document.addEventListener('submit', function (e) {
     try {
       window.gtag('event', 'conversion', { send_to: GADS_ID + '/' + LEAD_LABEL });
+      var form = e.target;
+      var treatmentEl = form && form.querySelector ? form.querySelector('[name="treatment"]') : null;
+      var treatment = treatmentEl ? treatmentEl.value : '';
+      window.gtag('event', 'generate_lead', {
+        currency: 'BRL',
+        value: 1.0,
+        method: 'whatsapp_popup',
+        content_category: treatment || 'avaliacao'
+      });
+    } catch (e) {}
+  }, true);
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href*="wa.me"]') : null;
+    if (!a) return;
+    try {
+      window.gtag('event', 'whatsapp_click', {
+        link_url: a.getAttribute('href') || '',
+        link_text: (a.textContent || '').trim().slice(0, 80),
+        page_location: window.location.href
+      });
     } catch (e) {}
   }, true);
 })();
