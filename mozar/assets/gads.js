@@ -1,8 +1,9 @@
 /**
- * Google Ads Conversion Tracking — OTA Odontologia
- * - Page-view conversion: fires once por page load
+ * Google Ads + Analytics Tracking — OTA Odontologia
+ * - GA4 pageview (G-L5YRTPWYD2 + G-8GXX55D9P5 legado)
+ * - Google Ads page-view conversion: fires once por page load
  * - Lead conversion: fires em qualquer form submit + via gtag_report_conversion()
- * Idempotente: se gtag ja estiver carregado (home mozar/ota), reutiliza.
+ * Idempotente: se gtag ja estiver carregado, reutiliza.
  */
 (function () {
   'use strict';
@@ -10,7 +11,7 @@
   window.__ota_gads_loaded = true;
 
   var GADS_ID = 'AW-16570742481';
-  var GA_ID = 'G-8GXX55D9P5';
+  var GA_IDS = ['G-L5YRTPWYD2', 'G-8GXX55D9P5'];
   var LEAD_LABEL = 'm_aRCNHCkJcaENHtxd09';
   var PV_LABEL = 'qunXCPnz9tAcENHtxd09';
 
@@ -18,13 +19,13 @@
   if (typeof window.gtag !== 'function') {
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag('js', new Date());
-    window.gtag('config', GA_ID);
     var s = document.createElement('script');
     s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GADS_ID;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_IDS[0];
     document.head.appendChild(s);
   }
 
+  GA_IDS.forEach(function (id) { window.gtag('config', id); });
   window.gtag('config', GADS_ID);
 
   window.gtag('event', 'conversion', {
