@@ -151,14 +151,6 @@
     _sent = true;
     _hubSend('Lead enviado',{nome:name,telefone:digits,tratamento:treatment});
 
-    var parts = name.split(/\s+/);
-    if (window.Tracker) {
-      Tracker.track('Lead',
-        {content_name:treatment,content_category:'odontologia',currency:'BRL',value:0},
-        {firstName:parts[0]||'',lastName:parts.slice(1).join(' ')||'',phone:digits}
-      );
-    }
-
     var assunto = treatment==='Outro' ? 'os tratamentos da OTA' : 'o tratamento de '+treatment;
     var msg = 'Olá, meu nome é '+name+' gostaria de saber mais sobre '+assunto+'.';
     var url = 'https://wa.me/5545991282260?text='+encodeURIComponent(msg);
