@@ -685,13 +685,7 @@
         const firstName = parts[0] || '';
         const lastName = parts.slice(1).join(' ') || '';
 
-        // Dispara Lead (Pixel + CAPI, enriquecido + desduplicado)
-        if (window.Tracker) {
-            Tracker.track('Lead',
-                { content_name: treatment, content_category: 'odontologia', currency: 'BRL', value: 0 },
-                { firstName: firstName, lastName: lastName, phone: digits }
-            );
-        }
+        // (Lead disparado pelo listener global de submit em fbq.js — dedupe evita duplicacao)
 
         // Mensagem personalizada para o WhatsApp
         let assunto;
@@ -722,5 +716,6 @@
 </script>
 
     <script src="assets/gads.js"></script>
+    <script src="assets/fbq.js"></script>
 </body>
 </html>
