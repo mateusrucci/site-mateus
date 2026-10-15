@@ -56,6 +56,40 @@ $payload = [
     'user_agent'   => $_SERVER['HTTP_USER_AGENT'] ?? '',
 ];
 
+// Bloqueia reenvios do mesmo telefone por 24 horas, inclusive entre abas/visitas.
+// O lock cobre a consulta, o envio e a gravação para evitar corridas simultâneas.
+$origin = $payload['origem'];
+$phone = preg_replace('/\D+/', '', (string) $payload['telefone']);
+if (strlen($phone) === 10 || strlen($phone) === 11) { $phone = '55' . $phone; }
+$eventId = trim((string) $payload['event_id']);
+$identity = $phone !== '' ? 'phone:' . $phone : ($eventId !== '' ? 'event:' . $eventId : '');
+$lock = null;
+$state = [];
+$now = time();
+if ($identity !== '' && in_array($origin, ['Lead enviado', 'Abandono de carrinho'], true)) {
+    $dir = sys_get_temp_dir() . '/ota-lead-hub-dedupe';
+    if (is_dir($dir) || @mkdir($dir, 0700)) {
+        $path = $dir . '/' . hash_hmac('sha256', $identity, $HUB_SECRET) . '.json';
+        $lock = @fopen($path, 'c+');
+        if ($lock && flock($lock, LOCK_EX)) {
+            $saved = json_decode(stream_get_contents($lock), true);
+            if (is_array($saved)) { $state = $saved; }
+            $leadRecent = ($now - (int) ($state['lead_at'] ?? 0)) < 86400;
+            $abandonRecent = ($now - (int) ($state['abandon_at'] ?? 0)) < 86400;
+            if (($origin === 'Lead enviado' && $leadRecent) ||
+                ($origin === 'Abandono de carrinho' && ($leadRecent || $abandonRecent))) {
+                flock($lock, LOCK_UN);
+                fclose($lock);
+                echo json_encode(['ok' => true, 'duplicate' => true]);
+                exit;
+            }
+        } else {
+            if ($lock) { fclose($lock); }
+            $lock = null;
+        }
+    }
+}
+
 $ch = curl_init($HUB_URL);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
@@ -63,9 +97,23 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-curl_exec($ch);
+$response = curl_exec($ch);
 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $err  = curl_error($ch);
 curl_close($ch);
 
-echo json_encode(['ok' => ($code >= 200 && $code < 400), 'hub_code' => $code, 'err' => $err]);
+$hubResult = is_string($response) ? json_decode($response, true) : null;
+$ok = $code >= 200 && $code < 400 && is_array($hubResult) && !empty($hubResult['ok']);
+if ($lock) {
+    if ($ok) {
+        $state[$origin === 'Lead enviado' ? 'lead_at' : 'abandon_at'] = $now;
+        rewind($lock);
+        ftruncate($lock, 0);
+        fwrite($lock, json_encode($state));
+        fflush($lock);
+    }
+    flock($lock, LOCK_UN);
+    fclose($lock);
+}
+
+echo json_encode(['ok' => $ok, 'hub_code' => $code, 'err' => $err]);
