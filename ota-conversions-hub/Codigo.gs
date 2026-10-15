@@ -45,6 +45,17 @@ function sha_(v) {
   var bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(v), Utilities.Charset.UTF_8);
   return bytes.map(function (b) { return ('0' + (b & 0xFF).toString(16)).slice(-2); }).join('');
 }
+function phoneKey_(value) {
+  var digits = String(value || '').replace(/\D/g, '');
+  if (/^55\d{10,11}$/.test(digits)) digits = digits.slice(2);
+  return /^\d{10,11}$/.test(digits) ? digits : '';
+}
+function rowTime_(value) {
+  if (value instanceof Date) return value.getTime();
+  var match = String(value || '').match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+  if (!match) return NaN;
+  return new Date(+match[3], +match[2] - 1, +match[1], +(match[4] || 0), +(match[5] || 0), +(match[6] || 0)).getTime();
+}
 
 /* =========================================================================
  *  1) INGESTÃO — Web App (o PHP do site faz POST aqui)
@@ -86,7 +97,48 @@ function doPost(e) {
     row[col_('UserAgent')]     = body.user_agent || '';
     row[col_('external_id')]   = body.external_id || '';
     row[col_('event_id_lead')] = body.event_id || '';
+
+    // Um contato gera uma linha por 24 h. Sob o lock, requisições simultâneas
+    // do formulário são serializadas antes de consultar/gravar a planilha.
+    var origin = row[col_('Origem')];
+    var phone = phoneKey_(row[col_('WhatsApp')]);
+    var eventId = String(row[col_('event_id_lead')] || '').trim();
+    if ((origin === 'Lead enviado' || origin === 'Abandono de carrinho') && (phone || eventId)) {
+      var lastRow = sh.getLastRow();
+      var firstRow = Math.max(2, lastRow - 999);
+      var abandoned = null;
+      if (lastRow >= firstRow) {
+        var previous = sh.getRange(firstRow, 1, lastRow - firstRow + 1, COLS.length).getValues();
+        for (var r = previous.length - 1; r >= 0; r--) {
+          var old = previous[r];
+          var age = row[col_('Data/Hora')].getTime() - rowTime_(old[col_('Data/Hora')]);
+          var samePhone = phone && phoneKey_(old[col_('WhatsApp')]) === phone && age >= 0 && age < 24 * 60 * 60 * 1000;
+          var sameEvent = eventId && String(old[col_('event_id_lead')] || '').trim() === eventId;
+          if (!samePhone && !sameEvent) continue;
+
+          var oldOrigin = String(old[col_('Origem')] || '').trim();
+          if (oldOrigin === 'Lead enviado') return json_({ ok: true, duplicate: true });
+          if (oldOrigin === 'Abandono de carrinho') {
+            if (origin === 'Abandono de carrinho') return json_({ ok: true, duplicate: true });
+            if (!abandoned) abandoned = { sheetRow: firstRow + r, values: old };
+          }
+        }
+      }
+      if (abandoned) {
+        var merged = abandoned.values.slice();
+        merged[col_('Data/Hora')] = row[col_('Data/Hora')];
+        merged[col_('Origem')] = 'Lead enviado';
+        for (var j = col_('Nome'); j <= col_('event_id_lead'); j++) {
+          if (row[j] !== '' && row[j] != null) merged[j] = row[j];
+        }
+        sh.getRange(abandoned.sheetRow, 2, 1, col_('event_id_lead'))
+          .setValues([merged.slice(1, col_('event_id_lead') + 1)]);
+        SpreadsheetApp.flush();
+        return json_({ ok: true, updated: true });
+      }
+    }
     sh.appendRow(row);
+    SpreadsheetApp.flush();
     return json_({ ok: true });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
@@ -147,6 +199,46 @@ function enviarConversoesDiarias() {
   } finally {
     lock.releaseLock();
   }
+}
+
+function montarGoogleAds() {
+  var sh = sheet_();
+  var ss = sh.getParent();
+  var tab = ss.getSheetByName('Google Ads') || ss.insertSheet('Google Ads');
+  tab.clearContents();
+
+  var nomes = { Contatado: 'OTA - Contatado', Agendado: 'OTA - Agendado', Cliente: 'OTA - Cliente' };
+  var out = [
+    ['Parameters:TimeZone=America/Sao_Paulo', '', '', '', ''],
+    ['Google Click ID', 'Conversion Name', 'Conversion Time', 'Conversion Value', 'Conversion Currency']
+  ];
+
+  var vals = sh.getDataRange().getValues();
+  for (var r = 1; r < vals.length; r++) {
+    var row = vals[r];
+    var gclid = String(row[col_('gclid')] || '').trim();
+    if (!gclid) continue; // só Google
+    var status = String(row[col_('Status')] || '').trim().toLowerCase();
+    var journey =
+      status === 'contatado' ? ['Contatado'] :
+      status === 'agendado'  ? ['Contatado', 'Agendado'] :
+      status === 'cliente'   ? ['Contatado', 'Agendado', 'Cliente'] : [];
+    if (!journey.length) continue;
+
+    var dt = row[col_('Data/Hora')];
+    var time = Utilities.formatDate(dt instanceof Date ? dt : new Date(dt), 'America/Sao_Paulo', 'yyyy-MM-dd HH:mm:ss');
+    for (var j = 0; j < journey.length; j++) {
+      var nm = journey[j], val = '', cur = '';
+      if (nm === 'Cliente') {
+        var v = parseFloat(String(row[col_('Valor (R$)')]).replace(/[^0-9,.-]/g, '').replace(',', '.')) || 0;
+        if (v <= 0) continue;
+        val = v; cur = 'BRL';
+      }
+      out.push([gclid, nomes[nm], time, val, cur]);
+    }
+  }
+  tab.getRange(1, 1, out.length, 5).setValues(out);
+  SpreadsheetApp.getActiveSpreadsheet().toast('Aba "Google Ads" atualizada (' + (out.length - 2) + ' conversões).', 'Hub OTA', 5);
 }
 
 function montarUserData_(row) {
@@ -249,6 +341,7 @@ function onOpen() {
     .addItem('Criar gatilho diário (00:00)', 'criarGatilhoDiario')
     .addSeparator()
     .addItem('Enviar conversões agora', 'enviarConversoesDiarias')
+    .addItem('Atualizar aba Google Ads', 'montarGoogleAds')
     .addItem('Testar conexão com o Meta', 'testarMeta')
     .addToUi();
 }

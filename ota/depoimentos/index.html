@@ -329,6 +329,7 @@
     // ===== HUB DE CONVERSÕES (envia lead + rastreamento pra planilha) =====
     var HUB_ENDPOINT = '/lead-hub.php';
     var leadEnviado = false, abandonoEnviado = false;
+    var hubLeadEventId = 'ota_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2);
     function hubParam(n){ var m=location.search.match(new RegExp('[?&]'+n+'=([^&#]*)')); return m?decodeURIComponent(m[1]):''; }
     function hubCookie(n){ var m=document.cookie.match(new RegExp('(^| )'+n+'=([^;]+)')); return m?m[2]:''; }
     function hubPersist(){
@@ -350,7 +351,7 @@
         external_id:(window.Tracker&&Tracker.getExternalId)?Tracker.getExternalId():'' };
     }
     function hubEnviar(origem, dados, beacon){
-      var payload=Object.assign({origem:origem}, dados, hubParams());
+      var payload=Object.assign({origem:origem, event_id:hubLeadEventId}, dados, hubParams());
       var body=JSON.stringify(payload);
       try{
         if(beacon && navigator.sendBeacon){ navigator.sendBeacon(HUB_ENDPOINT, new Blob([body],{type:'application/json'})); }
@@ -380,6 +381,7 @@
 
     function submitLead(e) {
         e.preventDefault();
+        if (leadEnviado) return false;
         const name = document.getElementById('leadName').value.trim();
         const phoneRaw = document.getElementById('leadPhone').value.trim();
         const treatment = document.getElementById('leadTreatment').value;
